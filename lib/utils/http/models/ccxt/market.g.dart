@@ -59,9 +59,9 @@ Map<String, dynamic> _$MarketToJson(Market instance) => <String, dynamic>{
 
 Precision _$PrecisionFromJson(Map<String, dynamic> json) {
   return Precision(
-    (json['price'] as num).toDouble(),
-    (json['amount'] as num?)?.toDouble(),
-    (json['cost'] as num?)?.toDouble(),
+    json['price'] as num,
+    json['amount'] as num?,
+    json['cost'] as num?,
   );
 }
 

@@ -72,7 +72,7 @@ class SymbolPopularGridView extends StatelessWidget {
                                                 style: Theme.of(context).textTheme.bodyText2,
                                                 children: [
                                                   TextSpan(
-                                                    text: '  ${ticker.percentage?.toPrecision(2).toStringAsFixed(2)}%',
+                                                    text: '  ${ticker.percentage?.toStringAsFixed(2)}%',
                                                     style: Theme.of(context).textTheme.caption?.copyWith(
                                                           color: NumUtil.isZero(ticker.percentage)
                                                               ? settingsController.advanceDeclineColors[1]
@@ -85,7 +85,7 @@ class SymbolPopularGridView extends StatelessWidget {
                                               ),
                                             ),
                                             Text(
-                                              '${ticker.bid?.toStringAsFixed(2)}',
+                                              '${ticker.bid}',
                                               style: Theme.of(context).textTheme.subtitle1?.copyWith(
                                                     color: NumUtil.isZero(ticker.percentage)
                                                         ? settingsController.advanceDeclineColors[1]

@@ -3,5 +3,5 @@ class HttpConfig {
 
   static const int HTTP_CONNECT_TIMEOUT = 30000;
 
-  static const int HTTP_RECEVE_TIMEOUT = 3000;
+  static const int HTTP_RECEVE_TIMEOUT = 10000;
 }

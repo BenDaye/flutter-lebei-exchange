@@ -2,8 +2,8 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SymbolHelper {
-  static String getTitleText(String symbol) {
+class CcxtHelper {
+  static String getSymbolTitleText(String symbol) {
     if (symbol.isEmpty) return '';
     String? marginString = new RegExp(r"[1-9]\d*[LS]").stringMatch(symbol);
     if (marginString == null) return symbol;
@@ -12,12 +12,12 @@ class SymbolHelper {
     return symbol.replaceAll(marginString, '*($marginText$multipleString)');
   }
 
-  static bool isMargin(String symbol) {
+  static bool isMarginSymbol(String symbol) {
     if (symbol.isEmpty) return false;
     return new RegExp(r"[1-9]\d*[LS]").hasMatch(symbol);
   }
 
-  static String getSubtitleText(String symbol) {
+  static String getSymbolSubtitleText(String symbol) {
     if (symbol.isEmpty) return '';
     String marginString = new RegExp(r"[1-9]\d*[LS]").stringMatch(symbol)!;
     String marginText = marginString.substring(marginString.length - 1) == 'L' ? '做多' : '做空';
@@ -25,9 +25,9 @@ class SymbolHelper {
     return '$multipleString倍$marginText';
   }
 
-  static Widget getTitle(String symbol) {
+  static Widget getSymbolTitle(String symbol) {
     if (symbol.isEmpty) return Text('/');
-    String titleText = getTitleText(symbol);
+    String titleText = getSymbolTitleText(symbol);
     if (!titleText.contains('/')) return Text(titleText);
 
     final titleTextArray = titleText.split('/');
@@ -47,9 +47,9 @@ class SymbolHelper {
     );
   }
 
-  static Widget getSubtitle(String symbol) => isMargin(symbol)
+  static Widget getSymbolSubtitle(String symbol) => isMarginSymbol(symbol)
       ? Text(
-          getSubtitleText(symbol),
+          getSymbolSubtitleText(symbol),
           style: Get.context?.textTheme.caption?.copyWith(color: Colors.red[700]),
         )
       : Container();
@@ -61,4 +61,26 @@ class SymbolHelper {
       : NumUtil.greaterThan((percentage ?? 0), 0)
           ? colors.first
           : colors.last;
+
+  static Widget getPercentageButton(List<Color> colors, num? percentage) => ElevatedButton(
+        onPressed: () => null,
+        child: Text(
+          '${getPercentageSymbol(percentage)}${(percentage ?? 0).toStringAsFixed(2)}%',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        style: ElevatedButton.styleFrom(
+          primary: getPercentageColor(colors, percentage),
+          elevation: 0,
+        ),
+      );
+
+  static Widget getPercentageText(List<Color> colors, num? percentage) => Text(
+        '${getPercentageSymbol(percentage)}${(percentage ?? 0).toStringAsFixed(2)}%',
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+          color: getPercentageColor(colors, percentage),
+        ),
+      );
 }

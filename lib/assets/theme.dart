@@ -26,7 +26,11 @@ class CustomTheme {
       colorScheme: isDarkTheme
           ? ThemeData.dark().colorScheme.copyWith(primary: Colors.orange)
           : ThemeData.light().colorScheme.copyWith(primary: Colors.orange),
-      textTheme: textTheme,
+      textTheme:
+          isDarkTheme ? ThemeData.dark().textTheme.merge(textTheme) : ThemeData.light().textTheme.merge(textTheme),
+      primaryTextTheme: isDarkTheme
+          ? ThemeData.dark().primaryTextTheme.merge(textTheme)
+          : ThemeData.light().primaryTextTheme.merge(textTheme),
       primarySwatch: Colors.orange,
       primaryColor: Colors.orange,
       accentColor: Colors.orange,
@@ -40,8 +44,10 @@ class CustomTheme {
             isDarkTheme ? ThemeData.dark().unselectedWidgetColor : ThemeData.light().unselectedWidgetColor,
       ),
       appBarTheme: AppBarTheme(
-        color: isDarkTheme ? ThemeData.dark().scaffoldBackgroundColor : ThemeData.light().scaffoldBackgroundColor,
-        textTheme: textTheme,
+        backgroundColor:
+            isDarkTheme ? ThemeData.dark().scaffoldBackgroundColor : ThemeData.light().scaffoldBackgroundColor,
+        textTheme:
+            isDarkTheme ? ThemeData.dark().textTheme.merge(textTheme) : ThemeData.light().textTheme.merge(textTheme),
       ),
     );
   }

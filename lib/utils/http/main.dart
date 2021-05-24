@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/config/http.dart';
 import 'package:flutter_lebei_exchange/utils/http/handler/error.dart';
 import 'package:flutter_lebei_exchange/utils/http/handler/success.dart';
@@ -47,11 +48,22 @@ class Http {
     } on DioError catch (error) {
       final httpError = onError<T>(error);
       GetX.Get.showSnackbar(GetX.GetBar(
-        title: 'Network Error',
+        title: 'NETWORK_ERROR',
         message: httpError.message,
-        snackPosition: GetX.SnackPosition.BOTTOM,
+        snackPosition: GetX.SnackPosition.TOP,
+        snackStyle: GetX.SnackStyle.GROUNDED,
+        backgroundColor: Colors.red,
       ));
       return httpError;
+    } catch (error) {
+      GetX.Get.showSnackbar(GetX.GetBar(
+        title: 'UNEXPECTED_NETWORK_ERROR',
+        message: error.toString(),
+        snackPosition: GetX.SnackPosition.TOP,
+        snackStyle: GetX.SnackStyle.GROUNDED,
+        backgroundColor: Colors.red,
+      ));
+      return onError<T>(error);
     }
   }
 }

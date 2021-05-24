@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_lebei_exchange/components/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/symbol_controller.dart';
-import 'package:flutter_lebei_exchange/components/ccxt/helpers/symbol_helper.dart';
+import 'package:flutter_lebei_exchange/components/ccxt/helpers/helper.dart';
 import 'package:flutter_lebei_exchange/pages/setting/controllers/settings_controller.dart';
 import 'package:flutter_lebei_exchange/utils/http/models/ccxt/ticker.dart';
 import 'package:get/get.dart';
@@ -22,30 +23,17 @@ class TickerPercentageListTile extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SymbolHelper.getTitle(ticker.symbol),
-              SymbolHelper.getSubtitle(ticker.symbol),
+              CcxtHelper.getSymbolTitle(ticker.symbol),
+              CcxtHelper.getSymbolSubtitle(ticker.symbol),
             ],
           ),
-          Text('${ticker.bid?.toStringAsFixed(10)}'),
+          Text('${ticker.bid}'),
         ],
       ),
       trailing: Container(
         width: 88.0,
         child: Obx(
-          () {
-            return ElevatedButton(
-              onPressed: () => null,
-              child: Text(
-                '${SymbolHelper.getPercentageSymbol(ticker.percentage)}${ticker.percentage?.toPrecision(2).toStringAsFixed(2)}%',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: SymbolHelper.getPercentageColor(settingsController.advanceDeclineColors, ticker.percentage),
-                elevation: 0,
-              ),
-            );
-          },
+          () => CcxtHelper.getPercentageButton(settingsController.advanceDeclineColors, ticker.percentage),
         ),
       ),
       selected: symbolController.favoriteSymbols.any((s) => s == ticker.symbol),

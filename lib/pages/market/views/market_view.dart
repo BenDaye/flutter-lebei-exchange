@@ -1,6 +1,6 @@
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart' hide NestedScrollView;
-import 'package:flutter_lebei_exchange/components/ccxt/helpers/symbol_helper.dart';
+import 'package:flutter_lebei_exchange/components/ccxt/helpers/helper.dart';
 import 'package:flutter_lebei_exchange/pages/market/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/pages/market/views/ohlcv_chart_view.dart';
 import 'package:flutter_lebei_exchange/pages/market/views/orderbook_list_view.dart';
@@ -17,7 +17,7 @@ class MarketView extends GetView<MarketViewController> {
       appBar: AppBar(
         title: Obx(
           () => Text(
-            SymbolHelper.getTitleText(controller.symbol.replaceAll('_', '/')),
+            CcxtHelper.getSymbolTitleText(controller.symbol.replaceAll('_', '/')),
             style: Theme.of(context).textTheme.headline6,
           ),
         ),

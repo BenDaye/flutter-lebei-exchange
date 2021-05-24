@@ -22,8 +22,7 @@ class MarketsView extends GetView<MarketsViewController> {
             );
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).bottomAppBarColor,
-        elevation: 0,
+        elevation: 1,
         centerTitle: false,
         title: ToggleButtons(
           children: [
@@ -90,7 +89,13 @@ class MarketsView extends GetView<MarketsViewController> {
             Column(
               children: [
                 Container(
-                  color: Theme.of(context).bottomAppBarColor,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(width: .5, color: Theme.of(context).dividerColor),
+                      bottom: BorderSide(width: .5, color: Theme.of(context).dividerColor),
+                    ),
+                  ),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: TabBar(

@@ -1,6 +1,6 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/components/ccxt/helpers/symbol_helper.dart';
+import 'package:flutter_lebei_exchange/components/ccxt/helpers/helper.dart';
 import 'package:flutter_lebei_exchange/pages/home/controllers/symbol_top_base_volume_list_view_controller.dart';
 import 'package:get/get.dart';
 
@@ -18,11 +18,11 @@ class SymbolTopBaseVolumeListView extends GetView<SymbolTopBaseVolumeListViewCon
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SymbolHelper.getTitle(controller.tickers[index].symbol),
-                  SymbolHelper.getSubtitle(controller.tickers[index].symbol),
+                  CcxtHelper.getSymbolTitle(controller.tickers[index].symbol),
+                  CcxtHelper.getSymbolSubtitle(controller.tickers[index].symbol),
                 ],
               ),
-              Text('${controller.tickers[index].bid?.toStringAsFixed(8)}'),
+              Text('${controller.tickers[index].bid}'),
             ],
           ),
           trailing: Container(

@@ -29,14 +29,14 @@ class TradeListView extends GetView<MarketViewController> {
                           : settingsController.advanceDeclineColors.last),
                 ),
                 Text(
-                  '${controller.trades[index].price.toStringAsFixed(2)}',
+                  '${controller.trades[index].price}',
                   textAlign: TextAlign.right,
                   style: Theme.of(context).textTheme.caption?.copyWith(
                         color: Theme.of(context).textTheme.bodyText1?.color,
                       ),
                 ),
                 Text(
-                  '${controller.trades[index].amount.toStringAsFixed(6)}',
+                  '${controller.trades[index].amount}',
                   textAlign: TextAlign.right,
                   style: Theme.of(context).textTheme.caption?.copyWith(
                         color: Theme.of(context).textTheme.bodyText1?.color,

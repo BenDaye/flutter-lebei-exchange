@@ -59,7 +59,7 @@ class Market {
         0,
         true,
         false,
-        Precision(0, 0, 0),
+        Precision(8, 8, 8),
         Limits(
           MaxMin(0, 0),
           MaxMin(0, 0),
@@ -72,10 +72,9 @@ class Market {
 
 @JsonSerializable(explicitToJson: true)
 class Precision {
-  double
-      price; // 8,       // integer or float for TICK_SIZE roundingMode, might be missing if not supplied by the exchange
-  double? amount; // 8,      // integer, might be missing if not supplied by the exchange
-  double? cost; // 8,        // integer, very few exchanges actually have it
+  num price; // 8,       // integer or float for TICK_SIZE roundingMode, might be missing if not supplied by the exchange
+  num? amount; // 8,      // integer, might be missing if not supplied by the exchange
+  num? cost; // 8,        // integer, very few exchanges actually have it
 
   Precision(
     this.price,
