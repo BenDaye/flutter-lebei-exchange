@@ -44,7 +44,7 @@ class HomeListHeaderView extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 104.0,
+            width: 110.0,
             child: Text(
               '${this.last}',
               style: Theme.of(context).textTheme.caption,

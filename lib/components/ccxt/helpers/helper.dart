@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class CcxtHelper {
   static String getSymbolTitleText(String symbol) {
     if (symbol.isEmpty) return '';
-    String? marginString = new RegExp(r"[1-9]\d*[LS]").stringMatch(symbol);
+    String? marginString = getMarginString(symbol);
     if (marginString == null) return symbol;
     String marginText = marginString.substring(marginString.length - 1) == 'L' ? '' : '-';
     String multipleString = marginString.substring(0, marginString.length - 1);
@@ -17,9 +17,12 @@ class CcxtHelper {
     return new RegExp(r"[1-9]\d*[LS]").hasMatch(symbol);
   }
 
+  static String? getMarginString(String symbol) => new RegExp(r"[1-9]\d*[LS]").stringMatch(symbol);
+
   static String getSymbolSubtitleText(String symbol) {
     if (symbol.isEmpty) return '';
-    String marginString = new RegExp(r"[1-9]\d*[LS]").stringMatch(symbol)!;
+    String? marginString = getMarginString(symbol);
+    if (marginString == null) return '';
     String marginText = marginString.substring(marginString.length - 1) == 'L' ? '做多' : '做空';
     String multipleString = marginString.substring(0, marginString.length - 1);
     return '$multipleString倍$marginText';
@@ -47,10 +50,12 @@ class CcxtHelper {
     );
   }
 
-  static Widget getSymbolSubtitle(String symbol) => isMarginSymbol(symbol)
+  static Widget getSymbolSubtitle(String symbol, List<Color> colors) => isMarginSymbol(symbol)
       ? Text(
           getSymbolSubtitleText(symbol),
-          style: Get.context?.textTheme.caption?.copyWith(color: Colors.red[700]),
+          style: Get.context?.textTheme.caption?.copyWith(
+            color: getMarginString(symbol)!.contains('L') ? colors.first : colors.last,
+          ),
         )
       : Container();
 

@@ -27,7 +27,7 @@ class HomeView extends GetView<HomeViewController> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.line_style),
+            icon: Icon(Icons.lunch_dining),
             onPressed: () => Get.toNamed('/exchanges'),
           ),
         ],

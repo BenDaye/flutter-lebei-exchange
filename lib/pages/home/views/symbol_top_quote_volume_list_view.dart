@@ -2,9 +2,11 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/helpers/helper.dart';
 import 'package:flutter_lebei_exchange/pages/home/controllers/symbol_top_quote_volume_list_view_controller.dart';
+import 'package:flutter_lebei_exchange/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
 
 class SymbolTopQuoteVolumeListView extends GetView<SymbolTopQuoteVolumeListViewController> {
+  final SettingsController settingsController = Get.find<SettingsController>();
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -19,14 +21,17 @@ class SymbolTopQuoteVolumeListView extends GetView<SymbolTopQuoteVolumeListViewC
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CcxtHelper.getSymbolTitle(controller.tickers[index].symbol),
-                  CcxtHelper.getSymbolSubtitle(controller.tickers[index].symbol),
+                  CcxtHelper.getSymbolSubtitle(
+                    controller.tickers[index].symbol,
+                    settingsController.advanceDeclineColors,
+                  ),
                 ],
               ),
               Text('${controller.tickers[index].bid}'),
             ],
           ),
           trailing: Container(
-            width: 88.0,
+            width: 96.0,
             child: ElevatedButton(
               onPressed: () => null,
               child: Text(

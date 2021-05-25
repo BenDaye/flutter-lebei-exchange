@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/components/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/helpers/helper.dart';
 import 'package:flutter_lebei_exchange/pages/setting/controllers/settings_controller.dart';
@@ -24,20 +23,23 @@ class TickerPercentageListTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CcxtHelper.getSymbolTitle(ticker.symbol),
-              CcxtHelper.getSymbolSubtitle(ticker.symbol),
+              CcxtHelper.getSymbolSubtitle(
+                ticker.symbol,
+                settingsController.advanceDeclineColors,
+              ),
             ],
           ),
           Text('${ticker.bid}'),
         ],
       ),
       trailing: Container(
-        width: 88.0,
+        width: 96.0,
         child: Obx(
           () => CcxtHelper.getPercentageButton(settingsController.advanceDeclineColors, ticker.percentage),
         ),
       ),
       selected: symbolController.favoriteSymbols.any((s) => s == ticker.symbol),
-      selectedTileColor: Theme.of(context).scaffoldBackgroundColor.withBlue(20),
+      selectedTileColor: Theme.of(context).accentColor.withOpacity(.1),
       onTap: () => Get.toNamed('/market/${ticker.symbol.replaceAll('/', '_')}'),
       onLongPress: () => symbolController.toggleFavoriteSymbol(ticker.symbol),
       enableFeedback: true,

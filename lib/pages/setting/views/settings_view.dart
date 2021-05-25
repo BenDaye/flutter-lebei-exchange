@@ -9,7 +9,7 @@ class SettingsView extends GetView<SettingsController> {
       appBar: AppBar(
         actions: [
           IconButton(
-            icon: Icon(Get.isDarkMode ? Icons.highlight_off : Icons.wb_sunny),
+            icon: Icon(Get.isDarkMode ? Icons.mode_night : Icons.light_mode),
             onPressed: () => controller.onSwitchThemeMode(Get.isDarkMode ? ThemeMode.light : ThemeMode.dark),
           ),
         ],
@@ -47,7 +47,7 @@ class SettingsView extends GetView<SettingsController> {
                 ),
               ),
               ListTile(
-                leading: Icon(Icons.settings),
+                leading: Icon(Icons.security),
                 title: Text('安全设置'),
                 trailing: Icon(
                   Icons.chevron_right,
@@ -63,7 +63,7 @@ class SettingsView extends GetView<SettingsController> {
                 ),
               ),
               ListTile(
-                leading: Icon(Icons.settings),
+                leading: Icon(Icons.menu_book),
                 title: Text('关于我们'),
                 trailing: Icon(
                   Icons.chevron_right,
@@ -71,7 +71,7 @@ class SettingsView extends GetView<SettingsController> {
                 ),
               ),
               ListTile(
-                leading: Icon(Icons.settings),
+                leading: Icon(Icons.thumb_up),
                 title: Text('分享应用'),
                 trailing: Icon(
                   Icons.chevron_right,
