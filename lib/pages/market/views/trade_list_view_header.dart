@@ -8,27 +8,40 @@ class TradeListViewHeader extends GetView<MarketViewController> {
     return Obx(
       () => Container(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-        color: Theme.of(context).bottomAppBarColor,
+        color: Theme.of(context).backgroundColor,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.baseline,
           textBaseline: TextBaseline.alphabetic,
           children: [
-            Text(
-              '时间',
-              style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
+            SizedBox(
+              width: 80,
+              child: Text(
+                'MarketPage.ListViewHeader.Time'.tr,
+                style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
+              ),
             ),
-            Text(
-              '方向',
-              style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
+            Expanded(
+              child: Text(
+                'MarketPage.ListViewHeader.Type'.tr,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
+              ),
             ),
-            Text(
-              '价格(${controller.market.value.quote})',
-              style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
+            SizedBox(
+              width: Get.width / 3,
+              child: Text(
+                'MarketPage.ListViewHeader.Price'.tr + '(${controller.market.value.quote})',
+                textAlign: TextAlign.right,
+                style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
+              ),
             ),
-            Text(
-              '数量(${controller.market.value.base})',
-              style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
+            SizedBox(
+              width: Get.width / 3,
+              child: Text(
+                'MarketPage.ListViewHeader.Amount'.tr + '(${controller.market.value.base})',
+                textAlign: TextAlign.right,
+                style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
+              ),
             ),
           ],
         ),

@@ -36,25 +36,40 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
   final mainSatte = MainState.MA.obs;
   final secondaryState = SecondaryState.NONE.obs;
 
-  final tabs = ['委托挂单', '成交', '简介']
-      .map<Tab>((t) => Tab(
-            text: t,
-            key: Key(t),
-          ))
+  final tabs = [
+    'MarketPage.TabBar.Order',
+    'MarketPage.TabBar.Trade',
+    'MarketPage.TabBar.Intro',
+  ]
+      .map<Tab>(
+        (t) => Tab(
+          text: t.tr,
+          key: Key(t),
+        ),
+      )
       .toList()
       .obs;
   late TabController tabController;
-  final innerScrollPositionKey = Key('委托挂单').obs;
+  final innerScrollPositionKey = Key('MarketPage.TabBar.Order').obs;
 
-  final klineTabs = ['1m', '1h', '1d', '1M', '1y', 'deep']
-      .map<Tab>((t) => Tab(
-            text: t,
-            key: Key(t),
-          ))
+  final klineTabs = [
+    'MarketPage.Period.1m',
+    'MarketPage.Period.1h',
+    'MarketPage.Period.1d',
+    'MarketPage.Period.1M',
+    // 'MarketPage.Period.1y',
+    'MarketPage.Period.depth',
+  ]
+      .map<Tab>(
+        (t) => Tab(
+          text: t.tr,
+          key: Key(t),
+        ),
+      )
       .toList()
       .obs;
   late TabController klineTabController;
-  final period = '1m'.obs;
+  final period = 'MarketPage.Period.1m'.obs;
 
   @override
   void onInit() {
@@ -133,7 +148,7 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
   }
 
   void watchPeriod(String _period) {
-    if (_period != 'deep') {
+    if (_period != 'depth') {
       this.getOhlcv(symbol.value, period: _period, update: true);
     } else {
       this.getDepth(symbol.value, update: true);
@@ -145,7 +160,8 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
   }
 
   void klineTabControllerListener() {
-    period.value = klineTabs[klineTabController.index].text!;
+    period.value =
+        new RegExp(r"(?<=').*?(?=')").stringMatch(klineTabs[klineTabController.index].key!.toString())!.split('.').last;
   }
 
   Future<Market?> getMarket(String? _symbol, {bool? update}) async {

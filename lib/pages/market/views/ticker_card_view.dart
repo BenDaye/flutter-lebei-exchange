@@ -41,7 +41,7 @@ class TickerCardView extends GetView<MarketViewController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('高'),
+                      Text('MarketPage.TickerCard.High'.tr),
                       SizedBox(width: 8),
                       Text('${controller.ticker.value.high}'),
                     ],
@@ -49,7 +49,7 @@ class TickerCardView extends GetView<MarketViewController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('低'),
+                      Text('MarketPage.TickerCard.Low'.tr),
                       SizedBox(width: 8),
                       Text('${controller.ticker.value.low}'),
                     ],
@@ -57,9 +57,9 @@ class TickerCardView extends GetView<MarketViewController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('24H'),
+                      Text('MarketPage.TickerCard.24HVol'.tr),
                       SizedBox(width: 8),
-                      Text('${controller.ticker.value.baseVolume}'),
+                      Text('${controller.ticker.value.baseVolume?.toStringAsFixed(0)}'),
                     ],
                   ),
                 ],

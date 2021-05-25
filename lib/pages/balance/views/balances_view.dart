@@ -2,15 +2,14 @@ import 'dart:io';
 
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/pages/asset/controllers/asset_controller.dart';
+import 'package:flutter_lebei_exchange/pages/balance/controllers/balances_controller.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
-class AssetsView extends GetView<AssetController> {
+class BalancesView extends GetView<BalancesController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: Container(
         child: Center(
           child: ElevatedButton(

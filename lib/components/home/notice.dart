@@ -59,7 +59,7 @@ class _HomeNoticeBarState extends State<HomeNoticeBar> {
     );
     return Container(
       height: 40.0,
-      color: Theme.of(context).bottomAppBarColor,
+      color: Theme.of(context).backgroundColor,
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
         children: [

@@ -43,7 +43,7 @@ class MarketView extends GetView<MarketViewController> {
           body: Column(
             children: [
               Container(
-                color: Theme.of(context).bottomAppBarColor,
+                color: Theme.of(context).backgroundColor,
                 height: 48.0,
                 child: Stack(
                   alignment: Alignment.bottomCenter,

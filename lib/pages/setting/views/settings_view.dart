@@ -48,7 +48,7 @@ class SettingsView extends GetView<SettingsController> {
               ),
               ListTile(
                 leading: Icon(Icons.security),
-                title: Text('安全设置'),
+                title: Text('SettingsPage.Security'.tr),
                 trailing: Icon(
                   Icons.chevron_right,
                   color: Theme.of(context).dividerColor,
@@ -56,15 +56,16 @@ class SettingsView extends GetView<SettingsController> {
               ),
               ListTile(
                 leading: Icon(Icons.settings),
-                title: Text('通用设置'),
+                title: Text('SettingsPage.General'.tr),
                 trailing: Icon(
                   Icons.chevron_right,
                   color: Theme.of(context).dividerColor,
                 ),
+                onTap: () => Get.toNamed('/settings/general'),
               ),
               ListTile(
                 leading: Icon(Icons.menu_book),
-                title: Text('关于我们'),
+                title: Text('SettingsPage.About'.tr),
                 trailing: Icon(
                   Icons.chevron_right,
                   color: Theme.of(context).dividerColor,
@@ -72,7 +73,7 @@ class SettingsView extends GetView<SettingsController> {
               ),
               ListTile(
                 leading: Icon(Icons.thumb_up),
-                title: Text('分享应用'),
+                title: Text('SettingsPage.Share'.tr),
                 trailing: Icon(
                   Icons.chevron_right,
                   color: Theme.of(context).dividerColor,

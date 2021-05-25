@@ -4,6 +4,7 @@ import 'package:flutter_lebei_exchange/components/ccxt/controllers/ticker_contro
 import 'package:flutter_lebei_exchange/components/ccxt/views/ticker_percentage_list_tile.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/home_list_header_view.dart';
 import 'package:flutter_lebei_exchange/pages/market/controllers/markets_controller.dart';
+import 'package:flutter_lebei_exchange/pages/market/views/category_title_view.dart';
 import 'package:flutter_lebei_exchange/utils/http/models/ccxt/ticker.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -14,52 +15,11 @@ class MarketsView extends GetView<MarketsViewController> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle? categoryTextStyle(bool actived) => actived
-        ? Theme.of(context).primaryTextTheme.headline6?.copyWith(
-              color: Theme.of(context).accentColor,
-            )
-        : Theme.of(context).primaryTextTheme.subtitle1?.copyWith(
-              color: Theme.of(context).textTheme.caption?.color,
-            );
     return Scaffold(
       appBar: AppBar(
         elevation: 1,
         centerTitle: false,
-        title: ToggleButtons(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Obx(
-                () => Text(
-                  '自选',
-                  style: categoryTextStyle(controller.selectedCategories[0]),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Obx(
-                () => Text(
-                  '币币',
-                  style: categoryTextStyle(controller.selectedCategories[1]),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Obx(
-                () => Text(
-                  '杠杆',
-                  style: categoryTextStyle(controller.selectedCategories[2]),
-                ),
-              ),
-            ),
-          ],
-          isSelected: controller.selectedCategories,
-          renderBorder: false,
-          fillColor: Colors.transparent,
-          onPressed: controller.onChangeCategory,
-        ),
+        title: CategoryTitleView(),
         actions: [
           IconButton(
             icon: Icon(Icons.search),
@@ -74,7 +34,11 @@ class MarketsView extends GetView<MarketsViewController> {
           children: [
             Column(
               children: [
-                HomeListHeaderView(first: '交易对', middle: '最新价', last: '涨跌幅'),
+                HomeListHeaderView(
+                  first: 'ListViewHeader.Symbol'.tr,
+                  middle: 'ListViewHeader.LastPrice'.tr,
+                  last: 'ListViewHeader.Change%'.tr,
+                ),
                 Expanded(
                   child: ListView.separated(
                     separatorBuilder: (BuildContext context, int index) => Divider(height: 1.0),
@@ -97,7 +61,7 @@ class MarketsView extends GetView<MarketsViewController> {
                       top: BorderSide(width: .5, color: Theme.of(context).dividerColor),
                       bottom: BorderSide(width: .5, color: Theme.of(context).dividerColor),
                     ),
-                    color: Theme.of(context).bottomAppBarColor,
+                    color: Theme.of(context).backgroundColor,
                   ),
                   child: Align(
                     alignment: Alignment.centerLeft,
@@ -109,7 +73,11 @@ class MarketsView extends GetView<MarketsViewController> {
                     ),
                   ),
                 ),
-                HomeListHeaderView(first: '交易对', middle: '最新价', last: '涨跌幅'),
+                HomeListHeaderView(
+                  first: 'ListViewHeader.Symbol'.tr,
+                  middle: 'ListViewHeader.LastPrice'.tr,
+                  last: 'ListViewHeader.Change%'.tr,
+                ),
                 Expanded(
                   child: SmartRefresher(
                     header: WaterDropMaterialHeader(),

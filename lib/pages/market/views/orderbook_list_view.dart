@@ -19,9 +19,8 @@ class OrderBookListView extends GetView<MarketViewController> {
                   Flexible(
                     child: Row(
                       children: [
-                        Container(
+                        SizedBox(
                           width: 28,
-                          padding: const EdgeInsets.only(right: 4),
                           child: Text(
                             '${index + 1}',
                             textAlign: TextAlign.start,
@@ -78,9 +77,8 @@ class OrderBookListView extends GetView<MarketViewController> {
                             ),
                           ),
                         ),
-                        Container(
+                        SizedBox(
                           width: 28,
-                          padding: const EdgeInsets.only(left: 4),
                           child: Text(
                             '${index + 1}',
                             textAlign: TextAlign.end,

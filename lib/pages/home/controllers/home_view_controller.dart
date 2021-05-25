@@ -3,22 +3,30 @@ import 'package:get/get.dart';
 
 class HomeViewController extends GetxController with SingleGetTickerProviderMixin {
   List<Tab> tabs = [
-    '涨幅榜',
-    '成交量榜',
-    '成交额榜',
-    '新币榜',
+    'RankingList.Hot',
+    'RankingList.BaseVol',
+    'RankingList.QuoteVol',
+    'RankingList.Newest',
   ]
-      .map((text) {
-        return Tab(
-          text: text,
-          key: Key(text),
-        );
-      })
+      .map(
+        (t) => Tab(
+          text: t.tr,
+          key: Key(t),
+        ),
+      )
       .toList()
       .obs;
+
+  List<String> tabStrings = [
+    'RankingList.Hot',
+    'RankingList.BaseVol',
+    'RankingList.QuoteVol',
+    'RankingList.Newest',
+  ].obs;
+
   late TabController tabController;
 
-  final innerScrollPositionKey = Key('涨幅榜').obs;
+  final innerScrollPositionKey = Key('RankingList.Hot').obs;
 
   @override
   void onInit() {

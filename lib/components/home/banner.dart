@@ -78,7 +78,7 @@ class _HomeBannerState extends State<HomeBanner> {
     );
     return Container(
       height: 168.0,
-      color: Theme.of(context).bottomAppBarColor,
+      color: Theme.of(context).backgroundColor,
       child: ObjectUtil.isEmptyList(_banners)
           ? SizedBox()
           : Stack(

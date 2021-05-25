@@ -2,7 +2,7 @@ import 'package:flutter_lebei_exchange/components/ccxt/controllers/exchange_cont
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/ticker_controller.dart';
-import 'package:flutter_lebei_exchange/pages/home/controllers/home_controller.dart';
+import 'package:flutter_lebei_exchange/pages/home/controllers/home_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/main/controllers/main_controller.dart';
 import 'package:flutter_lebei_exchange/pages/market/controllers/markets_controller.dart';
 import 'package:flutter_lebei_exchange/pages/setting/controllers/settings_controller.dart';

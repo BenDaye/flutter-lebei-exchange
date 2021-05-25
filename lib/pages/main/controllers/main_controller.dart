@@ -1,8 +1,7 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/components/keep_alive_widget.dart';
-import 'package:flutter_lebei_exchange/pages/asset/views/assets_view.dart';
+import 'package:flutter_lebei_exchange/pages/balance/views/balances_view.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/home_view.dart';
 import 'package:flutter_lebei_exchange/pages/market/views/markets_view.dart';
 import 'package:get/get.dart';
@@ -21,34 +20,33 @@ class MainViewController extends GetxController {
     KeepAliveWidget(
       child: Container(
         color: Colors.pink,
-        child: ElevatedButton(onPressed: SpUtil.clear, child: Text('data')),
       ),
     ),
     KeepAliveWidget(
-      child: AssetsView(),
+      child: BalancesView(),
     ),
   ];
   List<BottomNavyBarItem> bottomNavyBarItems(context) => <BottomNavyBarItem>[
         BottomNavyBarItem(
-          title: Text('首页'),
+          title: Text('MainBottomNavy.Home'.tr),
           icon: Icon(Icons.home),
           activeColor: Theme.of(context).primaryColor,
           inactiveColor: Theme.of(context).accentColor,
         ),
         BottomNavyBarItem(
-          title: Text('行情'),
+          title: Text('MainBottomNavy.Market'.tr),
           icon: Icon(Icons.apps),
           activeColor: Theme.of(context).primaryColor,
           inactiveColor: Theme.of(context).accentColor,
         ),
         BottomNavyBarItem(
-          title: Text('交易'),
+          title: Text('MainBottomNavy.Trade'.tr),
           icon: Icon(Icons.chat_bubble),
           activeColor: Theme.of(context).primaryColor,
           inactiveColor: Theme.of(context).accentColor,
         ),
         BottomNavyBarItem(
-          title: Text('资产'),
+          title: Text('MainBottomNavy.Asset'.tr),
           icon: Icon(Icons.settings),
           activeColor: Theme.of(context).primaryColor,
           inactiveColor: Theme.of(context).accentColor,

@@ -26,6 +26,7 @@ class OhlcvChartView extends GetView<MarketViewController> {
                       tabs: controller.klineTabs,
                       controller: controller.klineTabController,
                       indicatorSize: TabBarIndicatorSize.label,
+                      isScrollable: true,
                     ),
                   ),
                   TextButton(
@@ -56,14 +57,13 @@ class OhlcvChartView extends GetView<MarketViewController> {
               Container(
                 height: 450,
                 width: double.infinity,
-                child: controller.period.value == 'deep'
+                child: controller.period.value == 'depth'
                     ? DepthChart(
                         controller.depthBids,
                         controller.depthAsks,
                         CustomChartColors().copyWith(
                           upColor: settingsController.advanceDeclineColors.first,
                           dnColor: settingsController.advanceDeclineColors.last,
-                          selectFillColor: Colors.red,
                         ),
                       )
                     : KChartWidget(
@@ -92,7 +92,7 @@ class OhlcvChartView extends GetView<MarketViewController> {
                             children: [
                               ListTile(
                                 dense: true,
-                                title: Text('主图'),
+                                title: Text('MarketPage.KChart.MainState'.tr),
                                 subtitle: Wrap(
                                   // alignment: WrapAlignment.start,
                                   // runAlignment: WrapAlignment.center,
@@ -115,7 +115,7 @@ class OhlcvChartView extends GetView<MarketViewController> {
                               ),
                               ListTile(
                                 dense: true,
-                                title: Text('副图'),
+                                title: Text('MarketPage.KChart.SecondaryState'.tr),
                                 subtitle: Wrap(
                                   alignment: WrapAlignment.start,
                                   runAlignment: WrapAlignment.center,

@@ -24,8 +24,14 @@ class CustomTheme {
       brightness: isDarkTheme ? Brightness.dark : Brightness.light,
       accentColorBrightness: isDarkTheme ? Brightness.dark : Brightness.light,
       colorScheme: isDarkTheme
-          ? ThemeData.dark().colorScheme.copyWith(primary: Colors.orange)
-          : ThemeData.light().colorScheme.copyWith(primary: Colors.orange),
+          ? ThemeData.dark().colorScheme.copyWith(
+                primary: Colors.orange,
+                background: Colors.grey[800],
+              )
+          : ThemeData.light().colorScheme.copyWith(
+                primary: Colors.orange,
+                background: Colors.white,
+              ),
       textTheme:
           isDarkTheme ? ThemeData.dark().textTheme.merge(textTheme) : ThemeData.light().textTheme.merge(textTheme),
       primaryTextTheme: isDarkTheme
@@ -34,7 +40,7 @@ class CustomTheme {
       primarySwatch: Colors.orange,
       primaryColor: Colors.orange,
       accentColor: Colors.orange,
-      backgroundColor: isDarkTheme ? ThemeData.dark().backgroundColor : Colors.white,
+      backgroundColor: isDarkTheme ? Colors.grey[800] : Colors.white,
       tabBarTheme: TabBarTheme(
         indicator: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.orange, width: 2.0))),
         labelStyle: GoogleFonts.oswald().copyWith(fontWeight: FontWeight.bold),
@@ -44,8 +50,7 @@ class CustomTheme {
             isDarkTheme ? ThemeData.dark().unselectedWidgetColor : ThemeData.light().unselectedWidgetColor,
       ),
       appBarTheme: AppBarTheme(
-        backgroundColor:
-            isDarkTheme ? ThemeData.dark().scaffoldBackgroundColor : ThemeData.light().scaffoldBackgroundColor,
+        backgroundColor: isDarkTheme ? ThemeData.dark().bottomAppBarColor : ThemeData.light().bottomAppBarColor,
         textTheme:
             isDarkTheme ? ThemeData.dark().textTheme.merge(textTheme) : ThemeData.light().textTheme.merge(textTheme),
       ),

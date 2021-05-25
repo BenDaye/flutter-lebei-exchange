@@ -7,7 +7,7 @@ class HomeShortcutGridView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
         height: 176,
-        color: Theme.of(context).bottomAppBarColor,
+        color: Theme.of(context).backgroundColor,
         child: GridView.count(
           crossAxisCount: 5,
           children: List.filled(10, 0, growable: true)

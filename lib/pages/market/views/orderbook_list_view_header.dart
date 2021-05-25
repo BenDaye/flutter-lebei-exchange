@@ -8,35 +8,40 @@ class OrderBookListViewHeader extends GetView<MarketViewController> {
     return Obx(
       () => Container(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-        color: Theme.of(context).bottomAppBarColor,
+        color: Theme.of(context).backgroundColor,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.baseline,
           textBaseline: TextBaseline.alphabetic,
           children: [
-            Text(
-              '买盘',
-              style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
+            SizedBox(
+              width: 28,
+              child: Text(
+                'MarketPage.ListViewHeader.Buy'.tr,
+                style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
+              ),
             ),
-            SizedBox(width: 4),
             Text(
-              '数量(${controller.market.value.base})',
+              'MarketPage.ListViewHeader.Amount'.tr + '(${controller.market.value.base})',
               style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
             ),
             Expanded(
               child: Center(
                   child: Text(
-                '价格(${controller.market.value.quote})',
+                'MarketPage.ListViewHeader.Price'.tr + '(${controller.market.value.quote})',
                 style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
               )),
             ),
             Text(
-              '数量(${controller.market.value.base})',
+              'MarketPage.ListViewHeader.Amount'.tr + '(${controller.market.value.base})',
               style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
             ),
-            SizedBox(width: 4),
-            Text(
-              '卖盘',
-              style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
+            SizedBox(
+              width: 28,
+              child: Text(
+                'MarketPage.ListViewHeader.Sell'.tr,
+                textAlign: TextAlign.right,
+                style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
+              ),
             ),
           ],
         ),

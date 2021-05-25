@@ -20,7 +20,7 @@ class HomeListHeaderView extends StatelessWidget {
     if (this.custom != null) return this.custom!;
 
     return Container(
-      color: Theme.of(context).bottomAppBarColor,
+      color: Theme.of(context).backgroundColor,
       padding: const EdgeInsets.symmetric(
         horizontal: 16.0,
         vertical: 4.0,

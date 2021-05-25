@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class AssetBinding extends Bindings {
+class BalanceBinding extends Bindings {
   @override
   void dependencies() {}
 }

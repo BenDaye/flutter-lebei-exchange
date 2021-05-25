@@ -23,9 +23,11 @@ class CcxtHelper {
     if (symbol.isEmpty) return '';
     String? marginString = getMarginString(symbol);
     if (marginString == null) return '';
-    String marginText = marginString.substring(marginString.length - 1) == 'L' ? '做多' : '做空';
+    String marginText = marginString.substring(marginString.length - 1) == 'L'
+        ? 'MarginSymbolSubtitle.Long'.tr
+        : 'MarginSymbolSubtitle.Short'.tr;
     String multipleString = marginString.substring(0, marginString.length - 1);
-    return '$multipleString倍$marginText';
+    return '$multipleString' + 'MarginSymbolSubtitle.Multiple'.tr + '$marginText';
   }
 
   static Widget getSymbolTitle(String symbol) {

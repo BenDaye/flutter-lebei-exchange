@@ -27,7 +27,7 @@ class SymbolPopularGridView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(bottom: 8.0),
-      color: Theme.of(context).bottomAppBarColor,
+      color: Theme.of(context).backgroundColor,
       child: Obx(
         () {
           final splitedList = computeList<Ticker>(

@@ -9,7 +9,7 @@ enum AdvanceDeclineColorMode {
 
 class SettingsController extends GetxController {
   final themeMode = ThemeMode.dark.obs;
-  final locale = Locale('cn', 'zh').obs;
+  final locale = Locale('zh', 'CN').obs;
   final advanceDeclineColorMode = AdvanceDeclineColorMode.AdvanceGreen.obs;
   final advanceDeclineColors = <Color>[Colors.green, Colors.grey, Colors.red].obs;
 
@@ -22,6 +22,7 @@ class SettingsController extends GetxController {
     });
     ever(locale, (Locale _locale) {
       Get.updateLocale(_locale);
+      SpUtil.putString('locale', _locale.toLanguageTag());
     });
   }
 
@@ -29,6 +30,8 @@ class SettingsController extends GetxController {
   void onReady() {
     super.onReady();
     themeMode.value = SpUtil.getString('themeMode') == 'dark' ? ThemeMode.dark : ThemeMode.light;
+    // TODO: 本地存储语言
+    locale.value = SpUtil.getString('locale') == 'zh-CN' ? Locale('zh', 'CN') : Locale('en', 'US');
   }
 
   void onSwitchThemeMode(ThemeMode _themeMode) {
@@ -37,6 +40,7 @@ class SettingsController extends GetxController {
 
   void onChangeLocale(Locale _locale) {
     locale.value = _locale;
+    Get.back();
   }
 
   void onSwitchAdvanceDeclineColorMode(AdvanceDeclineColorMode _mode) {

@@ -2,13 +2,14 @@ import 'package:flutter/material.dart' hide NestedScrollView;
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter_lebei_exchange/components/home/banner.dart';
 import 'package:flutter_lebei_exchange/components/home/notice.dart';
-import 'package:flutter_lebei_exchange/pages/home/controllers/home_controller.dart';
+import 'package:flutter_lebei_exchange/pages/home/controllers/home_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/home/controllers/symbol_top_base_volume_list_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/home/controllers/symbol_top_percentage_list_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/home/controllers/symbol_top_quote_volume_list_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/home_guide_list_tile.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/home_list_header_view.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/home_shortcut_grid_view.dart';
+import 'package:flutter_lebei_exchange/pages/home/views/rank_tab_bar_view.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/symbol_popular_grid_view.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/symbol_top_base_volume_list_view.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/symbol_top_percentage_list_view.dart';
@@ -20,6 +21,7 @@ class HomeView extends GetView<HomeViewController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text('LeBeiGlobal'),
         leading: IconButton(
           icon: Icon(Icons.person),
@@ -58,32 +60,18 @@ class HomeView extends GetView<HomeViewController> {
           innerScrollPositionKeyBuilder: () => controller.innerScrollPositionKey.value,
           body: Column(
             children: [
-              Container(
-                color: Theme.of(context).bottomAppBarColor,
-                height: 48.0,
-                child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: TabBar(
-                        tabs: controller.tabs,
-                        controller: controller.tabController,
-                        indicatorSize: TabBarIndicatorSize.label,
-                        isScrollable: true,
-                      ),
-                    ),
-                    Divider(height: 1.0),
-                  ],
-                ),
-              ),
+              RankTabBarView(),
               Expanded(
                 child: TabBarView(
                   controller: controller.tabController,
                   children: [
                     Column(
                       children: [
-                        HomeListHeaderView(first: '交易对', middle: '最新价', last: '涨跌幅'),
+                        HomeListHeaderView(
+                          first: 'ListViewHeader.Symbol'.tr,
+                          middle: 'ListViewHeader.LastPrice'.tr,
+                          last: 'ListViewHeader.Change%'.tr,
+                        ),
                         Expanded(
                           child: NestedScrollViewInnerScrollPositionKeyWidget(
                             controller.tabs.first.key!,
@@ -100,7 +88,11 @@ class HomeView extends GetView<HomeViewController> {
                     ),
                     Column(
                       children: [
-                        HomeListHeaderView(first: '交易对', middle: '最新价', last: '成交量'),
+                        HomeListHeaderView(
+                          first: 'ListViewHeader.Symbol'.tr,
+                          middle: 'ListViewHeader.LastPrice'.tr,
+                          last: 'ListViewHeader.BaseVolume'.tr,
+                        ),
                         Expanded(
                           child: NestedScrollViewInnerScrollPositionKeyWidget(
                             controller.tabs[1].key!,
@@ -117,7 +109,11 @@ class HomeView extends GetView<HomeViewController> {
                     ),
                     Column(
                       children: [
-                        HomeListHeaderView(first: '交易对', middle: '最新价', last: '成交额'),
+                        HomeListHeaderView(
+                          first: 'ListViewHeader.Symbol'.tr,
+                          middle: 'ListViewHeader.LastPrice'.tr,
+                          last: 'ListViewHeader.QuoteVolume'.tr,
+                        ),
                         Expanded(
                           child: NestedScrollViewInnerScrollPositionKeyWidget(
                             controller.tabs[2].key!,
@@ -134,7 +130,11 @@ class HomeView extends GetView<HomeViewController> {
                     ),
                     Column(
                       children: [
-                        HomeListHeaderView(first: '交易对', middle: '最新价', last: '成交额'),
+                        HomeListHeaderView(
+                          first: 'ListViewHeader.Symbol'.tr,
+                          middle: 'ListViewHeader.LastPrice'.tr,
+                          last: 'ListViewHeader.QuoteVolume'.tr,
+                        ),
                         Expanded(
                           child: NestedScrollViewInnerScrollPositionKeyWidget(
                             controller.tabs.last.key!,

@@ -15,32 +15,45 @@ class TradeListView extends GetView<MarketViewController> {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  '${DateUtil.formatDateMs(controller.trades[index].timestamp!, format: 'HH:mm:ss')}',
-                  style: Theme.of(context).textTheme.caption,
+                SizedBox(
+                  width: 80,
+                  child: Text(
+                    '${DateUtil.formatDateMs(controller.trades[index].timestamp!, format: 'HH:mm:ss')}',
+                    style: Theme.of(context).textTheme.caption,
+                  ),
                 ),
-                Text(
-                  '${controller.trades[index].side}',
-                  style: Theme.of(context).textTheme.caption?.copyWith(
-                      color: controller.trades[index].side == 'buy'
-                          ? settingsController.advanceDeclineColors.first
-                          : settingsController.advanceDeclineColors.last),
+                Expanded(
+                  child: Text(
+                    controller.trades[index].side == 'buy'
+                        ? 'MarketPage.ListView.Buy'.tr
+                        : 'MarketPage.ListView.Sell'.tr,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.caption?.copyWith(
+                        color: controller.trades[index].side == 'buy'
+                            ? settingsController.advanceDeclineColors.first
+                            : settingsController.advanceDeclineColors.last),
+                  ),
                 ),
-                Text(
-                  '${controller.trades[index].price}',
-                  textAlign: TextAlign.right,
-                  style: Theme.of(context).textTheme.caption?.copyWith(
-                        color: Theme.of(context).textTheme.bodyText1?.color,
-                      ),
+                SizedBox(
+                  width: Get.width / 3,
+                  child: Text(
+                    '${controller.trades[index].price}',
+                    textAlign: TextAlign.right,
+                    style: Theme.of(context).textTheme.caption?.copyWith(
+                          color: Theme.of(context).textTheme.bodyText1?.color,
+                        ),
+                  ),
                 ),
-                Text(
-                  '${controller.trades[index].amount}',
-                  textAlign: TextAlign.right,
-                  style: Theme.of(context).textTheme.caption?.copyWith(
-                        color: Theme.of(context).textTheme.bodyText1?.color,
-                      ),
+                SizedBox(
+                  width: Get.width / 3,
+                  child: Text(
+                    '${controller.trades[index].amount}',
+                    textAlign: TextAlign.right,
+                    style: Theme.of(context).textTheme.caption?.copyWith(
+                          color: Theme.of(context).textTheme.bodyText1?.color,
+                        ),
+                  ),
                 ),
               ],
             ),
