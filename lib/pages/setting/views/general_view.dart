@@ -63,7 +63,29 @@ class GeneralView extends GetView<SettingsController> {
                     Icons.chevron_right,
                     color: Theme.of(context).dividerColor,
                   ),
-                  onTap: () => {},
+                  onTap: () => {
+                    Get.bottomSheet(
+                      Container(
+                        color: Theme.of(context).backgroundColor,
+                        child: SafeArea(
+                          child: Wrap(
+                            children: AdvanceDeclineColorMode.values
+                                .map(
+                                  (e) => ListTile(
+                                    title: Text(e.toString().tr),
+                                    selected: controller.advanceDeclineColorMode.value == e,
+                                    onTap: () {
+                                      controller.onSwitchAdvanceDeclineColorMode(e);
+                                      Get.back();
+                                    },
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ),
+                      ),
+                    )
+                  },
                 ),
                 Divider(
                   height: 1.0,
