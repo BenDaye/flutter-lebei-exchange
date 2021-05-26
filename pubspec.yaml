@@ -48,6 +48,7 @@ dependencies:
   redux: ^5.0.0
   redux_epics: ^0.15.0
   rxdart: ^0.26.0
+  scrollable_positioned_list: ^0.2.0-nullsafety.0
   shimmer: ^2.0.0
   transparent_image: ^2.0.0
 

@@ -72,7 +72,7 @@ class SymbolPopularGridView extends StatelessWidget {
                                                 style: Theme.of(context).textTheme.bodyText2,
                                                 children: [
                                                   TextSpan(
-                                                    text: '  ${ticker.percentage?.toStringAsFixed(2)}%',
+                                                    text: '  ${(ticker.percentage ?? 0).toStringAsFixed(2)}%',
                                                     style: Theme.of(context).textTheme.caption?.copyWith(
                                                           color: NumUtil.isZero(ticker.percentage)
                                                               ? settingsController.advanceDeclineColors[1]

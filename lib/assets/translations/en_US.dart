@@ -52,4 +52,7 @@ const Map<String, String> en_US = {
   'AdvanceDeclineColorMode.AdvanceRed': 'Red Up & Green Down',
   'Language.en-US': 'English',
   'Language.zh-CN': '简体中文',
+  'ExchangesPage.AppBar.Title': 'Exchanges',
+  'ExchangesPage.CurrentExchange': 'Current Exchange',
+  'ExchangesPage.RecommandedExchange': 'Recommanded'
 };
