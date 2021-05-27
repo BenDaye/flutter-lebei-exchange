@@ -48,11 +48,14 @@ const Map<String, String> zh_CN = {
   'SettingsPage.Share': '分享应用',
   'GeneralPage.Language': '语言设置',
   'GeneralPage.Color': '颜色设置',
+  'GeneralPage.Wakelock': '保持屏幕常亮',
   'AdvanceDeclineColorMode.AdvanceGreen': '绿涨红跌',
   'AdvanceDeclineColorMode.AdvanceRed': '红涨绿跌',
   'Language.en-US': 'English',
   'Language.zh-CN': '简体中文',
   'ExchangesPage.AppBar.Title': '交易所列表',
   'ExchangesPage.CurrentExchange': '当前交易所',
-  'ExchangesPage.RecommandedExchange': '推荐'
+  'ExchangesPage.RecommandedExchange': '推荐',
+  'Common.Switcher.On': '已开启',
+  'Common.Switcher.Off': '已关闭',
 };

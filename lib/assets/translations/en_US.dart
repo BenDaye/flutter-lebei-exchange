@@ -48,11 +48,14 @@ const Map<String, String> en_US = {
   'SettingsPage.Share': 'Share',
   'GeneralPage.Language': 'Language',
   'GeneralPage.Color': 'Color',
+  'GeneralPage.Wakelock': 'Keep Screen awake',
   'AdvanceDeclineColorMode.AdvanceGreen': 'Green Up & Red Down',
   'AdvanceDeclineColorMode.AdvanceRed': 'Red Up & Green Down',
   'Language.en-US': 'English',
   'Language.zh-CN': '简体中文',
   'ExchangesPage.AppBar.Title': 'Exchanges',
   'ExchangesPage.CurrentExchange': 'Current Exchange',
-  'ExchangesPage.RecommandedExchange': 'Recommanded'
+  'ExchangesPage.RecommandedExchange': 'Recommanded',
+  'Common.Switcher.On': 'On',
+  'Common.Switcher.Off': 'Off',
 };

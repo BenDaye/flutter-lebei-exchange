@@ -90,6 +90,17 @@ class GeneralView extends GetView<SettingsController> {
                   height: 1.0,
                   indent: 16.0,
                 ),
+                Obx(
+                  () => SwitchListTile(
+                    title: Text('GeneralPage.Wakelock'.tr),
+                    value: controller.wakelock.value,
+                    onChanged: controller.onSwitchWakelock,
+                  ),
+                ),
+                Divider(
+                  height: 1.0,
+                  indent: 16.0,
+                ),
               ],
             ),
           ),

@@ -1,6 +1,7 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wakelock/wakelock.dart';
 
 enum AdvanceDeclineColorMode {
   AdvanceGreen,
@@ -12,6 +13,8 @@ class SettingsController extends GetxController {
   final locale = Locale('zh', 'CN').obs;
   final advanceDeclineColorMode = AdvanceDeclineColorMode.AdvanceGreen.obs;
   final advanceDeclineColors = <Color>[Colors.green, Colors.grey, Colors.red].obs;
+
+  final wakelock = false.obs;
 
   @override
   void onInit() {
@@ -27,7 +30,7 @@ class SettingsController extends GetxController {
   }
 
   @override
-  void onReady() {
+  void onReady() async {
     super.onReady();
     themeMode.value = SpUtil.getString('themeMode') == 'dark' ? ThemeMode.dark : ThemeMode.light;
     // TODO: 本地存储语言
@@ -36,6 +39,8 @@ class SettingsController extends GetxController {
     if (advanceDeclineColorMode.value == AdvanceDeclineColorMode.AdvanceRed) {
       advanceDeclineColors.value = advanceDeclineColors.reversed.toList();
     }
+
+    wakelock.value = await Wakelock.enabled;
   }
 
   void onSwitchThemeMode(ThemeMode _themeMode) {
@@ -51,5 +56,10 @@ class SettingsController extends GetxController {
     advanceDeclineColorMode.value = _mode;
     advanceDeclineColors.value = advanceDeclineColors.reversed.toList();
     SpUtil.putInt('color', _mode.index);
+  }
+
+  void onSwitchWakelock(bool enable) async {
+    await Wakelock.toggle(enable: enable);
+    wakelock.value = await Wakelock.enabled;
   }
 }

@@ -40,6 +40,7 @@ class CustomTheme {
       primarySwatch: Colors.orange,
       primaryColor: Colors.orange,
       accentColor: Colors.orange,
+      toggleableActiveColor: Colors.orange,
       backgroundColor: isDarkTheme ? Colors.grey[800] : Colors.white,
       tabBarTheme: TabBarTheme(
         indicator: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.orange, width: 2.0))),
