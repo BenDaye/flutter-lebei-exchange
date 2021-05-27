@@ -74,12 +74,12 @@ class HomeView extends GetView<HomeViewController> {
                         ),
                         Expanded(
                           child: NestedScrollViewInnerScrollPositionKeyWidget(
-                            controller.tabs.first.key!,
+                            Key(controller.tabStrings.first),
                             GetBuilder<SymbolTopPercentageListViewController>(
                               init: SymbolTopPercentageListViewController(),
                               initState: (_) {},
                               builder: (_) {
-                                return SymbolTopPercentageListView(key: controller.tabs.first.key!);
+                                return SymbolTopPercentageListView(key: Key(controller.tabStrings.first));
                               },
                             ),
                           ),
@@ -95,7 +95,7 @@ class HomeView extends GetView<HomeViewController> {
                         ),
                         Expanded(
                           child: NestedScrollViewInnerScrollPositionKeyWidget(
-                            controller.tabs[1].key!,
+                            Key(controller.tabStrings[1]),
                             GetBuilder<SymbolTopBaseVolumeListViewController>(
                               init: SymbolTopBaseVolumeListViewController(),
                               initState: (_) {},
@@ -116,7 +116,7 @@ class HomeView extends GetView<HomeViewController> {
                         ),
                         Expanded(
                           child: NestedScrollViewInnerScrollPositionKeyWidget(
-                            controller.tabs[2].key!,
+                            Key(controller.tabStrings[2]),
                             GetBuilder<SymbolTopQuoteVolumeListViewController>(
                               init: SymbolTopQuoteVolumeListViewController(),
                               initState: (_) {},
@@ -137,7 +137,7 @@ class HomeView extends GetView<HomeViewController> {
                         ),
                         Expanded(
                           child: NestedScrollViewInnerScrollPositionKeyWidget(
-                            controller.tabs.last.key!,
+                            Key(controller.tabStrings.last),
                             Container(),
                           ),
                         ),

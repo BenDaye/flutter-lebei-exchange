@@ -29,7 +29,7 @@ class TickerPercentageListTile extends StatelessWidget {
               ),
             ],
           ),
-          Text('${ticker.bid}'),
+          Text('${ticker.bid ?? 0}'),
         ],
       ),
       trailing: Container(

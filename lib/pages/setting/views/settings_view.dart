@@ -20,9 +20,12 @@ class SettingsView extends GetView<SettingsController> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              ListTile(
-                title: Text('Hi, LeBeiGlobal'),
-                subtitle: Text('yypsgdsg@163.com'),
+              Container(
+                color: Theme.of(context).bottomAppBarColor,
+                child: ListTile(
+                  title: Text('Hi, LeBeiGlobal'),
+                  subtitle: Text('yypsgdsg@163.com'),
+                ),
               ),
               Container(
                 child: Row(

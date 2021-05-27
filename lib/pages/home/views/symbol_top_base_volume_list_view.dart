@@ -27,7 +27,7 @@ class SymbolTopBaseVolumeListView extends GetView<SymbolTopBaseVolumeListViewCon
                   ),
                 ],
               ),
-              Text('${controller.tickers[index].bid}'),
+              Text('${controller.tickers[index].bid ?? 0}'),
             ],
           ),
           trailing: Container(

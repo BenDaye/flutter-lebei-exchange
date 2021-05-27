@@ -7,13 +7,12 @@ class LanguageView extends GetView<SettingsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-      ),
+      appBar: AppBar(elevation: 0),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(
+          Container(
+            color: Theme.of(context).bottomAppBarColor,
             padding: const EdgeInsets.all(16.0),
             child: Text(
               'GeneralPage.Language'.tr,

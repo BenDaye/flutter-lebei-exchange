@@ -85,7 +85,7 @@ class SymbolPopularGridView extends StatelessWidget {
                                               ),
                                             ),
                                             Text(
-                                              '${ticker.bid}',
+                                              '${ticker.bid ?? 0}',
                                               style: Theme.of(context).textTheme.subtitle1?.copyWith(
                                                     color: NumUtil.isZero(ticker.percentage)
                                                         ? settingsController.advanceDeclineColors[1]

@@ -1,22 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeViewController extends GetxController with SingleGetTickerProviderMixin {
-  List<Tab> tabs = [
-    'RankingList.Hot',
-    'RankingList.BaseVol',
-    'RankingList.QuoteVol',
-    'RankingList.Newest',
-  ]
-      .map(
-        (t) => Tab(
-          text: t.tr,
-          key: Key(t),
-        ),
-      )
-      .toList()
-      .obs;
-
   List<String> tabStrings = [
     'RankingList.Hot',
     'RankingList.BaseVol',
@@ -26,13 +12,21 @@ class HomeViewController extends GetxController with SingleGetTickerProviderMixi
 
   late TabController tabController;
 
-  final innerScrollPositionKey = Key('RankingList.Hot').obs;
+  final innerScrollPositionKey = Key('innerScrollPositionKey').obs;
+
+  final RefreshController refreshController = RefreshController();
 
   @override
   void onInit() {
     super.onInit();
-    tabController = TabController(length: tabs.length, vsync: this);
+    tabController = TabController(length: tabStrings.length, vsync: this);
     tabController.addListener(tabControllerListener);
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    innerScrollPositionKey.value = Key(tabStrings.first);
   }
 
   @override
@@ -43,6 +37,6 @@ class HomeViewController extends GetxController with SingleGetTickerProviderMixi
   }
 
   void tabControllerListener() {
-    innerScrollPositionKey.value = tabs[tabController.index].key!;
+    innerScrollPositionKey.value = Key(tabStrings[tabController.index]);
   }
 }
