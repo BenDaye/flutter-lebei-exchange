@@ -39,4 +39,9 @@ class HomeViewController extends GetxController with SingleGetTickerProviderMixi
   void tabControllerListener() {
     innerScrollPositionKey.value = Key(tabStrings[tabController.index]);
   }
+
+  // TODO: 刷新首页数据
+  Future<bool> refreshPageData() async {
+    return await Future.delayed(Duration(seconds: 3), () => true);
+  }
 }

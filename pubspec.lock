@@ -679,6 +679,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.0"
+  pull_to_refresh_notification:
+    dependency: "direct main"
+    description:
+      name: pull_to_refresh_notification
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.1"
   rational:
     dependency: transitive
     description:
