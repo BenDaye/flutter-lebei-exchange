@@ -101,6 +101,24 @@ class GeneralView extends GetView<SettingsController> {
                   height: 1.0,
                   indent: 16.0,
                 ),
+                Obx(
+                  () => ListTile(
+                    title: Text('GeneralPage.AutoRefresh'.tr),
+                    subtitle: Slider(
+                      value: controller.autoRefresh.value,
+                      onChanged: controller.onChangeAutoRefresh,
+                      min: 0.0,
+                      max: 300.0,
+                      divisions: 10,
+                      // label: controller.autoRefresh.value.round().toString(),
+                    ),
+                    trailing: Text('${controller.autoRefresh.value.round()}'),
+                  ),
+                ),
+                Divider(
+                  height: 1.0,
+                  indent: 16.0,
+                ),
               ],
             ),
           ),

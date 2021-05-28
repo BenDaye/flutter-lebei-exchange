@@ -13,16 +13,6 @@ class SymbolPopularGridView extends StatelessWidget {
   final TickerController tickerController = Get.find<TickerController>();
   final SettingsController settingsController = Get.find<SettingsController>();
 
-  List<List<T>> computeList<T>(List<T> l) {
-    int _length = int.parse((l.length / 3).toStringAsFixed(0));
-    Map<int, List<T>> _l = {};
-    for (var i = 0; i < _length; i++) {
-      int _endIndex = (i + 1) * 3 > l.length ? l.length : (i + 1) * 3;
-      _l[i] = l.sublist(i * 3, _endIndex);
-    }
-    return _l.values.toList();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,25 +20,16 @@ class SymbolPopularGridView extends StatelessWidget {
       color: Theme.of(context).backgroundColor,
       child: Obx(
         () {
-          final splitedList = computeList<Ticker>(
-            tickerController.tickers
-                .where((t) =>
-                    t.symbol.startsWith(RegExp(r"BTC|ETH|XCH|DOT|SHIB|DOGE")) &&
-                    t.symbol.endsWith('USDT') &&
-                    !RegExp(r"[1-9]\d*[LS]").hasMatch(t.symbol))
-                .take(6)
-                .toList(),
-          );
           return Stack(
             alignment: Alignment.bottomCenter,
             children: [
               Container(
                 height: 80.0,
                 child: CarouselSlider.builder(
-                  itemCount: splitedList.length,
+                  itemCount: controller.tickersForRender.length,
                   itemBuilder: (BuildContext context, int index, int realIndex) {
                     final tickers = List<Ticker?>.filled(3, null)
-                      ..setRange(0, splitedList[index].length, splitedList[index]);
+                      ..setRange(0, controller.tickersForRender[index].length, controller.tickersForRender[index]);
                     return Container(
                       margin: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Row(
@@ -125,7 +106,7 @@ class SymbolPopularGridView extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: splitedList
+                children: controller.tickersForRender
                     .asMap()
                     .entries
                     .map(

@@ -15,6 +15,7 @@ class SettingsController extends GetxController {
   final advanceDeclineColors = <Color>[Colors.green, Colors.grey, Colors.red].obs;
 
   final wakelock = false.obs;
+  final autoRefresh = 60.0.obs;
 
   @override
   void onInit() {
@@ -41,6 +42,7 @@ class SettingsController extends GetxController {
     }
 
     wakelock.value = await Wakelock.enabled;
+    autoRefresh.value = SpUtil.getDouble('autoRefresh') ?? 60.0;
   }
 
   void onSwitchThemeMode(ThemeMode _themeMode) {
@@ -61,5 +63,10 @@ class SettingsController extends GetxController {
   void onSwitchWakelock(bool enable) async {
     await Wakelock.toggle(enable: enable);
     wakelock.value = await Wakelock.enabled;
+  }
+
+  void onChangeAutoRefresh(double second) {
+    autoRefresh.value = second;
+    SpUtil.putDouble('autoRefresh', second);
   }
 }

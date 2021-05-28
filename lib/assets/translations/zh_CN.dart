@@ -49,6 +49,7 @@ const Map<String, String> zh_CN = {
   'GeneralPage.Language': '语言设置',
   'GeneralPage.Color': '颜色设置',
   'GeneralPage.Wakelock': '保持屏幕常亮',
+  'GeneralPage.AutoRefresh': '自动刷新间隔(秒)',
   'AdvanceDeclineColorMode.AdvanceGreen': '绿涨红跌',
   'AdvanceDeclineColorMode.AdvanceRed': '红涨绿跌',
   'Language.en-US': 'English',
