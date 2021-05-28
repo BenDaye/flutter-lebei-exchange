@@ -16,9 +16,9 @@ class MainBinding extends Bindings {
     Get.lazyPut<SettingsController>(() => SettingsController());
 
     Get.lazyPut<ExchangeController>(() => ExchangeController());
-    Get.lazyPut<MarketController>(() => MarketController());
+    Get.put<SymbolController>(SymbolController());
+    Get.put<MarketController>(MarketController());
     Get.lazyPut<TickerController>(() => TickerController());
-    Get.lazyPut<SymbolController>(() => SymbolController());
 
     Get.lazyPut<MainViewController>(() => MainViewController());
     Get.lazyPut<HomeViewController>(() => HomeViewController());

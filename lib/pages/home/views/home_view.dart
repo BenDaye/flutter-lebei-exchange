@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart' hide NestedScrollView;
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter_lebei_exchange/pages/home/controllers/home_view_controller.dart';
@@ -24,7 +25,10 @@ class HomeView extends GetView<HomeViewController> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text('LeBeiGlobal'),
+        title: Text(
+          'LeBei Globel',
+          style: Theme.of(context).textTheme.headline6,
+        ),
         leading: IconButton(
           icon: Icon(Icons.person),
           onPressed: () => Get.toNamed('/settings'),
@@ -39,7 +43,7 @@ class HomeView extends GetView<HomeViewController> {
       body: Obx(
         () => PullToRefreshNotification(
           onRefresh: controller.refreshPageData,
-          maxDragOffset: 90,
+          maxDragOffset: HomePullToRefreshHeaderView.maxDragOffset,
           child: NestedScrollView(
             headerSliverBuilder: (BuildContext context, bool) => <Widget>[
               PullToRefreshContainer(

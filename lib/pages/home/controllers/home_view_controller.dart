@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_lebei_exchange/components/ccxt/controllers/ticker_controller.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeViewController extends GetxController with SingleGetTickerProviderMixin {
+  final TickerController tickerController = Get.find<TickerController>();
+
   List<String> tabStrings = [
     'RankingList.Hot',
     'RankingList.BaseVol',
@@ -40,8 +43,9 @@ class HomeViewController extends GetxController with SingleGetTickerProviderMixi
     innerScrollPositionKey.value = Key(tabStrings[tabController.index]);
   }
 
-  // TODO: 刷新首页数据
   Future<bool> refreshPageData() async {
-    return await Future.delayed(Duration(seconds: 3), () => true);
+    // return await Future.delayed(Duration(seconds: 3), () => true);
+    await tickerController.getTickers(update: true);
+    return true;
   }
 }

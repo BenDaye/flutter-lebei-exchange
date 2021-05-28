@@ -34,13 +34,13 @@ class OrderBookListView extends GetView<MarketViewController> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  '${controller.orderBook.value.bids[index].last}',
+                                  '${(controller.orderBook.value.bids[index].last).toStringAsFixed(2)}',
                                   style: Theme.of(context).textTheme.caption?.copyWith(
                                         color: Theme.of(context).textTheme.bodyText1?.color,
                                       ),
                                 ),
                                 Text(
-                                  '${controller.orderBook.value.bids[index].first}',
+                                  '${(controller.orderBook.value.bids[index].first).toStringAsFixed(controller.market.value.precision.price.toInt())}',
                                   style: Theme.of(context).textTheme.caption?.copyWith(
                                         color: settingsController.advanceDeclineColors.first,
                                       ),
@@ -62,13 +62,13 @@ class OrderBookListView extends GetView<MarketViewController> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  '${controller.orderBook.value.asks[index].first}',
+                                  '${(controller.orderBook.value.asks[index].first).toStringAsFixed(controller.market.value.precision.price.toInt())}',
                                   style: Theme.of(context).textTheme.caption?.copyWith(
                                         color: settingsController.advanceDeclineColors.last,
                                       ),
                                 ),
                                 Text(
-                                  '${controller.orderBook.value.asks[index].last}',
+                                  '${(controller.orderBook.value.asks[index].last).toStringAsFixed(2)}',
                                   style: Theme.of(context).textTheme.caption?.copyWith(
                                         color: Theme.of(context).textTheme.bodyText1?.color,
                                       ),

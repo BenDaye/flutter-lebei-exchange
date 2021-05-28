@@ -1,6 +1,7 @@
 import 'package:flutter_lebei_exchange/api/ccxt.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/utils/http/models/ccxt/market.dart';
+import 'package:flutter_lebei_exchange/utils/http/models/ccxt/ticker.dart';
 import 'package:get/get.dart';
 
 class MarketController extends GetxController {
@@ -40,5 +41,11 @@ class MarketController extends GetxController {
     if (!result.success) return null;
 
     return Market.fromJson(result.data!);
+  }
+
+  String formatPriceByPrecision(Ticker ticker) {
+    double _price = ticker.bid ?? 0.0;
+    Market _market = markets.firstWhere((e) => e.symbol == ticker.symbol, orElse: () => Market.empty());
+    return _price.toStringAsFixed(_market.precision.price.toInt());
   }
 }

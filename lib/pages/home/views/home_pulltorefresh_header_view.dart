@@ -11,18 +11,29 @@ class HomePullToRefreshHeaderView extends StatelessWidget {
   final HomeBannerViewController homeBannerViewController = Get.find<HomeBannerViewController>();
   final HomeNoticeViewController homeNoticeViewController = Get.find<HomeNoticeViewController>();
 
+  static const double maxDragOffset = 60.0;
+
   @override
   Widget build(BuildContext context) {
     if (info == null || info?.mode == null) {
       return Container();
     }
     final double dragOffset = info?.dragOffset ?? 0;
+    final double progressValue = dragOffset / maxDragOffset;
     switch (info?.mode) {
       case RefreshIndicatorMode.armed:
         {
           return Container(
             height: dragOffset,
-            child: Text('armed'),
+            child: Center(
+              child: SizedBox(
+                height: 24,
+                width: 24,
+                child: CircularProgressIndicator(
+                  value: 1,
+                ),
+              ),
+            ),
           );
         }
       case RefreshIndicatorMode.drag:
@@ -31,21 +42,41 @@ class HomePullToRefreshHeaderView extends StatelessWidget {
           homeNoticeViewController.carouselController.stopAutoPlay();
           return Container(
             height: dragOffset,
-            child: Text('drag'),
+            child: Center(
+              child: SizedBox(
+                height: 24,
+                width: 24,
+                child: CircularProgressIndicator(
+                  value: progressValue,
+                ),
+              ),
+            ),
           );
         }
       case RefreshIndicatorMode.refresh:
         {
           return Container(
             height: dragOffset,
-            child: Text('refresh'),
+            child: Center(
+              child: SizedBox(
+                height: 24,
+                width: 24,
+                child: CircularProgressIndicator(),
+              ),
+            ),
           );
         }
       case RefreshIndicatorMode.snap:
         {
           return Container(
             height: dragOffset,
-            child: Text('snap'),
+            child: Center(
+              child: SizedBox(
+                height: 24,
+                width: 24,
+                child: CircularProgressIndicator(),
+              ),
+            ),
           );
         }
       case RefreshIndicatorMode.canceled:
@@ -54,17 +85,22 @@ class HomePullToRefreshHeaderView extends StatelessWidget {
           homeNoticeViewController.carouselController.startAutoPlay();
           return Container(
             height: dragOffset,
-            child: Text('canceled'),
+            child: Center(
+              child: SizedBox(
+                height: 24,
+                width: 24,
+                child: CircularProgressIndicator(
+                  value: progressValue,
+                ),
+              ),
+            ),
           );
         }
       case RefreshIndicatorMode.done:
         {
           homeBannerViewController.carouselController.startAutoPlay();
           homeNoticeViewController.carouselController.startAutoPlay();
-          return Container(
-            height: dragOffset,
-            child: Text('done'),
-          );
+          return Container();
         }
       default:
         {

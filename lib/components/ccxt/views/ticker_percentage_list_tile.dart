@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_lebei_exchange/components/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/helpers/helper.dart';
 import 'package:flutter_lebei_exchange/pages/setting/controllers/settings_controller.dart';
@@ -11,6 +12,7 @@ class TickerPercentageListTile extends StatelessWidget {
 
   final SymbolController symbolController = Get.find<SymbolController>();
   final SettingsController settingsController = Get.find<SettingsController>();
+  final MarketController marketController = Get.find<MarketController>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,9 @@ class TickerPercentageListTile extends StatelessWidget {
               ),
             ],
           ),
-          Text('${ticker.bid ?? 0}'),
+          Obx(
+            () => Text('${marketController.formatPriceByPrecision(ticker)}'),
+          ),
         ],
       ),
       trailing: Container(

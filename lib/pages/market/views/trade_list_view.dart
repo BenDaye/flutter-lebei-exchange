@@ -38,7 +38,7 @@ class TradeListView extends GetView<MarketViewController> {
                 SizedBox(
                   width: Get.width / 3,
                   child: Text(
-                    '${controller.trades[index].price}',
+                    '${(controller.trades[index].price).toStringAsFixed(controller.market.value.precision.price.toInt())}',
                     textAlign: TextAlign.right,
                     style: Theme.of(context).textTheme.caption?.copyWith(
                           color: Theme.of(context).textTheme.bodyText1?.color,
@@ -48,7 +48,7 @@ class TradeListView extends GetView<MarketViewController> {
                 SizedBox(
                   width: Get.width / 3,
                   child: Text(
-                    '${controller.trades[index].amount}',
+                    '${(controller.trades[index].amount).toStringAsFixed(2)}',
                     textAlign: TextAlign.right,
                     style: Theme.of(context).textTheme.caption?.copyWith(
                           color: Theme.of(context).textTheme.bodyText1?.color,

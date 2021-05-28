@@ -32,9 +32,7 @@ class MarketView extends GetView<MarketViewController> {
             SliverToBoxAdapter(
               child: GetBuilder<MarketViewController>(
                 id: 'ohlcv',
-                builder: (_) {
-                  return OhlcvChartView();
-                },
+                builder: (_) => OhlcvChartView(),
               ),
             ),
           ],

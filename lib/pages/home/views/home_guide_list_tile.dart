@@ -5,7 +5,7 @@ class HomeGuideListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
+      padding: const EdgeInsets.only(top: 4.0),
       child: Container(
         color: Theme.of(context).backgroundColor,
         child: ListTile(
@@ -19,7 +19,7 @@ class HomeGuideListTile extends StatelessWidget {
           subtitle: Text('HomeGuide.Subtitle'.tr),
           trailing: Icon(
             Icons.chevron_right,
-            color: Theme.of(context).unselectedWidgetColor,
+            color: Theme.of(context).dividerColor,
           ),
         ),
       ),

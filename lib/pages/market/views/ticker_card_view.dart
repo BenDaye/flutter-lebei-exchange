@@ -21,7 +21,7 @@ class TickerCardView extends GetView<MarketViewController> {
                 children: [
                   Expanded(
                       child: Text(
-                    '${controller.ticker.value.bid ?? 0}',
+                    '${(controller.ticker.value.bid ?? 0).toStringAsFixed(controller.market.value.precision.price.toInt())}',
                     style: Theme.of(context).textTheme.headline5?.copyWith(
                           color: CcxtHelper.getPercentageColor(
                               settingsController.advanceDeclineColors, controller.ticker.value.percentage),
@@ -43,7 +43,8 @@ class TickerCardView extends GetView<MarketViewController> {
                     children: [
                       Text('MarketPage.TickerCard.High'.tr),
                       SizedBox(width: 8),
-                      Text('${controller.ticker.value.high ?? 0}'),
+                      Text(
+                          '${(controller.ticker.value.high ?? 0).toStringAsFixed(controller.market.value.precision.price.toInt())}'),
                     ],
                   ),
                   Row(
@@ -51,7 +52,8 @@ class TickerCardView extends GetView<MarketViewController> {
                     children: [
                       Text('MarketPage.TickerCard.Low'.tr),
                       SizedBox(width: 8),
-                      Text('${controller.ticker.value.low ?? 0}'),
+                      Text(
+                          '${(controller.ticker.value.low ?? 0).toStringAsFixed(controller.market.value.precision.price.toInt())}'),
                     ],
                   ),
                   Row(
