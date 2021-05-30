@@ -5,9 +5,12 @@ import 'package:flutter_lebei_exchange/pages/main/views/main_view.dart';
 import 'package:flutter_lebei_exchange/pages/market/bindings/market_binding.dart';
 import 'package:flutter_lebei_exchange/pages/market/views/market_view.dart';
 import 'package:flutter_lebei_exchange/pages/setting/bindings/settings_binding.dart';
+import 'package:flutter_lebei_exchange/pages/setting/controllers/currency_view_controller.dart';
+import 'package:flutter_lebei_exchange/pages/setting/views/currency_view.dart';
 import 'package:flutter_lebei_exchange/pages/setting/views/general_view.dart';
 import 'package:flutter_lebei_exchange/pages/setting/views/language_view.dart';
 import 'package:flutter_lebei_exchange/pages/setting/views/settings_view.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 
 part 'routes.dart';
@@ -43,16 +46,26 @@ class Pages {
       name: Routes.SETTINGS,
       page: () => SettingsView(),
       binding: SettingsBinding(),
-    ),
-    GetPage(
-      name: Routes.SETTINGS_GENERAL,
-      page: () => GeneralView(),
-      // binding: MarketBinding(),
-    ),
-    GetPage(
-      name: Routes.SETTINGS_GENERAL_LANGUAGE,
-      page: () => LanguageView(),
-      // binding: MarketBinding(),
+      children: [
+        GetPage(
+          name: Routes.SETTINGS_GENERAL,
+          page: () => GeneralView(),
+          children: [
+            GetPage(
+              name: Routes.SETTINGS_GENERAL_LANGUAGE,
+              page: () => LanguageView(),
+            ),
+            GetPage(
+              name: Routes.SETTINGS_GENERAL_CURRENCY,
+              page: () => CurrencyView(),
+              // ignore: top_level_function_literal_block
+              binding: BindingsBuilder(() {
+                Get.lazyPut<CurrencyViewController>(() => CurrencyViewController());
+              }),
+            ),
+          ],
+        ),
+      ],
     ),
   ];
 }

@@ -34,6 +34,7 @@ dependencies:
   extended_nested_scroll_view: ^3.0.0
   flustars: ^2.0.1
   flutter_form_builder: ^6.0.0
+  flutter_phoenix: ^1.0.0
   flutter_redux: ^0.8.2
   get: ^4.1.4
   google_fonts: ^2.0.0

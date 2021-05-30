@@ -1,11 +1,14 @@
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/ticker_controller.dart';
+import 'package:flutter_lebei_exchange/pages/setting/controllers/settings_controller.dart';
 import 'package:flutter_lebei_exchange/utils/http/models/ccxt/ticker.dart';
 import 'package:get/get.dart';
 
 class SymbolPopularGridViewController extends GetxController {
+  final SettingsController settingsController = Get.find<SettingsController>();
   final TickerController tickerController = Get.find<TickerController>();
+
   final currentIndex = 0.obs;
   final tickers = <Ticker>[].obs;
   final tickersForRender = <List<Ticker>>[].obs;
@@ -15,6 +18,7 @@ class SymbolPopularGridViewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    debounce(settingsController.autoRefresh, watchAutoRefresh, time: Duration(milliseconds: 800));
     timer.setOnTimerTickCallback(handleTimer);
   }
 
@@ -30,6 +34,14 @@ class SymbolPopularGridViewController extends GetxController {
   void onClose() {
     timer.cancel();
     super.onClose();
+  }
+
+  void watchAutoRefresh(double _m) {
+    if (timer.isActive()) timer.cancel();
+    if (!_m.isEqual(0)) {
+      timer.setInterval(_m.toInt() * 1000);
+      timer.startTimer();
+    }
   }
 
   void watchTickerControllerTickers(List<Ticker> _tickers) {
@@ -61,7 +73,7 @@ class SymbolPopularGridViewController extends GetxController {
   }
 
   Future handleTimer(int tick) async {
-    print('SymbolPopularGridViewController getTickers ==> $tick');
+    print('SymbolPopularGridViewController getTickers ==> $tick, Timer: ${timer.mInterval}');
     if (tickers.isEmpty) return;
     final tickerSymbols = tickers.map((e) => e.symbol).toList();
     final result = await tickerController.getTickers(symbols: tickerSymbols);

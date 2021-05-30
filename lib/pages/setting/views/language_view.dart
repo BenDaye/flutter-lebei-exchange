@@ -23,11 +23,11 @@ class LanguageView extends GetView<SettingsController> {
           Expanded(
             child: ListView.builder(
               itemBuilder: (BuildContext context, int index) => ListTile(
-                title: Text('Language.${CustomTranslations.supportLanguages[index].toLanguageTag()}'.tr),
-                selected: controller.locale.value == CustomTranslations.supportLanguages[index],
-                onTap: () => controller.onChangeLocale(CustomTranslations.supportLanguages[index]),
+                title: Text('Language.${TranslationService.supportLanguages[index].toLanguageTag()}'.tr),
+                selected: controller.locale.value == TranslationService.supportLanguages[index],
+                onTap: () => controller.onChangeLocale(TranslationService.supportLanguages[index]),
               ),
-              itemCount: CustomTranslations.supportLanguages.length,
+              itemCount: TranslationService.supportLanguages.length,
             ),
           ),
         ],

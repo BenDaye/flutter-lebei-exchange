@@ -1,5 +1,7 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lebei_exchange/api/juhe.dart';
+import 'package:flutter_lebei_exchange/utils/http/models/juhe/exchange.dart';
 import 'package:get/get.dart';
 import 'package:wakelock/wakelock.dart';
 
@@ -10,7 +12,9 @@ enum AdvanceDeclineColorMode {
 
 class SettingsController extends GetxController {
   final themeMode = ThemeMode.dark.obs;
-  final locale = Locale('zh', 'CN').obs;
+  final locale = Locale('en', 'US').obs;
+  final currency = 'USD'.obs;
+  final currencyRate = 1.0.obs;
   final advanceDeclineColorMode = AdvanceDeclineColorMode.AdvanceGreen.obs;
   final advanceDeclineColors = <Color>[Colors.green, Colors.grey, Colors.red].obs;
 
@@ -28,6 +32,8 @@ class SettingsController extends GetxController {
       Get.updateLocale(_locale);
       SpUtil.putString('locale', _locale.toLanguageTag());
     });
+
+    ever(currency, watchCurrency);
   }
 
   @override
@@ -43,6 +49,14 @@ class SettingsController extends GetxController {
 
     wakelock.value = await Wakelock.enabled;
     autoRefresh.value = SpUtil.getDouble('autoRefresh') ?? 60.0;
+  }
+
+  void watchCurrency(String _code) {
+    if (_code == 'USD') {
+      currencyRate.value = 1.0;
+    } else {
+      _getCurrency();
+    }
   }
 
   void onSwitchThemeMode(ThemeMode _themeMode) {
@@ -68,5 +82,22 @@ class SettingsController extends GetxController {
   void onChangeAutoRefresh(double second) {
     autoRefresh.value = second;
     SpUtil.putDouble('autoRefresh', second);
+  }
+
+  void onChangeCurrency(String _code) {
+    currency.value = _code;
+    Get.back();
+  }
+
+  Future _getCurrency() async {
+    currencyRate.value = await getCurrency();
+  }
+
+  Future<double> getCurrency() async {
+    if (currency.value == 'USD') return 1.0;
+    final result = await ApiJuhe.exchangeCurrency('USD', currency.value);
+    if (!result.success) return 1.0;
+    List<Rate> _rates = List<Rate>.from(result.data!.map((e) => Rate.fromJson(e)));
+    return NumUtil.getDoubleByValueStr(_rates.first.exchange, defValue: 1.0) ?? 1.0;
   }
 }

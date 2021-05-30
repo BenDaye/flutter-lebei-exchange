@@ -78,7 +78,7 @@ class SymbolPopularGridView extends StatelessWidget {
                                               maxLines: 1,
                                             ),
                                             Text(
-                                              '${MoneyUtil.YUAN} ${NumUtil.multiply((ticker.bid ?? 0), 7).toStringAsFixed(2)}',
+                                              '${MoneyUtil.YUAN} ${NumUtil.multiply((ticker.bid ?? 0), settingsController.currencyRate.value).toStringAsFixed(2)}',
                                               style: Theme.of(context).textTheme.caption,
                                               maxLines: 1,
                                             ),

@@ -15,9 +15,9 @@ class App extends StatelessWidget {
       theme: CustomTheme.themeData(false, context),
       darkTheme: CustomTheme.themeData(true, context),
       debugShowCheckedModeBanner: false,
-      translations: CustomTranslations(),
-      locale: Locale('zh', 'CN'),
-      fallbackLocale: Locale('en', 'US'),
+      translations: TranslationService(),
+      locale: TranslationService.locale,
+      fallbackLocale: TranslationService.fallbackLocale,
     );
   }
 }

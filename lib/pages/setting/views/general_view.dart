@@ -49,6 +49,29 @@ class GeneralView extends GetView<SettingsController> {
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Text('GeneralPage.Currency'.tr),
+                      Obx(
+                        () => Text(
+                          '${controller.currency.value}',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                      ),
+                    ],
+                  ),
+                  trailing: Icon(
+                    Icons.chevron_right,
+                    color: Theme.of(context).dividerColor,
+                  ),
+                  onTap: () => Get.toNamed('/settings/general/currency'),
+                ),
+                Divider(
+                  height: 1.0,
+                  indent: 16.0,
+                ),
+                ListTile(
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                       Text('GeneralPage.Color'.tr),
                       Obx(
                         () => Text(
@@ -118,6 +141,14 @@ class GeneralView extends GetView<SettingsController> {
                 Divider(
                   height: 1.0,
                   indent: 16.0,
+                ),
+                ListTile(
+                  title: Text('GeneralPage.Reset'.tr),
+                  trailing: Icon(
+                    Icons.chevron_right,
+                    color: Theme.of(context).dividerColor,
+                  ),
+                  onTap: () => null,
                 ),
               ],
             ),

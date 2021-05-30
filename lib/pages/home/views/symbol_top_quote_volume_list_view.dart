@@ -35,7 +35,7 @@ class SymbolTopQuoteVolumeListView extends GetView<SymbolTopQuoteVolumeListViewC
             child: ElevatedButton(
               onPressed: () => null,
               child: Text(
-                '${MoneyUtil.YUAN}${NumUtil.multiply(NumUtil.divide(controller.tickers[index].quoteVolume ?? 0, 100 * 1000 * 1000), 7).toStringAsFixed(2)}亿',
+                '${MoneyUtil.YUAN}${NumUtil.multiply(NumUtil.divide(controller.tickers[index].quoteVolume ?? 0, 100 * 1000 * 1000), settingsController.currencyRate.value).toStringAsFixed(2)}亿',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
