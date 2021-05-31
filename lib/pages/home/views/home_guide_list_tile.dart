@@ -21,6 +21,13 @@ class HomeGuideListTile extends StatelessWidget {
             Icons.chevron_right,
             color: Theme.of(context).dividerColor,
           ),
+          onTap: () => Get.snackbar(
+            'Tips',
+            'TODO',
+            duration: Duration(seconds: 2),
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.orangeAccent.withOpacity(.2),
+          ),
         ),
       ),
     );

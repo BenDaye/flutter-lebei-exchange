@@ -39,6 +39,7 @@ dependencies:
   flutter_redux: ^0.8.2
   get: ^4.1.4
   google_fonts: ^2.0.0
+  google_mobile_ads: ^0.13.0
   json_annotation: ^4.0.1
   k_chart: ^0.2.1
   logger: ^1.0.0

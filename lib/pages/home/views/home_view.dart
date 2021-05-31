@@ -5,6 +5,7 @@ import 'package:flutter_lebei_exchange/pages/home/controllers/symbol_top_base_vo
 import 'package:flutter_lebei_exchange/pages/home/controllers/symbol_top_percentage_list_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/home/controllers/symbol_top_quote_volume_list_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/home_banner_view.dart';
+import 'package:flutter_lebei_exchange/pages/home/views/home_google_ad_banner_view.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/home_guide_list_tile.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/home_list_header_view.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/home_notice_view.dart';
@@ -49,24 +50,13 @@ class HomeView extends GetView<HomeViewController> {
                 (PullToRefreshScrollNotificationInfo? info) =>
                     SliverToBoxAdapter(child: HomePullToRefreshHeaderView(info)),
               ),
-              SliverToBoxAdapter(
-                child: HomeBannerView(),
-              ),
-              SliverToBoxAdapter(
-                child: HomeNoticeView(),
-              ),
-              SliverToBoxAdapter(
-                child: Divider(height: 1.0),
-              ),
-              SliverToBoxAdapter(
-                child: SymbolPopularGridView(),
-              ),
-              SliverToBoxAdapter(
-                child: HomeGuideListTile(),
-              ),
-              SliverToBoxAdapter(
-                child: HomeShortcutGridView(),
-              ),
+              SliverToBoxAdapter(child: HomeBannerView()),
+              SliverToBoxAdapter(child: HomeNoticeView()),
+              SliverToBoxAdapter(child: Divider(height: 1.0)),
+              SliverToBoxAdapter(child: SymbolPopularGridView()),
+              SliverToBoxAdapter(child: HomeGuideListTile()),
+              SliverToBoxAdapter(child: HomeGoogleAdBannerView()),
+              SliverToBoxAdapter(child: HomeShortcutGridView()),
             ],
             pinnedHeaderSliverHeightBuilder: () => 0,
             innerScrollPositionKeyBuilder: () => controller.innerScrollPositionKey.value,

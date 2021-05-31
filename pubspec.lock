@@ -413,6 +413,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.0"
+  google_mobile_ads:
+    dependency: "direct main"
+    description:
+      name: google_mobile_ads
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.13.0"
   graphs:
     dependency: transitive
     description:

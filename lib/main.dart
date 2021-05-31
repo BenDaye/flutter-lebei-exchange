@@ -5,6 +5,7 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_lebei_exchange/app.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:sentry/sentry.dart';
 
 void main() async {
@@ -16,6 +17,7 @@ void main() async {
     );
 
     WidgetsFlutterBinding.ensureInitialized();
+    MobileAds.instance.initialize();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     if (Platform.isAndroid) {
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent));
