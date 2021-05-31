@@ -37,5 +37,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.vip.bendaye.flutter_lebei_global"
+            android:value="ca-app-pub-7954599330288267~4195542835"/>
     </application>
 </manifest>
