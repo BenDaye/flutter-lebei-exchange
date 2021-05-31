@@ -35,19 +35,19 @@ class MainViewController extends GetxController {
         ),
         BottomNavyBarItem(
           title: Text('MainBottomNavy.Market'.tr),
-          icon: Icon(Icons.apps),
+          icon: Icon(Icons.assessment),
           activeColor: Theme.of(context).primaryColor,
           inactiveColor: Theme.of(context).accentColor,
         ),
         BottomNavyBarItem(
           title: Text('MainBottomNavy.Trade'.tr),
-          icon: Icon(Icons.chat_bubble),
+          icon: Icon(Icons.coffee),
           activeColor: Theme.of(context).primaryColor,
           inactiveColor: Theme.of(context).accentColor,
         ),
         BottomNavyBarItem(
           title: Text('MainBottomNavy.Asset'.tr),
-          icon: Icon(Icons.settings),
+          icon: Icon(Icons.person),
           activeColor: Theme.of(context).primaryColor,
           inactiveColor: Theme.of(context).accentColor,
         ),
