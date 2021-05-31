@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lebei_exchange/components/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/ticker_controller.dart';
+import 'package:flutter_lebei_exchange/components/ccxt/helpers/number_helper.dart';
 import 'package:flutter_lebei_exchange/pages/home/controllers/symbol_popular_controller.dart';
 import 'package:flutter_lebei_exchange/pages/setting/controllers/settings_controller.dart';
 import 'package:flutter_lebei_exchange/utils/http/models/ccxt/ticker.dart';
@@ -11,6 +13,7 @@ class SymbolPopularGridView extends StatelessWidget {
   final SymbolPopularGridViewController controller =
       Get.put<SymbolPopularGridViewController>(SymbolPopularGridViewController());
   final TickerController tickerController = Get.find<TickerController>();
+  final MarketController marketController = Get.find<MarketController>();
   final SettingsController settingsController = Get.find<SettingsController>();
 
   @override
@@ -66,7 +69,7 @@ class SymbolPopularGridView extends StatelessWidget {
                                               ),
                                             ),
                                             Text(
-                                              '${ticker.bid ?? 0}',
+                                              '${marketController.formatPriceByPrecision(ticker)}',
                                               style: Theme.of(context).textTheme.subtitle1?.copyWith(
                                                     color: NumUtil.isZero(ticker.percentage)
                                                         ? settingsController.advanceDeclineColors[1]
@@ -78,7 +81,7 @@ class SymbolPopularGridView extends StatelessWidget {
                                               maxLines: 1,
                                             ),
                                             Text(
-                                              '${MoneyUtil.YUAN} ${NumUtil.multiply((ticker.bid ?? 0), settingsController.currencyRate.value).toStringAsFixed(2)}',
+                                              '${NumberHelper.getCurrencySymbol(settingsController.currency.value)} ${NumUtil.multiply((ticker.bid ?? 0), settingsController.currencyRate.value).toStringAsFixed(2)}',
                                               style: Theme.of(context).textTheme.caption,
                                               maxLines: 1,
                                             ),

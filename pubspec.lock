@@ -36,6 +36,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.6.1"
+  big_numbers:
+    dependency: "direct main"
+    description:
+      name: big_numbers
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.2.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -518,6 +525,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.0"
+  number_display:
+    dependency: "direct main"
+    description:
+      name: number_display
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.0.0"
   package_config:
     dependency: transitive
     description:

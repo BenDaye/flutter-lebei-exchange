@@ -32,7 +32,7 @@ class SymbolTopPercentageListViewController extends GetxController {
         .where((t) => t.symbol.endsWith("USDT") || t.symbol.endsWith("BTC"))
         .toList();
     _tickers.sort((a, b) => (b.percentage ?? double.nan).compareTo((a.percentage ?? double.nan)));
-    tickers.value = NumUtil.greaterThan(_tickers.length, 20) ? _tickers.sublist(0, 20) : _tickers;
+    tickers.value = NumUtil.greaterThan(_tickers.length, 8) ? _tickers.sublist(0, 8) : _tickers;
   }
 
   // void watchTheseTickers(int timer) async {

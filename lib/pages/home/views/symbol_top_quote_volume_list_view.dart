@@ -1,11 +1,14 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lebei_exchange/components/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/helpers/helper.dart';
+import 'package:flutter_lebei_exchange/components/ccxt/helpers/number_helper.dart';
 import 'package:flutter_lebei_exchange/pages/home/controllers/symbol_top_quote_volume_list_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
 
 class SymbolTopQuoteVolumeListView extends GetView<SymbolTopQuoteVolumeListViewController> {
+  final MarketController marketController = Get.find<MarketController>();
   final SettingsController settingsController = Get.find<SettingsController>();
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class SymbolTopQuoteVolumeListView extends GetView<SymbolTopQuoteVolumeListViewC
                   ),
                 ],
               ),
-              Text('${controller.tickers[index].bid ?? 0}'),
+              Text('${marketController.formatPriceByPrecision(controller.tickers[index])}'),
             ],
           ),
           trailing: Container(
@@ -35,7 +38,10 @@ class SymbolTopQuoteVolumeListView extends GetView<SymbolTopQuoteVolumeListViewC
             child: ElevatedButton(
               onPressed: () => null,
               child: Text(
-                '${MoneyUtil.YUAN}${NumUtil.multiply(NumUtil.divide(controller.tickers[index].quoteVolume ?? 0, 100 * 1000 * 1000), settingsController.currencyRate.value).toStringAsFixed(2)}亿',
+                '${NumberHelper.getCurrencySymbol(settingsController.currency.value)} ${NumberHelper(
+                  currencyRate: settingsController.currencyRate.value,
+                  locale: settingsController.locale.value,
+                ).getNumberDisplay(controller.tickers[index].quoteVolume).text}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

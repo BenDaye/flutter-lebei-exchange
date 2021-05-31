@@ -42,6 +42,7 @@ class SettingsController extends GetxController {
     themeMode.value = SpUtil.getString('themeMode') == 'dark' ? ThemeMode.dark : ThemeMode.light;
     // TODO: 本地存储语言
     locale.value = SpUtil.getString('locale') == 'zh-CN' ? Locale('zh', 'CN') : Locale('en', 'US');
+    currency.value = SpUtil.getString('currency') ?? 'USD';
     advanceDeclineColorMode.value = AdvanceDeclineColorMode.values[SpUtil.getInt('color') ?? 0];
     if (advanceDeclineColorMode.value == AdvanceDeclineColorMode.AdvanceRed) {
       advanceDeclineColors.value = advanceDeclineColors.reversed.toList();
@@ -86,6 +87,7 @@ class SettingsController extends GetxController {
 
   void onChangeCurrency(String _code) {
     currency.value = _code;
+    SpUtil.putString('currency', _code);
     Get.back();
   }
 

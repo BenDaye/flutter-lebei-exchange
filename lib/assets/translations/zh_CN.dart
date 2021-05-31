@@ -61,4 +61,8 @@ const Map<String, String> zh_CN = {
   'ExchangesPage.RecommandedExchange': '推荐',
   'Common.Switcher.On': '已开启',
   'Common.Switcher.Off': '已关闭',
+  'Common.Unit.QIAN': '千',
+  'Common.Unit.WAN': '万',
+  'Common.Unit.YI': '亿',
+  'Common.Unit.ZHAO': '兆',
 };
