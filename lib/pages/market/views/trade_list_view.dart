@@ -1,6 +1,6 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/pages/market/controllers/market_controller.dart';
+import 'package:flutter_lebei_exchange/pages/market/controllers/market_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
 

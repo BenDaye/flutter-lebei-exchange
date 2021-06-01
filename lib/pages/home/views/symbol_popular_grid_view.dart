@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/market_controller.dart';
+import 'package:flutter_lebei_exchange/components/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/ticker_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/helpers/number_helper.dart';
 import 'package:flutter_lebei_exchange/pages/home/controllers/symbol_popular_controller.dart';
@@ -12,6 +13,7 @@ import 'package:get/get.dart';
 class SymbolPopularGridView extends StatelessWidget {
   final SymbolPopularGridViewController controller =
       Get.put<SymbolPopularGridViewController>(SymbolPopularGridViewController());
+  final SymbolController symbolController = Get.find<SymbolController>();
   final TickerController tickerController = Get.find<TickerController>();
   final MarketController marketController = Get.find<MarketController>();
   final SettingsController settingsController = Get.find<SettingsController>();
@@ -44,7 +46,10 @@ class SymbolPopularGridView extends StatelessWidget {
                                 child: ticker == null
                                     ? Container()
                                     : InkWell(
-                                        onTap: () => Get.toNamed('/market/${ticker.symbol.replaceAll('/', '_')}'),
+                                        onTap: () {
+                                          symbolController.onChangeCurrentSymbol(ticker.symbol);
+                                          Get.toNamed('/market');
+                                        },
                                         child: Column(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           crossAxisAlignment: CrossAxisAlignment.start,

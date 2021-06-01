@@ -65,4 +65,8 @@ class SymbolController extends GetxController {
       }
     }
   }
+
+  void onChangeCurrentSymbol(String _symbol) {
+    currentSymbol.value = _symbol.replaceAll('/', '_');
+  }
 }

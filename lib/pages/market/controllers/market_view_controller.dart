@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/ohlcv_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/orderbook_controller.dart';
+import 'package:flutter_lebei_exchange/components/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/ticker_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/trade_controller.dart';
 import 'package:flutter_lebei_exchange/utils/http/models/ccxt/market.dart';
@@ -13,6 +14,7 @@ import 'package:get/get.dart' hide Precision;
 import 'package:k_chart/flutter_k_chart.dart';
 
 class MarketViewController extends GetxController with SingleGetTickerProviderMixin {
+  final SymbolController symbolController = Get.find<SymbolController>();
   final MarketController marketController = Get.find<MarketController>();
   final TickerController tickerController = Get.find<TickerController>();
   final OhlcvController ohlcvController = Get.find<OhlcvController>();
@@ -21,7 +23,7 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final symbol = ''.obs;
+  // final symbol = ''.obs;
 
   final market = Market.empty().obs;
   final ticker = Ticker.empty().obs;
@@ -88,8 +90,8 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
   @override
   void onReady() {
     super.onReady();
-    ever(symbol, watchSymbol);
-    symbol.value = Get.parameters['symbol']!;
+    ever(symbolController.currentSymbol, watchSymbol);
+    watchSymbol(symbolController.currentSymbol.value);
     ever(ohlcv, watchOhlcv);
     ever(depth, watchDepth);
     // !!!: 防止过快切换
@@ -151,9 +153,9 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
 
   void watchPeriod(String _period) {
     if (_period != 'depth') {
-      this.getOhlcv(symbol.value, period: _period, update: true);
+      this.getOhlcv(symbolController.currentSymbol.value, period: _period, update: true);
     } else {
-      this.getDepth(symbol.value, update: true);
+      this.getDepth(symbolController.currentSymbol.value, update: true);
     }
   }
 
@@ -167,7 +169,7 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
   }
 
   Future<Market?> getMarket(String? _symbol, {bool? update}) async {
-    final s = _symbol ?? symbol.value;
+    final s = _symbol ?? symbolController.currentSymbol.value;
     if (s.isEmpty) return null;
     final data = await marketController.getMarket(s);
     if (data is Market) {
@@ -178,7 +180,7 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
   }
 
   Future<Ticker?> getTicker(String? _symbol, {bool? update}) async {
-    final s = _symbol ?? symbol.value;
+    final s = _symbol ?? symbolController.currentSymbol.value;
     if (s.isEmpty) return null;
     final data = await tickerController.getTicker(s);
     if (data is Ticker) {
@@ -189,7 +191,7 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
   }
 
   Future<List<List<num>>> getOhlcv(String? _symbol, {bool? update, String period = '1m'}) async {
-    final s = _symbol ?? symbol.value;
+    final s = _symbol ?? symbolController.currentSymbol.value;
     if (s.isEmpty) return [];
     final data = await ohlcvController.getOhlcv(s, period: period);
     if (data is List<List<num>>) {
@@ -200,7 +202,7 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
   }
 
   Future<OrderBook?> getOrderBook(String? _symbol, {bool? update}) async {
-    final s = _symbol ?? symbol.value;
+    final s = _symbol ?? symbolController.currentSymbol.value;
     if (s.isEmpty) return null;
     final data = await orderBookController.getOrderBook(s);
     if (data is OrderBook) {
@@ -211,7 +213,7 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
   }
 
   Future<OrderBook?> getDepth(String? _symbol, {bool? update}) async {
-    final s = _symbol ?? symbol.value;
+    final s = _symbol ?? symbolController.currentSymbol.value;
     if (s.isEmpty) return null;
     final data = await orderBookController.getDepth(s);
     if (data is OrderBook) {
@@ -222,7 +224,7 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
   }
 
   Future<List<Trade>> getTrades(String? _symbol, {bool? update}) async {
-    final s = _symbol ?? symbol.value;
+    final s = _symbol ?? symbolController.currentSymbol.value;
     if (s.isEmpty) return [];
     final data = await tradeController.getTrades(s);
     if (data is List<Trade>) {

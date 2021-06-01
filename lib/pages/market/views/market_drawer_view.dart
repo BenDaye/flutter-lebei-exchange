@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/market_controller.dart';
+import 'package:flutter_lebei_exchange/components/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/helpers/helper.dart';
-import 'package:flutter_lebei_exchange/pages/market/controllers/market_controller.dart';
+import 'package:flutter_lebei_exchange/pages/market/controllers/market_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/market/controllers/market_drawer_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
 
 class MarketDrawerView extends StatelessWidget {
   final MarketDrawerViewController marketDrawerViewController = Get.put(MarketDrawerViewController());
+  final SymbolController symbolController = Get.find<SymbolController>();
   final MarketController marketController = Get.find<MarketController>();
   final SettingsController settingsController = Get.find<SettingsController>();
   final MarketViewController marketViewController = Get.find<MarketViewController>();
@@ -53,12 +55,11 @@ class MarketDrawerView extends StatelessWidget {
                   ),
                 ),
               ),
-              selected: marketViewController.symbol.value.replaceAll('_', '/') ==
+              selected: symbolController.currentSymbol.value.replaceAll('_', '/') ==
                   marketDrawerViewController.tickers[index].symbol,
               selectedTileColor: Theme.of(context).accentColor.withOpacity(.2),
               onTap: () {
-                marketViewController.symbol.value =
-                    marketDrawerViewController.tickers[index].symbol.replaceAll('/', '_');
+                symbolController.onChangeCurrentSymbol(marketDrawerViewController.tickers[index].symbol);
                 Get.back();
               },
             ),

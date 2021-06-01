@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/pages/market/controllers/market_controller.dart';
+import 'package:flutter_lebei_exchange/pages/market/controllers/market_view_controller.dart';
 import 'package:get/get.dart';
 
 class TradeListViewHeader extends GetView<MarketViewController> {

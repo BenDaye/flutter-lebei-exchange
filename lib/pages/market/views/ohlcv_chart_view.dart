@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/pages/market/controllers/market_controller.dart';
+import 'package:flutter_lebei_exchange/pages/market/controllers/market_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
 // ignore: import_of_legacy_library_into_null_safe

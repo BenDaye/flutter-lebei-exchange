@@ -7,5 +7,5 @@ abstract class Routes {
   static const SETTINGS_GENERAL = '/general';
   static const SETTINGS_GENERAL_LANGUAGE = '/language';
   static const SETTINGS_GENERAL_CURRENCY = '/currency';
-  static const MARKET = '/market/:symbol';
+  static const MARKET = '/market';
 }

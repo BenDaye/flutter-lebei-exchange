@@ -44,7 +44,10 @@ class TickerPercentageListTile extends StatelessWidget {
       ),
       selected: symbolController.favoriteSymbols.any((s) => s == ticker.symbol),
       selectedTileColor: Theme.of(context).accentColor.withOpacity(.1),
-      onTap: () => Get.toNamed('/market/${ticker.symbol.replaceAll('/', '_')}'),
+      onTap: () {
+        symbolController.onChangeCurrentSymbol(ticker.symbol);
+        Get.toNamed('/market');
+      },
       onLongPress: () => symbolController.toggleFavoriteSymbol(ticker.symbol),
       enableFeedback: true,
     );
