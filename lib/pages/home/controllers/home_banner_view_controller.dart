@@ -1,8 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/components/ad/google/helpers/helper.dart';
 import 'package:get/get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class HomeBannerViewController extends GetxController {
   final currentIndex = 0.obs;

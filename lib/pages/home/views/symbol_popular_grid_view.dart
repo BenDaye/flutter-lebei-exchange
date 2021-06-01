@@ -19,6 +19,7 @@ class SymbolPopularGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(bottom: 4.0),
       padding: EdgeInsets.only(bottom: 8.0),
       color: Theme.of(context).backgroundColor,
       child: Obx(

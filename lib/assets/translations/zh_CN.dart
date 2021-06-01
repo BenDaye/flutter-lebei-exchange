@@ -65,4 +65,9 @@ const Map<String, String> zh_CN = {
   'Common.Unit.WAN': '万',
   'Common.Unit.YI': '亿',
   'Common.Unit.ZHAO': '兆',
+  'MarketDrawer.Tab.Favorites': '自选',
+  'MarketDrawer.Tab.All': '全部',
+  'MarketDrawer.Tab.USDT': 'USDT',
+  'MarketDrawer.Tab.BTC': 'BTC',
+  'MarketDrawer.Tab.ETH': 'ETH',
 };

@@ -30,7 +30,7 @@ class CcxtHelper {
     return '$multipleString' + 'MarginSymbolSubtitle.Multiple'.tr + '$marginText';
   }
 
-  static Widget getSymbolTitle(String symbol) {
+  static Widget getSymbolTitle(String symbol, {TextStyle? baseTextStyle, TextStyle? quoteTextStyle}) {
     if (symbol.isEmpty) return Text('/');
     String titleText = getSymbolTitleText(symbol);
     if (!titleText.contains('/')) return Text(titleText);
@@ -40,11 +40,11 @@ class CcxtHelper {
     return RichText(
       text: TextSpan(
         text: titleTextArray.first,
-        style: Get.context?.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
+        style: baseTextStyle ?? Get.context?.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
         children: [
           TextSpan(
             text: ' /${titleTextArray.last}',
-            style: Get.context?.textTheme.caption,
+            style: quoteTextStyle ?? Get.context?.textTheme.caption,
           ),
         ],
       ),

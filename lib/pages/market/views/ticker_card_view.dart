@@ -1,5 +1,7 @@
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/helpers/helper.dart';
+import 'package:flutter_lebei_exchange/components/ccxt/helpers/number_helper.dart';
 import 'package:flutter_lebei_exchange/pages/market/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
@@ -27,8 +29,19 @@ class TickerCardView extends GetView<MarketViewController> {
                               settingsController.advanceDeclineColors, controller.ticker.value.percentage),
                         ),
                   )),
-                  CcxtHelper.getPercentageText(
-                      settingsController.advanceDeclineColors, controller.ticker.value.percentage),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        '${NumberHelper.getCurrencySymbol(settingsController.currency.value)} ${NumUtil.multiply((controller.ticker.value.bid ?? 0), settingsController.currencyRate.value).toStringAsFixed(2)}',
+                        maxLines: 1,
+                      ),
+                      SizedBox(width: 8.0),
+                      CcxtHelper.getPercentageText(
+                          settingsController.advanceDeclineColors, controller.ticker.value.percentage),
+                    ],
+                  ),
                 ],
               ),
             ),

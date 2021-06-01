@@ -19,6 +19,8 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
   final OrderBookController orderBookController = Get.find<OrderBookController>();
   final TradeController tradeController = Get.find<TradeController>();
 
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   final symbol = ''.obs;
 
   final market = Market.empty().obs;
@@ -91,7 +93,7 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
     ever(ohlcv, watchOhlcv);
     ever(depth, watchDepth);
     // !!!: 防止过快切换
-    debounce(period, watchPeriod, time: Duration(seconds: 1));
+    debounce(period, watchPeriod, time: Duration(milliseconds: 300));
   }
 
   @override

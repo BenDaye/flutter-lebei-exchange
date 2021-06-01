@@ -10,7 +10,7 @@ class HomeGoogleAdListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 72.0,
-      margin: const EdgeInsets.only(top: 4.0),
+      margin: const EdgeInsets.only(bottom: 4.0),
       color: Theme.of(context).backgroundColor,
       alignment: Alignment.center,
       child: AdWidget(ad: homeGoogleAdListTileController.bannerAd),

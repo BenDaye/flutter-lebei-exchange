@@ -2,6 +2,7 @@ import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart' hide NestedScrollView;
 import 'package:flutter_lebei_exchange/components/ccxt/helpers/helper.dart';
 import 'package:flutter_lebei_exchange/pages/market/controllers/market_controller.dart';
+import 'package:flutter_lebei_exchange/pages/market/views/market_drawer_view.dart';
 import 'package:flutter_lebei_exchange/pages/market/views/ohlcv_chart_view.dart';
 import 'package:flutter_lebei_exchange/pages/market/views/orderbook_list_view.dart';
 import 'package:flutter_lebei_exchange/pages/market/views/orderbook_list_view_header.dart';
@@ -14,15 +15,32 @@ class MarketView extends GetView<MarketViewController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: controller.scaffoldKey,
       appBar: AppBar(
         title: Obx(
-          () => Text(
-            CcxtHelper.getSymbolTitleText(controller.symbol.replaceAll('_', '/')),
-            style: Theme.of(context).textTheme.headline6,
+          () => InkWell(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.format_indent_increase,
+                  size: 22,
+                ),
+                SizedBox(width: 4.0),
+                Text(
+                  CcxtHelper.getSymbolTitleText(controller.symbol.replaceAll('_', '/')),
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              ],
+            ),
+            onTap: () => controller.scaffoldKey.currentState!.openDrawer(),
           ),
         ),
         centerTitle: false,
+        automaticallyImplyLeading: false,
+        leading: BackButton(),
       ),
+      drawer: MarketDrawerView(),
       body: Obx(
         () => NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool) => <Widget>[

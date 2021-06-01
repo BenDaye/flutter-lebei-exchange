@@ -61,4 +61,9 @@ const Map<String, String> en_US = {
   'ExchangesPage.RecommandedExchange': 'Recommanded',
   'Common.Switcher.On': 'On',
   'Common.Switcher.Off': 'Off',
+  'MarketDrawer.Tab.Favorites': 'Favorites',
+  'MarketDrawer.Tab.All': 'All',
+  'MarketDrawer.Tab.USDT': 'USDT',
+  'MarketDrawer.Tab.BTC': 'BTC',
+  'MarketDrawer.Tab.ETH': 'ETH',
 };

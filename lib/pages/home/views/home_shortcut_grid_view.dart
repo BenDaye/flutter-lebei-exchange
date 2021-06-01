@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 class HomeShortcutGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 4.0),
       child: Container(
         // height: 140,
         color: Theme.of(context).backgroundColor,
@@ -26,6 +26,13 @@ class HomeShortcutGridView extends StatelessWidget {
                         Text('LeBei'),
                       ],
                     ),
+                  ),
+                  onTap: () => Get.snackbar(
+                    'Tips',
+                    'TODO',
+                    duration: Duration(seconds: 2),
+                    snackPosition: SnackPosition.BOTTOM,
+                    backgroundColor: Colors.orangeAccent.withOpacity(.2),
                   ),
                 ),
               )
