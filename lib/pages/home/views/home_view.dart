@@ -6,6 +6,7 @@ import 'package:flutter_lebei_exchange/pages/home/controllers/symbol_top_percent
 import 'package:flutter_lebei_exchange/pages/home/controllers/symbol_top_quote_volume_list_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/home_banner_view.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/home_google_ad_banner_view.dart';
+import 'package:flutter_lebei_exchange/pages/home/views/home_google_ad_list_tile.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/home_guide_list_tile.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/home_list_header_view.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/home_notice_view.dart';
@@ -50,12 +51,13 @@ class HomeView extends GetView<HomeViewController> {
                 (PullToRefreshScrollNotificationInfo? info) =>
                     SliverToBoxAdapter(child: HomePullToRefreshHeaderView(info)),
               ),
-              SliverToBoxAdapter(child: HomeBannerView()),
+              // SliverToBoxAdapter(child: HomeBannerView()),
+              SliverToBoxAdapter(child: HomeGoogleAdBannerView()),
               SliverToBoxAdapter(child: HomeNoticeView()),
               SliverToBoxAdapter(child: Divider(height: 1.0)),
               SliverToBoxAdapter(child: SymbolPopularGridView()),
               SliverToBoxAdapter(child: HomeGuideListTile()),
-              SliverToBoxAdapter(child: HomeGoogleAdBannerView()),
+              // SliverToBoxAdapter(child: HomeGoogleAdListTile()),
               SliverToBoxAdapter(child: HomeShortcutGridView()),
             ],
             pinnedHeaderSliverHeightBuilder: () => 0,

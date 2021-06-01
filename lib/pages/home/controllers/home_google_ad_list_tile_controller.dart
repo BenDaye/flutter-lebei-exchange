@@ -2,16 +2,15 @@ import 'package:flutter_lebei_exchange/components/ad/google/helpers/helper.dart'
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-class HomeGoogleAdBannerViewController extends GetxController {
-  late BannerAd ad;
+class HomeGoogleAdListTileController extends GetxController {
+  late BannerAd bannerAd;
   final isAdLoaded = false.obs;
 
   @override
   void onInit() {
     super.onInit();
-
-    ad = BannerAd(
-      size: AdSize.fullBanner,
+    bannerAd = BannerAd(
+      size: AdSize.largeBanner,
       adUnitId: AdHelper.bannerAdUnitId,
       listener: BannerAdListener(
         onAdLoaded: (_) {
@@ -27,12 +26,12 @@ class HomeGoogleAdBannerViewController extends GetxController {
       request: AdRequest(),
     );
 
-    ad.load();
+    bannerAd.load();
   }
 
   @override
   void onClose() {
-    ad.dispose();
+    bannerAd.dispose();
     super.onClose();
   }
 }

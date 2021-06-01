@@ -8,7 +8,7 @@ class HomeBannerView extends GetView<HomeBannerViewController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 168.0,
+      height: 128.0,
       color: Theme.of(context).backgroundColor,
       child: controller.banners.isEmpty
           ? SizedBox()
@@ -30,7 +30,7 @@ class HomeBannerView extends GetView<HomeBannerViewController> {
                     ),
                   ),
                   options: CarouselOptions(
-                    height: 160.0,
+                    height: 120.0,
                     viewportFraction: 1,
                     initialPage: 0,
                     enableInfiniteScroll: true,

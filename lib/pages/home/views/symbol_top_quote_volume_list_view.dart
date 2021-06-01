@@ -1,4 +1,3 @@
-import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/helpers/helper.dart';

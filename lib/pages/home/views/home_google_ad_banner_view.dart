@@ -9,11 +9,14 @@ class HomeGoogleAdBannerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 72.0,
-      margin: const EdgeInsets.only(top: 4.0),
+      height: 128,
       color: Theme.of(context).backgroundColor,
       alignment: Alignment.center,
-      child: AdWidget(ad: homeGoogleAdBannerViewController.bannerAd),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8.0),
+        child: new AdWidget(ad: homeGoogleAdBannerViewController.ad),
+      ),
     );
   }
 }
