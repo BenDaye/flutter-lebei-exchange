@@ -1,5 +1,6 @@
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart' hide NestedScrollView;
+import 'package:flutter_lebei_exchange/components/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/helpers/helper.dart';
 import 'package:flutter_lebei_exchange/pages/market/controllers/market_view_controller.dart';
@@ -16,6 +17,7 @@ import 'package:get/get.dart';
 
 class MarketView extends GetView<MarketViewController> {
   final SymbolController symbolController = Get.find<SymbolController>();
+  final MarketController marketController = Get.find<MarketController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +45,17 @@ class MarketView extends GetView<MarketViewController> {
         centerTitle: false,
         automaticallyImplyLeading: false,
         leading: BackButton(),
+        actions: [
+          Obx(
+            () => IconButton(
+              onPressed: () =>
+                  symbolController.toggleFavoriteSymbol(symbolController.currentSymbol.value.replaceAll('_', '/')),
+              icon: symbolController.favoriteSymbols.contains(symbolController.currentSymbol.value.replaceAll('_', '/'))
+                  ? Icon(Icons.favorite, color: Colors.red)
+                  : Icon(Icons.favorite_border, color: Theme.of(context).unselectedWidgetColor),
+            ),
+          ),
+        ],
       ),
       drawer: MarketDrawerView(),
       body: Obx(

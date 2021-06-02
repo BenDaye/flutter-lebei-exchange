@@ -42,25 +42,21 @@ class SymbolController extends GetxController {
     if (symbols.contains(symbol)) {
       if (favoriteSymbols.contains(symbol)) {
         favoriteSymbols.remove(symbol);
-        Get.showSnackbar(
-          GetBar(
-            message: '已将$symbol移除自选',
-            snackPosition: SnackPosition.TOP,
-            snackStyle: SnackStyle.GROUNDED,
-            duration: Duration(seconds: 2),
-            backgroundColor: Colors.orange,
-          ),
+        Get.snackbar(
+          'Tips',
+          '已将$symbol移除自选',
+          duration: Duration(seconds: 2),
+          backgroundColor: Colors.red.withOpacity(.2),
+          snackPosition: SnackPosition.BOTTOM,
         );
       } else {
         favoriteSymbols.add(symbol);
-        Get.showSnackbar(
-          GetBar(
-            message: '已将$symbol添加自选',
-            snackPosition: SnackPosition.TOP,
-            snackStyle: SnackStyle.GROUNDED,
-            duration: Duration(seconds: 2),
-            backgroundColor: Colors.green,
-          ),
+        Get.snackbar(
+          'Tips',
+          '已将$symbol添加自选',
+          duration: Duration(seconds: 2),
+          backgroundColor: Colors.green.withOpacity(.2),
+          snackPosition: SnackPosition.BOTTOM,
         );
       }
     }
