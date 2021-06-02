@@ -3,6 +3,7 @@ import 'package:flutter_lebei_exchange/components/ccxt/controllers/ohlcv_control
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/orderbook_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/ticker_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/trade_controller.dart';
+import 'package:flutter_lebei_exchange/pages/market/controllers/exchange_list_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/market/controllers/market_view_controller.dart';
 import 'package:get/get.dart';
 
@@ -15,5 +16,6 @@ class MarketBinding extends Bindings {
     Get.lazyPut<OhlcvController>(() => OhlcvController());
     Get.lazyPut<OrderBookController>(() => OrderBookController());
     Get.lazyPut<TradeController>(() => TradeController());
+    Get.lazyPut<ExchangeListViewController>(() => ExchangeListViewController());
   }
 }

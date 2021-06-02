@@ -44,6 +44,7 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
     'MarketPage.TabBar.Order',
     'MarketPage.TabBar.Trade',
     'MarketPage.TabBar.Intro',
+    'MarketPage.TabBar.Exchanges',
   ]
       .map<Tab>(
         (t) => Tab(

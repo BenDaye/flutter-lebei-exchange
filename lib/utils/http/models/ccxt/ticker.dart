@@ -1,3 +1,4 @@
+import 'package:flustars/flustars.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'ticker.g.dart';
@@ -5,7 +6,7 @@ part 'ticker.g.dart';
 @JsonSerializable()
 class Ticker {
   String symbol; // string symbol of the market ('BTC/USD', 'ETH/BTC', ...)
-  Map<String, dynamic> info; // { the original non-modified unparsed reply from exchange API },
+  dynamic info; // { the original non-modified unparsed reply from exchange API },
   int? timestamp; // int (64-bit Unix Timestamp in milliseconds since Epoch 1 Jan 1970)
   String datetime; // ISO8601 datetime string with milliseconds
   double? high; // float, // highest price
@@ -19,11 +20,19 @@ class Ticker {
   double? close; // float, // price of last trade (closing price for current period)
   double? last; // float, // same as `close`, duplicated for convenience
   double? previousClose; // float, // closing price for the previous period
+  @JsonKey(
+    fromJson: _changeFromJson,
+  )
   double? change; // float, // absolute change, `last - open`
   double? percentage; // float, // relative change, `(change/open) * 100`
   double? average; // float, // average price, `(last + open) / 2`
   double? baseVolume; // float, // volume of base currency traded for last 24 hours
   double? quoteVolume; // float, // volume of quote currency traded for last 24 hours
+
+  static double? _changeFromJson(dynamic change) {
+    if (change == null) return null;
+    return NumUtil.getDoubleByValueStr(change.toString());
+  }
 
   Ticker(
     this.symbol,

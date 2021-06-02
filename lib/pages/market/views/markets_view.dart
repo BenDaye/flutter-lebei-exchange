@@ -3,7 +3,7 @@ import 'package:flutter_lebei_exchange/components/ccxt/controllers/symbol_contro
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/ticker_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/views/ticker_percentage_list_tile.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/home_list_header_view.dart';
-import 'package:flutter_lebei_exchange/pages/market/controllers/markets_controller.dart';
+import 'package:flutter_lebei_exchange/pages/market/controllers/markets_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/market/views/category_title_view.dart';
 import 'package:flutter_lebei_exchange/utils/http/models/ccxt/ticker.dart';
 import 'package:get/get.dart';

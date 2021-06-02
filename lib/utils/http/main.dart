@@ -30,6 +30,7 @@ class Http {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
     Options? options,
+    Function(dynamic)? handleError,
   }) async {
     Map<String, dynamic> _headers = HashMap<String, dynamic>();
     if (headers != null) _headers.addAll(headers);
@@ -47,22 +48,31 @@ class Http {
       return onSuccess<T>(result);
     } on DioError catch (error) {
       final httpError = onError<T>(error);
-      GetX.Get.showSnackbar(GetX.GetBar(
-        title: 'NETWORK_ERROR',
-        message: httpError.message,
-        snackPosition: GetX.SnackPosition.TOP,
-        snackStyle: GetX.SnackStyle.GROUNDED,
-        backgroundColor: Colors.red,
-      ));
+      if (handleError == null) {
+        GetX.Get.showSnackbar(GetX.GetBar(
+          title: 'NETWORK_ERROR',
+          message: httpError.message.length > 128 ? '${httpError.message.substring(0, 128)}...' : httpError.message,
+          snackPosition: GetX.SnackPosition.TOP,
+          snackStyle: GetX.SnackStyle.GROUNDED,
+          backgroundColor: Colors.red,
+        ));
+      } else {
+        handleError(error);
+      }
+
       return httpError;
     } catch (error) {
-      GetX.Get.showSnackbar(GetX.GetBar(
-        title: 'UNEXPECTED_NETWORK_ERROR',
-        message: error.toString(),
-        snackPosition: GetX.SnackPosition.TOP,
-        snackStyle: GetX.SnackStyle.GROUNDED,
-        backgroundColor: Colors.red,
-      ));
+      if (handleError == null) {
+        GetX.Get.showSnackbar(GetX.GetBar(
+          title: 'UNEXPECTED_NETWORK_ERROR',
+          message: error.toString().length > 128 ? '${error.toString().substring(0, 128)}...' : error.toString(),
+          snackPosition: GetX.SnackPosition.TOP,
+          snackStyle: GetX.SnackStyle.GROUNDED,
+          backgroundColor: Colors.red,
+        ));
+      } else {
+        handleError(error);
+      }
       return onError<T>(error);
     }
   }

@@ -9,7 +9,7 @@ part of 'ticker.dart';
 Ticker _$TickerFromJson(Map<String, dynamic> json) {
   return Ticker(
     json['symbol'] as String,
-    json['info'] as Map<String, dynamic>,
+    json['info'],
     json['timestamp'] as int?,
     json['datetime'] as String,
     (json['high'] as num?)?.toDouble(),
@@ -23,7 +23,7 @@ Ticker _$TickerFromJson(Map<String, dynamic> json) {
     (json['close'] as num?)?.toDouble(),
     (json['last'] as num?)?.toDouble(),
     (json['previousClose'] as num?)?.toDouble(),
-    (json['change'] as num?)?.toDouble(),
+    Ticker._changeFromJson(json['change']),
     (json['percentage'] as num?)?.toDouble(),
     (json['average'] as num?)?.toDouble(),
     (json['baseVolume'] as num?)?.toDouble(),

@@ -6,7 +6,7 @@ import 'package:flutter_lebei_exchange/pages/home/controllers/home_banner_view_c
 import 'package:flutter_lebei_exchange/pages/home/controllers/home_notice_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/home/controllers/home_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/main/controllers/main_controller.dart';
-import 'package:flutter_lebei_exchange/pages/market/controllers/markets_controller.dart';
+import 'package:flutter_lebei_exchange/pages/market/controllers/markets_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
 

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart' hide NestedScrollView;
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/helpers/helper.dart';
 import 'package:flutter_lebei_exchange/pages/market/controllers/market_view_controller.dart';
+import 'package:flutter_lebei_exchange/pages/market/views/exchange_list_view.dart';
+import 'package:flutter_lebei_exchange/pages/market/views/exchange_list_view_header.dart';
 import 'package:flutter_lebei_exchange/pages/market/views/market_drawer_view.dart';
 import 'package:flutter_lebei_exchange/pages/market/views/ohlcv_chart_view.dart';
 import 'package:flutter_lebei_exchange/pages/market/views/orderbook_list_view.dart';
@@ -109,11 +111,22 @@ class MarketView extends GetView<MarketViewController> {
                       children: [
                         Expanded(
                           child: NestedScrollViewInnerScrollPositionKeyWidget(
-                            controller.tabs.last.key!,
+                            controller.tabs[2].key!,
                             Container(
                               height: 1000,
                               color: Colors.blue,
                             ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        ExchangeListViewHeader(),
+                        Expanded(
+                          child: NestedScrollViewInnerScrollPositionKeyWidget(
+                            controller.tabs.last.key!,
+                            ExchangeListView(),
                           ),
                         ),
                       ],

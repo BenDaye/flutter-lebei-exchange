@@ -68,8 +68,9 @@ class ApiCcxt {
     return await http.request<List>(UrlCcxt.trades(exchangeId, symbol));
   }
 
-  static Future<HttpResult<Map<String, dynamic>>> ticker(String exchangeId, String symbol) async {
-    return await http.request<Map<String, dynamic>>(UrlCcxt.ticker(exchangeId, symbol));
+  static Future<HttpResult<Map<String, dynamic>>> ticker(String exchangeId, String symbol,
+      {Function(dynamic)? handleError}) async {
+    return await http.request<Map<String, dynamic>>(UrlCcxt.ticker(exchangeId, symbol), handleError: handleError);
   }
 
   static Future<HttpResult<Map<String, dynamic>>> tickers(String exchangeId, {List<String>? symbols}) async {
