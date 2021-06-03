@@ -48,9 +48,15 @@ class MarketDrawerViewController extends GetxController with SingleGetTickerProv
     switch (_index) {
       case 0:
         {
-          tickers.value = List<Ticker>.from(symbolController.favoriteSymbols
-              .map((s) => tickerController.tickers.firstWhere((t) => t.symbol == s))
-              .toList());
+          tickers.value = List<Ticker>.from(
+            symbolController.favoriteSymbols
+                .map(
+                  (s) => tickerController.tickers.firstWhere(
+                    (t) => t.symbol == s.replaceAll('_', '/'),
+                  ),
+                )
+                .toList(),
+          );
           break;
         }
       case 1:

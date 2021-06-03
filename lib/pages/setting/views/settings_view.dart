@@ -56,6 +56,7 @@ class SettingsView extends GetView<SettingsController> {
                   Icons.chevron_right,
                   color: Theme.of(context).dividerColor,
                 ),
+                enabled: false,
               ),
               ListTile(
                 leading: Icon(Icons.settings),
@@ -73,6 +74,7 @@ class SettingsView extends GetView<SettingsController> {
                   Icons.chevron_right,
                   color: Theme.of(context).dividerColor,
                 ),
+                enabled: false,
               ),
               ListTile(
                 leading: Icon(Icons.thumb_up),
@@ -81,6 +83,7 @@ class SettingsView extends GetView<SettingsController> {
                   Icons.chevron_right,
                   color: Theme.of(context).dividerColor,
                 ),
+                enabled: false,
               ),
             ],
           ),

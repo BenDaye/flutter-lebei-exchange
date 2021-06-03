@@ -34,7 +34,7 @@ class HomeNoticeView extends GetView<HomeNoticeViewController> {
                       enableInfiniteScroll: true,
                       reverse: false,
                       autoPlay: true,
-                      autoPlayInterval: Duration(seconds: 3),
+                      autoPlayInterval: Duration(milliseconds: 10 * 1000),
                       autoPlayAnimationDuration: Duration(milliseconds: 800),
                       autoPlayCurve: Curves.fastOutSlowIn,
                       pauseAutoPlayInFiniteScroll: true,

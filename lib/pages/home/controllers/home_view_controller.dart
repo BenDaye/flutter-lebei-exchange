@@ -44,7 +44,6 @@ class HomeViewController extends GetxController with SingleGetTickerProviderMixi
   }
 
   Future<bool> refreshPageData() async {
-    // return await Future.delayed(Duration(seconds: 3), () => true);
     await tickerController.getTickers(update: true);
     return true;
   }

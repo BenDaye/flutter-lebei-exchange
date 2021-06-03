@@ -45,7 +45,7 @@ class SymbolController extends GetxController {
         Get.snackbar(
           'Common.Text.Tips'.tr,
           'Common.Text.Dislike'.tr + '[$symbol]',
-          duration: Duration(seconds: 2),
+          duration: Duration(milliseconds: 2000),
           backgroundColor: Colors.red.withOpacity(.2),
           snackPosition: SnackPosition.BOTTOM,
         );
@@ -54,7 +54,7 @@ class SymbolController extends GetxController {
         Get.snackbar(
           'Common.Text.Tips'.tr,
           'Common.Text.Like'.tr + '[$symbol]',
-          duration: Duration(seconds: 2),
+          duration: Duration(milliseconds: 2000),
           backgroundColor: Colors.green.withOpacity(.2),
           snackPosition: SnackPosition.BOTTOM,
         );

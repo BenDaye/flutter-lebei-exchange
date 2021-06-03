@@ -24,7 +24,7 @@ class HomeGuideListTile extends StatelessWidget {
         onTap: () => Get.snackbar(
           'Common.Text.Tips'.tr,
           'TODO',
-          duration: Duration(seconds: 2),
+          duration: Duration(milliseconds: 2000),
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.orangeAccent.withOpacity(.2),
         ),

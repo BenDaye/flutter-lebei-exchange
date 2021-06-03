@@ -26,7 +26,7 @@ class ExchangeController extends GetxController {
         'Common.Text.SwitchExchangeId'.tr + '[$exchangeId]',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.green.withOpacity(.2),
-        duration: Duration(seconds: 2),
+        duration: Duration(milliseconds: 2000),
       );
     }
   }
