@@ -1,3 +1,4 @@
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/ohlcv_controller.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_lebei_exchange/components/ccxt/controllers/orderbook_con
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/ticker_controller.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/trade_controller.dart';
+import 'package:flutter_lebei_exchange/pages/setting/controllers/settings_controller.dart';
 import 'package:flutter_lebei_exchange/utils/http/models/ccxt/market.dart';
 import 'package:flutter_lebei_exchange/utils/http/models/ccxt/orderbook.dart';
 import 'package:flutter_lebei_exchange/utils/http/models/ccxt/ticker.dart';
@@ -20,6 +22,7 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
   final OhlcvController ohlcvController = Get.find<OhlcvController>();
   final OrderBookController orderBookController = Get.find<OrderBookController>();
   final TradeController tradeController = Get.find<TradeController>();
+  final SettingsController settingsController = Get.find<SettingsController>();
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -74,11 +77,18 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
       .toList()
       .obs;
   late TabController klineTabController;
-  final period = 'MarketPage.Period.1m'.obs;
+  final period = '1m'.obs;
+
+  final timer = new TimerUtil(mInterval: 60 * 1000);
+  late Worker timerWorker;
 
   @override
   void onInit() {
     super.onInit();
+
+    timerWorker = debounce(settingsController.autoRefresh, watchAutoRefresh, time: Duration(milliseconds: 800));
+    timer.setOnTimerTickCallback(handleTimer);
+
     tabController = TabController(length: tabs.length, vsync: this);
     tabController.addListener(tabControllerListener);
     klineTabController = TabController(
@@ -91,21 +101,35 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
   @override
   void onReady() {
     super.onReady();
+
+    watchAutoRefresh(settingsController.autoRefresh.value);
+
     ever(symbolController.currentSymbol, watchSymbol);
-    watchSymbol(symbolController.currentSymbol.value);
     ever(ohlcv, watchOhlcv);
     ever(depth, watchDepth);
-    // !!!: 防止过快切换
+
     debounce(period, watchPeriod, time: Duration(milliseconds: 300));
   }
 
   @override
   void onClose() {
+    timerWorker.dispose();
+    timer.cancel();
+
     tabController.removeListener(tabControllerListener);
     tabController.dispose();
     klineTabController.removeListener(klineTabControllerListener);
     klineTabController.dispose();
+
     super.onClose();
+  }
+
+  void watchAutoRefresh(double _m) {
+    if (timer.isActive()) timer.cancel();
+    if (!_m.isEqual(0)) {
+      timer.setInterval(_m.toInt() * 1000);
+      timer.startTimer();
+    }
   }
 
   void watchSymbol(String _symbol) async {
@@ -113,8 +137,11 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
     this.getMarket(_symbol, update: true);
     this.getTicker(_symbol, update: true);
     this.getOhlcv(_symbol, update: true);
-    this.getOrderBook(_symbol, update: true);
-    // this.getDepth(_symbol, update: true);
+    if (period.value == 'depth') {
+      this.getDepth(_symbol, update: true);
+    } else {
+      this.getOrderBook(_symbol, update: true);
+    }
     this.getTrades(_symbol, update: true);
   }
 
@@ -139,12 +166,22 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
   }
 
   void watchDepth(OrderBook _depth) {
-    final _bids =
-        List<DepthEntity>.from(_depth.bids.map((item) => DepthEntity(item[0].toDouble(), item[1].toDouble()))).toList();
-    // _bids.sort((a, b) => b.price.compareTo(a.price));
-    final _asks =
-        List<DepthEntity>.from(_depth.asks.map((item) => DepthEntity(item[0].toDouble(), item[1].toDouble()))).toList();
-    // _asks.sort((a, b) => b.price.compareTo(a.price));
+    final _bids = List<DepthEntity>.from(
+      _depth.bids.map(
+        (item) => DepthEntity(
+          item[0].toDouble(),
+          item[1].toDouble(),
+        ),
+      ),
+    ).toList();
+    final _asks = List<DepthEntity>.from(
+      _depth.asks.map(
+        (item) => DepthEntity(
+          item[0].toDouble(),
+          item[1].toDouble(),
+        ),
+      ),
+    ).toList();
 
     depthBids.value = _bids;
     depthAsks.value = _asks;
@@ -165,8 +202,12 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
   }
 
   void klineTabControllerListener() {
-    period.value =
-        new RegExp(r"(?<=').*?(?=')").stringMatch(klineTabs[klineTabController.index].key!.toString())!.split('.').last;
+    period.value = new RegExp(r"(?<=').*?(?=')")
+        .stringMatch(
+          klineTabs[klineTabController.index].key!.toString(),
+        )!
+        .split('.')
+        .last;
   }
 
   Future<Market?> getMarket(String? _symbol, {bool? update}) async {
@@ -236,6 +277,21 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
   }
 
   void toggleShowKlineSetting() {
-    showKlineSettings.value = !showKlineSettings.value;
+    showKlineSettings.toggle();
+  }
+
+  Future handleTimer(int tick) async {
+    print('MarketViewController AutoRefresh ==> $tick, Timer: ${timer.mInterval}');
+    if (symbolController.currentSymbol.value.isEmpty) return;
+
+    this.getMarket(symbolController.currentSymbol.value, update: true);
+    this.getTicker(symbolController.currentSymbol.value, update: true);
+    if (period.value == 'depth') {
+      this.getDepth(symbolController.currentSymbol.value, update: true);
+    } else {
+      this.getOhlcv(symbolController.currentSymbol.value, update: true, period: period.value);
+    }
+    this.getOrderBook(symbolController.currentSymbol.value, update: true);
+    this.getTrades(symbolController.currentSymbol.value, update: true);
   }
 }

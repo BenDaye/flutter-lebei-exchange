@@ -55,7 +55,7 @@ class OhlcvChartView extends GetView<MarketViewController> {
             alignment: Alignment.topCenter,
             children: [
               Container(
-                height: 450,
+                height: 420,
                 width: double.infinity,
                 child: controller.period.value == 'depth'
                     ? DepthChart(
@@ -153,11 +153,11 @@ class OhlcvChartView extends GetView<MarketViewController> {
 class CustomChartStyle extends ChartStyle {
   CustomChartStyle({
     this.pointWidth = 11.0,
-    this.candleWidth = 8.5,
+    this.candleWidth = 6.5,
     this.candleLineWidth = 1.5,
-    this.volWidth = 8.5,
+    this.volWidth = 6.5,
     this.macdWidth = 3.0,
-    this.vCrossWidth = 8.5,
+    this.vCrossWidth = 6.5,
     this.hCrossWidth = 0.5,
   });
   //点与点的距离

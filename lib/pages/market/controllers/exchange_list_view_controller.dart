@@ -5,6 +5,7 @@ import 'package:flutter_lebei_exchange/components/ccxt/controllers/market_contro
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/utils/http/models/ccxt/ticker.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class TickerForRender {
   TickerForRender(
@@ -27,6 +28,8 @@ class ExchangeListViewController extends GetxController {
   final SymbolController symbolController = Get.find<SymbolController>();
   final MarketController marketController = Get.find<MarketController>();
 
+  final RefreshController refreshController = RefreshController(initialRefresh: true);
+
   final exchangesMap = <String, Ticker>{}.obs;
   final exchanges = <TickerForRender>[].obs;
 
@@ -34,36 +37,41 @@ class ExchangeListViewController extends GetxController {
 
   final sortType = SortType.PriceDesc.obs;
 
+  late Worker exchangesWorker;
+  late Worker currentSymbolWorker;
+
   @override
   void onInit() {
     super.onInit();
-    ever(exchangeController.exchanges, watchExchanges);
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
-    watchExchanges(exchangeController.exchanges);
+    exchangesWorker = ever(exchangeController.exchanges, watchExchanges);
+    currentSymbolWorker = debounce(
+      symbolController.currentSymbol,
+      watchCurrentSymbol,
+      time: Duration(milliseconds: 500),
+    );
+
     ever(exchangesMap, watchExchangesMap);
-    debounce(symbolController.currentSymbol, watchCurrentSymbol, time: Duration(milliseconds: 500));
     debounce(sortType, watchSortType, time: Duration(milliseconds: 300));
   }
 
   @override
   void onClose() {
+    exchangesWorker.dispose();
+    currentSymbolWorker.dispose();
     refreshing.value = false;
+    refreshController.refreshCompleted();
+    refreshController.dispose();
     super.onClose();
   }
 
-  Future watchCurrentSymbol(String _symbol) async {
-    exchangesMap.clear();
-    refreshing.value = false;
-    await Future.delayed(Duration(milliseconds: 800));
+  void watchCurrentSymbol(String _symbol) async {
+    await beforeRefresh();
     onRefresh(exchangeController.exchanges);
   }
 
-  void watchExchanges(List<String> _exchanges) {
-    exchangesMap.clear();
+  void watchExchanges(List<String> _exchanges) async {
+    await beforeRefresh();
     onRefresh(_exchanges);
   }
 
@@ -117,9 +125,16 @@ class ExchangeListViewController extends GetxController {
     exchanges.value = _exchanges;
   }
 
+  Future beforeRefresh() async {
+    exchangesMap.clear();
+    refreshing.value = false;
+    await Future.delayed(Duration(milliseconds: 800));
+    refreshing.value = true;
+  }
+
   Future onRefresh(List<String> _exchanges) async {
     if (_exchanges.isEmpty || symbolController.currentSymbol.isEmpty) return;
-    refreshing.value = true;
+
     for (String exchange in _exchanges) {
       if (refreshing.isFalse) break;
       await Future.delayed(Duration(milliseconds: 500));
@@ -127,7 +142,14 @@ class ExchangeListViewController extends GetxController {
 
       getTicker(exchange);
     }
+
     refreshing.value = false;
+  }
+
+  Future onRefreshExchange() async {
+    await beforeRefresh();
+    await onRefresh(exchangeController.exchanges);
+    refreshController.refreshCompleted();
   }
 
   Future getTicker(String _exchange) async {
