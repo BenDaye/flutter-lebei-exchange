@@ -52,7 +52,7 @@ class Http {
         GetX.Get.showSnackbar(GetX.GetBar(
           title: 'NETWORK_ERROR',
           message: httpError.message.length > 128 ? '${httpError.message.substring(0, 128)}...' : httpError.message,
-          snackPosition: GetX.SnackPosition.TOP,
+          snackPosition: GetX.SnackPosition.BOTTOM,
           snackStyle: GetX.SnackStyle.GROUNDED,
           backgroundColor: Colors.red,
         ));
@@ -66,7 +66,7 @@ class Http {
         GetX.Get.showSnackbar(GetX.GetBar(
           title: 'UNEXPECTED_NETWORK_ERROR',
           message: error.toString().length > 128 ? '${error.toString().substring(0, 128)}...' : error.toString(),
-          snackPosition: GetX.SnackPosition.TOP,
+          snackPosition: GetX.SnackPosition.BOTTOM,
           snackStyle: GetX.SnackStyle.GROUNDED,
           backgroundColor: Colors.red,
         ));

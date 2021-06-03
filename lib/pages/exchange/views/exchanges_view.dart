@@ -108,7 +108,10 @@ class ExchangesView extends GetView<ExchangeViewController> {
                 onVerticalDragUpdate: (DragUpdateDetails details) {
                   controller.currentOffsetY.value = details.localPosition.dy;
                 },
-                behavior: HitTestBehavior.translucent,
+                onTapDown: (TapDownDetails details) {
+                  controller.currentOffsetY.value = details.localPosition.dy;
+                },
+                behavior: HitTestBehavior.opaque,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: controller.indexes

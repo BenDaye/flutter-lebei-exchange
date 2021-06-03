@@ -20,7 +20,7 @@ class ExchangeViewController extends GetxController {
     super.onReady();
     ever(indexes, watchIndexes);
     debounce(currentOffsetY, watchOffsetY, time: Duration(milliseconds: 100));
-    this.getIndexes();
+    getIndexes();
     itemPositionsListener.itemPositions.addListener(watchItemPositions);
   }
 
@@ -41,7 +41,7 @@ class ExchangeViewController extends GetxController {
         : offsetY ~/ (itemHeight.value) > (indexes.length - 1)
             ? indexes.length - 1
             : offsetY ~/ (itemHeight.value);
-    this.onClickIndex(indexes[_index]);
+    scrollToIndex(indexes[_index]);
   }
 
   void watchItemPositions() {
@@ -65,11 +65,11 @@ class ExchangeViewController extends GetxController {
     indexes.value = _indexes;
   }
 
-  void onClickIndex(String index) {
+  void scrollToIndex(String index) {
     itemScrollController.scrollTo(
       index: indexMap[index] ?? 0,
-      duration: Duration(milliseconds: 300),
-      curve: Curves.fastLinearToSlowEaseIn,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.linear,
     );
   }
 }

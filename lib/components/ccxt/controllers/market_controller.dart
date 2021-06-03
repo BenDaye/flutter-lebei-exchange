@@ -17,7 +17,7 @@ class MarketController extends GetxController {
   }
 
   void watchCurrentExchangeId(String _exchangeId) {
-    this.getMarkets(exchangeId: _exchangeId, update: true);
+    getMarkets(exchangeId: _exchangeId, update: true);
   }
 
   Future<Map<String, Market>> getMarkets({String? exchangeId, bool? update}) async {

@@ -19,7 +19,7 @@ class TickerController extends GetxController {
   }
 
   void watchCurrentExchangeId(String _exchangeId) {
-    this.getTickers(exchangeId: _exchangeId, update: true);
+    getTickers(exchangeId: _exchangeId, update: true);
   }
 
   Future<Map<String, Ticker>> getTickers({String? exchangeId, bool? update, List<String>? symbols}) async {

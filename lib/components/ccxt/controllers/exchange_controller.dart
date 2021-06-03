@@ -10,23 +10,24 @@ class ExchangeController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    await this.getExchanges(update: true);
+    await getExchanges(update: true);
     ever(currentExchangeId, watchCurrentExchangeId);
-    this.updateCurrentExchangeId(SpUtil.getString('currentExchangeId') ?? '');
+    updateCurrentExchangeId(SpUtil.getString('currentExchangeId') ?? '');
   }
 
   void watchCurrentExchangeId(String exchangeId) async {
     if (exchangeId.isEmpty) {
       Get.toNamed('/exchanges');
     } else {
-      Get.back();
-      Get.showSnackbar(GetBar(
-        messageText: Text('已切换至[$exchangeId]'),
-        snackStyle: SnackStyle.GROUNDED,
-        snackPosition: SnackPosition.TOP,
+      if (Get.currentRoute != '/') Get.back();
+
+      Get.snackbar(
+        'Common.Text.Tips'.tr,
+        'Common.Text.SwitchExchangeId'.tr + '[$exchangeId]',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green.withOpacity(.2),
         duration: Duration(seconds: 2),
-        backgroundColor: Colors.green,
-      ));
+      );
     }
   }
 

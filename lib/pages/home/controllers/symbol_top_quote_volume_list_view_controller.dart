@@ -24,7 +24,7 @@ class SymbolTopQuoteVolumeListViewController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    this.watchTickers([]);
+    watchTickers([]);
   }
 
   void watchTickers(List<Ticker> list) {

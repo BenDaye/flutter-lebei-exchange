@@ -18,7 +18,7 @@ class SymbolController extends GetxController {
   }
 
   void watchCurrentExchangeId(String _exchangeId) {
-    this.getSymbols(exchangeId: _exchangeId, update: true);
+    getSymbols(exchangeId: _exchangeId, update: true);
   }
 
   void watchCurrentSymbol(String _symbol) {
@@ -43,8 +43,8 @@ class SymbolController extends GetxController {
       if (favoriteSymbols.contains(symbol)) {
         favoriteSymbols.remove(symbol);
         Get.snackbar(
-          'Tips',
-          '已将$symbol移除自选',
+          'Common.Text.Tips'.tr,
+          'Common.Text.Dislike'.tr + '[$symbol]',
           duration: Duration(seconds: 2),
           backgroundColor: Colors.red.withOpacity(.2),
           snackPosition: SnackPosition.BOTTOM,
@@ -52,8 +52,8 @@ class SymbolController extends GetxController {
       } else {
         favoriteSymbols.add(symbol);
         Get.snackbar(
-          'Tips',
-          '已将$symbol添加自选',
+          'Common.Text.Tips'.tr,
+          'Common.Text.Like'.tr + '[$symbol]',
           duration: Duration(seconds: 2),
           backgroundColor: Colors.green.withOpacity(.2),
           snackPosition: SnackPosition.BOTTOM,
