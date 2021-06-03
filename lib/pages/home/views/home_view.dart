@@ -5,7 +5,6 @@ import 'package:flutter_lebei_exchange/pages/home/controllers/symbol_top_base_vo
 import 'package:flutter_lebei_exchange/pages/home/controllers/symbol_top_percentage_list_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/home/controllers/symbol_top_quote_volume_list_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/home_banner_view.dart';
-import 'package:flutter_lebei_exchange/pages/home/views/home_google_ad_banner_view.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/home_google_ad_list_tile.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/home_guide_list_tile.dart';
 import 'package:flutter_lebei_exchange/pages/home/views/home_list_header_view.dart';

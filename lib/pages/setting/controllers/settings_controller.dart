@@ -1,6 +1,7 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/api/juhe.dart';
+import 'package:flutter_lebei_exchange/assets/translations/main.dart';
 import 'package:flutter_lebei_exchange/utils/http/models/juhe/exchange.dart';
 import 'package:get/get.dart';
 import 'package:wakelock/wakelock.dart';
@@ -40,8 +41,7 @@ class SettingsController extends GetxController {
   void onReady() async {
     super.onReady();
     themeMode.value = SpUtil.getString('themeMode') == 'dark' ? ThemeMode.dark : ThemeMode.light;
-    // TODO: 本地存储语言
-    locale.value = SpUtil.getString('locale') == 'zh-CN' ? Locale('zh', 'CN') : Locale('en', 'US');
+    _initLocale();
     currency.value = SpUtil.getString('currency') ?? 'USD';
     advanceDeclineColorMode.value = AdvanceDeclineColorMode.values[SpUtil.getInt('color') ?? 0];
     if (advanceDeclineColorMode.value == AdvanceDeclineColorMode.AdvanceRed) {
@@ -50,6 +50,30 @@ class SettingsController extends GetxController {
 
     wakelock.value = await Wakelock.enabled;
     autoRefresh.value = SpUtil.getDouble('autoRefresh') ?? 60.0;
+  }
+
+  void _initLocale() {
+    String? _localeString = SpUtil.getString('locale');
+    Locale _locale;
+    switch (_localeString) {
+      case 'zh-CN':
+        {
+          _locale = Locale('zh', 'CN');
+        }
+        break;
+      default:
+        {
+          _locale = Locale('en', 'US');
+        }
+        break;
+    }
+
+    if (TranslationService.supportLanguages.contains(_locale)) {
+      locale.value = _locale;
+    } else {
+      SpUtil.remove('locale');
+      locale.value = TranslationService.fallbackLocale;
+    }
   }
 
   void watchCurrency(String _code) {
