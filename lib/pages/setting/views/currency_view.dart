@@ -3,7 +3,8 @@ import 'package:flutter_lebei_exchange/pages/setting/controllers/currency_view_c
 import 'package:flutter_lebei_exchange/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
 
-class CurrencyView extends GetView<CurrencyViewController> {
+class CurrencyView extends StatelessWidget {
+  final CurrencyViewController currencyViewController = Get.put<CurrencyViewController>(CurrencyViewController());
   final SettingsController settingsController = Get.find<SettingsController>();
 
   @override
@@ -27,11 +28,11 @@ class CurrencyView extends GetView<CurrencyViewController> {
               child: Obx(
                 () => ListView.builder(
                   itemBuilder: (BuildContext context, int index) => ListTile(
-                    title: Text(controller.codes[index].code),
-                    selected: settingsController.currency.value == controller.codes[index].code,
-                    onTap: () => settingsController.onChangeCurrency(controller.codes[index].code),
+                    title: Text(currencyViewController.codes[index].code),
+                    selected: settingsController.currency.value == currencyViewController.codes[index].code,
+                    onTap: () => settingsController.onChangeCurrency(currencyViewController.codes[index].code),
                   ),
-                  itemCount: controller.codes.length,
+                  itemCount: currencyViewController.codes.length,
                 ),
               ),
             ),

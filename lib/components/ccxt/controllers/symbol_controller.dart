@@ -1,3 +1,4 @@
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/api/ccxt.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/exchange_controller.dart';
@@ -14,15 +15,21 @@ class SymbolController extends GetxController {
   void onInit() {
     super.onInit();
     ever(exchangeController.currentExchangeId, watchCurrentExchangeId);
-    ever(currentSymbol, watchCurrentSymbol);
+    ever(favoriteSymbols, watchFavoriteSymbols);
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    favoriteSymbols.value = SpUtil.getStringList('favoriteSymbols', defValue: []) ?? [];
   }
 
   void watchCurrentExchangeId(String _exchangeId) {
     getSymbols(exchangeId: _exchangeId, update: true);
   }
 
-  void watchCurrentSymbol(String _symbol) {
-    print(_symbol);
+  void watchFavoriteSymbols(List<String> _symbols) {
+    SpUtil.putStringList('favoriteSymbols', _symbols);
   }
 
   Future<List<String>> getSymbols({String? exchangeId, bool? update}) async {

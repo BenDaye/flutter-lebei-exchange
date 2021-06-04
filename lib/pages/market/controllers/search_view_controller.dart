@@ -44,6 +44,7 @@ class SearchViewController extends GetxController {
         (e) => e.startsWith(_query.trim().toUpperCase()),
       ),
     ).toList();
+    _symbol.removeWhere((e) => e.contains(RegExp(r"[1-9]\d*[LS]")));
     _symbol.sort((a, b) => a.compareTo(b));
 
     symbols.value = _symbol;

@@ -3,11 +3,9 @@ import 'package:flutter_lebei_exchange/pages/exchange/views/exchanges_view.dart'
 import 'package:flutter_lebei_exchange/pages/main/bindings/main_binding.dart';
 import 'package:flutter_lebei_exchange/pages/main/views/main_view.dart';
 import 'package:flutter_lebei_exchange/pages/market/bindings/market_binding.dart';
-import 'package:flutter_lebei_exchange/pages/market/controllers/search_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/market/views/market_view.dart';
 import 'package:flutter_lebei_exchange/pages/market/views/search_view.dart';
 import 'package:flutter_lebei_exchange/pages/setting/bindings/settings_binding.dart';
-import 'package:flutter_lebei_exchange/pages/setting/controllers/currency_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/setting/views/currency_view.dart';
 import 'package:flutter_lebei_exchange/pages/setting/views/general_view.dart';
 import 'package:flutter_lebei_exchange/pages/setting/views/language_view.dart';
@@ -64,10 +62,6 @@ class Pages {
             GetPage(
               name: Routes.SETTINGS_GENERAL_CURRENCY,
               page: () => CurrencyView(),
-              // ignore: top_level_function_literal_block
-              binding: BindingsBuilder(() {
-                Get.lazyPut<CurrencyViewController>(() => CurrencyViewController());
-              }),
             ),
           ],
         ),

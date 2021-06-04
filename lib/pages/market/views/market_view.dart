@@ -44,9 +44,7 @@ class MarketView extends GetView<MarketViewController> {
         ),
         centerTitle: false,
         automaticallyImplyLeading: false,
-        leading: BackButton(
-          onPressed: () => Get.until((route) => route.settings.name == '/'),
-        ),
+        leading: BackButton(),
         actions: [
           Obx(
             () => IconButton(

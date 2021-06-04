@@ -14,6 +14,7 @@ const Map<String, String> en_US = {
   'MarketsPage.AppBar.Spot': 'Spot',
   'MarketsPage.AppBar.Margin': 'Margin',
   'MarketsPage.Search.Hint': 'Search symbol',
+  'MarketsPage.Search.Recommanded': 'Recommanded',
   'MainBottomNavy.Home': 'Home',
   'MainBottomNavy.Market': 'Markets',
   'MainBottomNavy.Trade': 'Trades',

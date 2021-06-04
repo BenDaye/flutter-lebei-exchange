@@ -41,25 +41,44 @@ class SearchMarketView extends StatelessWidget {
                 child: Obx(
                   () => Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: searchViewController.symbols
-                        .map<ListTile>(
-                          (e) => ListTile(
-                            dense: true,
-                            title: Text(e),
-                            trailing: Icon(
-                              Icons.chevron_right,
-                              size: 14,
-                              color: Theme.of(context).dividerColor,
+                    children: searchViewController.symbols.isNotEmpty
+                        ? searchViewController.symbols
+                            .map<ListTile>(
+                              (e) => ListTile(
+                                title: Text(e),
+                                trailing: Icon(
+                                  Icons.chevron_right,
+                                  size: 14,
+                                  color: Theme.of(context).dividerColor,
+                                ),
+                                selected: searchViewController.symbolController.favoriteSymbols.contains(e),
+                                onTap: () {
+                                  searchViewController.floatingSearchBarController.close();
+                                  searchViewController.symbolController.onChangeCurrentSymbol(e);
+                                  Get.toNamed('/market');
+                                },
+                                onLongPress: () {
+                                  searchViewController.symbolController.toggleFavoriteSymbol(e);
+                                },
+                              ),
+                            )
+                            .toList()
+                        : [
+                            ListTile(
+                              title: Text('MarketsPage.Search.Recommanded'.tr),
+                              subtitle: Wrap(
+                                spacing: 16,
+                                children: <String>['BTC', 'ETH', 'DOGE', 'SHIB', 'XCH', 'FIL']
+                                    .map<OutlinedButton>(
+                                      (String e) => OutlinedButton(
+                                        onPressed: () => searchViewController.floatingSearchBarController.query = e,
+                                        child: Text(e),
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
                             ),
-                            selected: searchViewController.symbolController.favoriteSymbols.contains(e),
-                            onTap: () {
-                              searchViewController.floatingSearchBarController.close();
-                              searchViewController.symbolController.onChangeCurrentSymbol(e);
-                              Get.toNamed('/market');
-                            },
-                          ),
-                        )
-                        .toList(),
+                          ],
                   ),
                 ),
               ),
