@@ -15,55 +15,120 @@ class MarketDrawerView extends StatelessWidget {
   final MarketViewController marketViewController = Get.find<MarketViewController>();
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          title: Align(
-            alignment: Alignment.centerLeft,
-            child: TabBar(
-              tabs: marketDrawerViewController.tabs
-                  .map(
-                    (t) => Tab(
-                      text: t.tr,
-                      key: Key(t),
-                    ),
-                  )
-                  .toList(),
-              controller: marketDrawerViewController.tabController,
-              isScrollable: true,
-              indicatorSize: TabBarIndicatorSize.label,
-              labelPadding: EdgeInsets.symmetric(horizontal: 8),
-            ),
-          ),
-        ),
-        body: Obx(
-          () => ListView.builder(
-            itemBuilder: (BuildContext context, int index) => ListTile(
-              dense: true,
-              title: CcxtHelper.getSymbolTitle(
-                marketDrawerViewController.tickers[index].symbol,
-                baseTextStyle: Get.context?.textTheme.bodyText2,
+    return GestureDetector(
+      onPanDown: (_) {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Drawer(
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            elevation: 0,
+            title: Align(
+              alignment: Alignment.centerLeft,
+              child: TabBar(
+                tabs: marketDrawerViewController.tabs
+                    .map(
+                      (t) => Tab(
+                        text: t.tr,
+                        key: Key(t),
+                      ),
+                    )
+                    .toList(),
+                controller: marketDrawerViewController.tabController,
+                isScrollable: true,
+                indicatorSize: TabBarIndicatorSize.label,
+                labelPadding: EdgeInsets.symmetric(horizontal: 8),
               ),
-              trailing: Text(
-                '${marketController.formatPriceByPrecision(marketDrawerViewController.tickers[index])}',
-                style: TextStyle(
-                  color: CcxtHelper.getPercentageColor(
-                    settingsController.advanceDeclineColors,
-                    marketDrawerViewController.tickers[index].percentage,
+            ),
+            centerTitle: false,
+          ),
+          body: Obx(
+            () => Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          color: Theme.of(context).focusColor,
+                          child: TextField(
+                            controller: marketDrawerViewController.textEditingController,
+                            textInputAction: TextInputAction.search,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.search,
+                                size: 16,
+                                color: Theme.of(context).unselectedWidgetColor,
+                              ),
+                              border: InputBorder.none,
+                              counterStyle: TextStyle(height: double.minPositive),
+                              counterText: '',
+                            ),
+                            textCapitalization: TextCapitalization.characters,
+                            maxLength: 12,
+                          ),
+                        ),
+                      ),
+                      Obx(
+                        () => marketDrawerViewController.query.isEmpty
+                            ? Container()
+                            : InkWell(
+                                child: Container(
+                                  width: 48,
+                                  color: Theme.of(context).focusColor,
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.clear,
+                                      size: 16,
+                                      color: Theme.of(context).unselectedWidgetColor,
+                                    ),
+                                  ),
+                                ),
+                                onTap: () => marketDrawerViewController.textEditingController.clear(),
+                              ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              selected: symbolController.currentSymbol.value.replaceAll('_', '/') ==
-                  marketDrawerViewController.tickers[index].symbol,
-              selectedTileColor: Theme.of(context).accentColor.withOpacity(.2),
-              onTap: () {
-                symbolController.onChangeCurrentSymbol(marketDrawerViewController.tickers[index].symbol);
-                Get.back();
-              },
+                Divider(height: 1),
+                Expanded(
+                  child: ListView.builder(
+                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                    itemBuilder: (BuildContext context, int index) => ListTile(
+                      dense: true,
+                      title: CcxtHelper.getSymbolTitle(
+                        marketDrawerViewController.tickers[index].symbol,
+                        baseTextStyle: Get.context?.textTheme.bodyText2,
+                      ),
+                      trailing: Text(
+                        '${marketController.formatPriceByPrecision(marketDrawerViewController.tickers[index])}',
+                        style: TextStyle(
+                          color: CcxtHelper.getPercentageColor(
+                            settingsController.advanceDeclineColors,
+                            marketDrawerViewController.tickers[index].percentage,
+                          ),
+                        ),
+                      ),
+                      selected: symbolController.currentSymbol.value.replaceAll('_', '/') ==
+                          marketDrawerViewController.tickers[index].symbol,
+                      selectedTileColor: Theme.of(context).accentColor.withOpacity(.2),
+                      onTap: () {
+                        symbolController.onChangeCurrentSymbol(marketDrawerViewController.tickers[index].symbol);
+                        Get.back();
+                      },
+                    ),
+                    itemCount: marketDrawerViewController.tickers.length,
+                  ),
+                ),
+              ],
             ),
-            itemCount: marketDrawerViewController.tickers.length,
           ),
         ),
       ),

@@ -8,6 +8,8 @@ class MarketDrawerViewController extends GetxController with SingleGetTickerProv
   final TickerController tickerController = Get.find<TickerController>();
   final SymbolController symbolController = Get.find<SymbolController>();
 
+  TextEditingController textEditingController = TextEditingController();
+
   final tabs = [
     'MarketDrawer.Tab.Favorites',
     'MarketDrawer.Tab.All',
@@ -20,11 +22,15 @@ class MarketDrawerViewController extends GetxController with SingleGetTickerProv
 
   final tickers = <Ticker>[].obs;
 
+  late Worker queryWorker;
+  final query = ''.obs;
+
   @override
   void onInit() {
+    super.onInit();
     tabController = TabController(length: tabs.length, vsync: this);
     tabController.addListener(tabControllerListener);
-    super.onInit();
+    textEditingController.addListener(watchEditing);
   }
 
   @override
@@ -32,12 +38,29 @@ class MarketDrawerViewController extends GetxController with SingleGetTickerProv
     super.onReady();
     ever(tickerController.tickers, wacthTickers);
     debounce(currentTabIndex, watchCurrenctTabIndex, time: Duration(milliseconds: 300));
+    watchCurrenctTabIndex(0);
+
+    queryWorker = debounce(query, watchQuery, time: Duration(milliseconds: 300));
   }
 
   @override
   void onClose() {
+    queryWorker.dispose();
     tabController.dispose();
+    textEditingController.removeListener(watchEditing);
     super.onClose();
+  }
+
+  void watchEditing() {
+    query.value = textEditingController.text;
+  }
+
+  void watchQuery(String _query) {
+    if (_query.isEmpty) return watchCurrenctTabIndex(currentTabIndex.value);
+    final _tickers = List<Ticker>.from(tickerController.filterTickers())
+        .where((e) => e.symbol.startsWith(_query.trim().toUpperCase()))
+        .toList();
+    tickers.value = _tickers;
   }
 
   void tabControllerListener() {

@@ -28,10 +28,7 @@ class MarketView extends GetView<MarketViewController> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
-                  Icons.format_indent_increase,
-                  size: 22,
-                ),
+                Icon(Icons.lunch_dining, size: 22),
                 SizedBox(width: 4.0),
                 Text(
                   CcxtHelper.getSymbolTitleText(symbolController.currentSymbol.value.replaceAll('_', '/')),
