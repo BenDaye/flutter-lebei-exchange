@@ -306,7 +306,7 @@ class LocalExchange {
     LocalExchangeModel(
       id: 'delta',
       icon: 'https://user-images.githubusercontent.com/1294454/99450025-3be60a00-2931-11eb-9302-f4fd8d8589aa.jpg',
-      name: 'Delta LocalExchangeModel',
+      name: 'Delta Exchange',
     ),
     LocalExchangeModel(
       id: 'deribit',
@@ -486,7 +486,7 @@ class LocalExchange {
     LocalExchangeModel(
       id: 'okex5',
       icon: 'https://user-images.githubusercontent.com/1294454/32552768-0d6dd3c6-c4a6-11e7-90f8-c043b64756a7.jpg',
-      name: 'OKEX',
+      name: 'OKEX5',
     ),
     LocalExchangeModel(
       id: 'paymium',
@@ -561,12 +561,12 @@ class LocalExchange {
     LocalExchangeModel(
       id: 'vcc',
       icon: 'https://user-images.githubusercontent.com/1294454/100545356-8427f500-326c-11eb-9539-7d338242d61b.jpg',
-      name: 'VCC LocalExchangeModel',
+      name: 'VCC Exchange',
     ),
     LocalExchangeModel(
       id: 'wavesexchange',
       icon: 'https://user-images.githubusercontent.com/1294454/84547058-5fb27d80-ad0b-11ea-8711-78ac8b3c7f31.jpg',
-      name: 'Waves.LocalExchangeModel',
+      name: 'Waves.Exchange',
     ),
     LocalExchangeModel(
       id: 'whitebit',
@@ -576,7 +576,7 @@ class LocalExchange {
     LocalExchangeModel(
       id: 'xena',
       icon: 'https://user-images.githubusercontent.com/51840849/87489843-bb469280-c64c-11ea-91aa-69c6326506af.jpg',
-      name: 'Xena LocalExchangeModel',
+      name: 'Xena Exchange',
     ),
     LocalExchangeModel(
       id: 'yobit',
