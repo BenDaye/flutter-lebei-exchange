@@ -10,7 +10,7 @@ class HomeGoogleAdListTileController extends GetxController {
   void onInit() {
     super.onInit();
     bannerAd = BannerAd(
-      size: AdSize.largeBanner,
+      size: SmartBannerAdSize(Get.context!.orientation),
       adUnitId: AdHelper.bannerAdUnitId,
       listener: BannerAdListener(
         onAdLoaded: (_) {
@@ -20,7 +20,7 @@ class HomeGoogleAdListTileController extends GetxController {
           // Releases an ad resource when it fails to load
           ad.dispose();
 
-          print('Ad load failed (code=${error.code} message=${error.message})');
+          throw ('Ad load failed (code=${error.code} message=${error.message})');
         },
       ),
       request: AdRequest(),

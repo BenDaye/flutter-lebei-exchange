@@ -8,6 +8,7 @@ class ExchangeViewController extends GetxController {
   final ItemScrollController itemScrollController = ItemScrollController();
   final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
 
+  final currentIndex = ''.obs;
   final indexes = <String>[].obs;
   final indexMap = <String, int>{}.obs;
 
@@ -21,12 +22,11 @@ class ExchangeViewController extends GetxController {
     ever(indexes, watchIndexes);
     debounce(currentOffsetY, watchOffsetY, time: Duration(milliseconds: 100));
     getIndexes();
-    itemPositionsListener.itemPositions.addListener(watchItemPositions);
+    ever(currentIndex, watchCurrentIndex);
   }
 
   @override
   void onClose() {
-    itemPositionsListener.itemPositions.removeListener(watchItemPositions);
     super.onClose();
   }
 
@@ -42,10 +42,11 @@ class ExchangeViewController extends GetxController {
             ? indexes.length - 1
             : offsetY ~/ (itemHeight.value);
     scrollToIndex(indexes[_index]);
+    currentIndex.value = indexes[_index];
   }
 
-  void watchItemPositions() {
-    // print(itemPositionsListener.itemPositions.value);
+  void watchCurrentIndex(String _currentIndex) {
+    print(_currentIndex);
   }
 
   void getIndexes() {
@@ -63,6 +64,7 @@ class ExchangeViewController extends GetxController {
 
     indexMap.value = _indexMap;
     indexes.value = _indexes;
+    currentIndex.value = _indexes.first;
   }
 
   void scrollToIndex(String index) {

@@ -10,9 +10,7 @@ class ExchangesView extends GetView<ExchangeViewController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ExchangesPage.AppBar.Title'.tr),
-      ),
+      appBar: AppBar(title: Text('ExchangesPage.AppBar.Title'.tr)),
       body: Obx(
         () => Stack(
           alignment: Alignment.centerRight,
@@ -74,35 +72,40 @@ class ExchangesView extends GetView<ExchangeViewController> {
                 // ),
                 Expanded(
                   child: SafeArea(
-                    child: ScrollablePositionedList.builder(
-                      itemCount: exchangeController.exchanges.length,
-                      itemBuilder: (BuildContext context, int index) => ListTile(
-                        leading: ExtendedImage.asset(
-                          'images/ccxt/${exchangeController.exchanges[index]}.jpg',
-                          height: 25.0,
-                          width: 85.0,
-                          loadStateChanged: (state) {
-                            if (state.extendedImageLoadState == LoadState.failed)
-                              return Image.asset('images/ccxt/fail.png');
-                          },
-                        ),
-                        title: Obx(() => Text(ExchangeController.getExchangeName(exchangeController.exchanges[index]))),
-                        selected: exchangeController.currentExchangeId.value == exchangeController.exchanges[index],
-                        onTap: () => exchangeController.updateCurrentExchangeId(exchangeController.exchanges[index]),
-                        trailing: Padding(
-                          padding: const EdgeInsets.only(right: 16.0),
-                          child: Icon(
-                            Icons.check,
-                            size: 16,
-                            color: exchangeController.currentExchangeId.value == exchangeController.exchanges[index]
-                                ? Theme.of(context).accentColor
-                                : Colors.transparent,
+                    child: RefreshIndicator(
+                      onRefresh: exchangeController.getExchanges,
+                      child: ScrollablePositionedList.separated(
+                        separatorBuilder: (BuildContext context, int index) => Divider(indent: 16, height: 1.0),
+                        itemCount: exchangeController.exchanges.length,
+                        itemBuilder: (BuildContext context, int index) => ListTile(
+                          leading: ExtendedImage.asset(
+                            'images/ccxt/${exchangeController.exchanges[index]}.jpg',
+                            height: 25.0,
+                            width: 85.0,
+                            loadStateChanged: (state) {
+                              if (state.extendedImageLoadState == LoadState.failed)
+                                return Image.asset('images/ccxt/fail.png');
+                            },
+                          ),
+                          title:
+                              Obx(() => Text(ExchangeController.getExchangeName(exchangeController.exchanges[index]))),
+                          selected: exchangeController.currentExchangeId.value == exchangeController.exchanges[index],
+                          onTap: () => exchangeController.updateCurrentExchangeId(exchangeController.exchanges[index]),
+                          trailing: Padding(
+                            padding: const EdgeInsets.only(right: 16.0),
+                            child: Icon(
+                              Icons.check,
+                              size: 16,
+                              color: exchangeController.currentExchangeId.value == exchangeController.exchanges[index]
+                                  ? Theme.of(context).accentColor
+                                  : Colors.transparent,
+                            ),
                           ),
                         ),
+                        itemPositionsListener: controller.itemPositionsListener,
+                        itemScrollController: controller.itemScrollController,
+                        physics: BouncingScrollPhysics(),
                       ),
-                      itemPositionsListener: controller.itemPositionsListener,
-                      itemScrollController: controller.itemScrollController,
-                      physics: ClampingScrollPhysics(),
                     ),
                   ),
                 ),
