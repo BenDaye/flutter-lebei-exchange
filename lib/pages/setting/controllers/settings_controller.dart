@@ -80,7 +80,7 @@ class SettingsController extends GetxController {
     if (_code == 'USD') {
       currencyRate.value = 1.0;
     } else {
-      _getCurrency();
+      _getCurrencyRate();
     }
   }
 
@@ -115,15 +115,26 @@ class SettingsController extends GetxController {
     Get.back();
   }
 
-  Future _getCurrency() async {
-    currencyRate.value = await getCurrency();
+  Future _getCurrencyRate() async {
+    currencyRate.value = await getCurrencyRate();
   }
 
-  Future<double> getCurrency() async {
+  Future<double> getCurrencyRate() async {
     if (currency.value == 'USD') return 1.0;
+    double? rateFromSp = SpUtil.getDouble('currency.${currency.value}');
+    if (rateFromSp is double) {
+      return rateFromSp;
+    }
+
     final result = await ApiJuhe.exchangeCurrency('USD', currency.value);
     if (!result.success) return 1.0;
     List<Rate> _rates = List<Rate>.from(result.data!.map((e) => Rate.fromJson(e)));
-    return NumUtil.getDoubleByValueStr(_rates.first.exchange, defValue: 1.0) ?? 1.0;
+    double? rateFromResponse = NumUtil.getDoubleByValueStr(_rates.first.exchange);
+
+    if (rateFromResponse is double) {
+      SpUtil.putDouble('currency.${currency.value}', rateFromResponse);
+      return rateFromResponse;
+    }
+    return 1.0;
   }
 }

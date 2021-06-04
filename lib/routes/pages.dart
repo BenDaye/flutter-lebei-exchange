@@ -3,7 +3,9 @@ import 'package:flutter_lebei_exchange/pages/exchange/views/exchanges_view.dart'
 import 'package:flutter_lebei_exchange/pages/main/bindings/main_binding.dart';
 import 'package:flutter_lebei_exchange/pages/main/views/main_view.dart';
 import 'package:flutter_lebei_exchange/pages/market/bindings/market_binding.dart';
+import 'package:flutter_lebei_exchange/pages/market/controllers/search_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/market/views/market_view.dart';
+import 'package:flutter_lebei_exchange/pages/market/views/search_view.dart';
 import 'package:flutter_lebei_exchange/pages/setting/bindings/settings_binding.dart';
 import 'package:flutter_lebei_exchange/pages/setting/controllers/currency_view_controller.dart';
 import 'package:flutter_lebei_exchange/pages/setting/views/currency_view.dart';
@@ -38,6 +40,10 @@ class Pages {
       name: Routes.MARKET,
       page: () => MarketView(),
       binding: MarketBinding(),
+    ),
+    GetPage(
+      name: Routes.SEARCH_SYMBOL,
+      page: () => SearchMarketView(),
     ),
   ];
 

@@ -13,6 +13,7 @@ const Map<String, String> zh_CN = {
   'MarketsPage.AppBar.Favorites': '自选',
   'MarketsPage.AppBar.Spot': '币币',
   'MarketsPage.AppBar.Margin': '杠杆',
+  'MarketsPage.Search.Hint': '搜索您关心的币种',
   'MainBottomNavy.Home': '首页',
   'MainBottomNavy.Market': '行情',
   'MainBottomNavy.Trade': '交易',

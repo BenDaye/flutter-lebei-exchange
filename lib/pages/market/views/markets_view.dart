@@ -23,7 +23,7 @@ class MarketsView extends GetView<MarketsViewController> {
         actions: [
           IconButton(
             icon: Icon(Icons.search),
-            onPressed: null,
+            onPressed: () => Get.toNamed('/search_symbol'),
           ),
         ],
       ),

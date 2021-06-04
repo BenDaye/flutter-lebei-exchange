@@ -13,6 +13,7 @@ const Map<String, String> en_US = {
   'MarketsPage.AppBar.Favorites': 'Favorites',
   'MarketsPage.AppBar.Spot': 'Spot',
   'MarketsPage.AppBar.Margin': 'Margin',
+  'MarketsPage.Search.Hint': 'Search symbol',
   'MainBottomNavy.Home': 'Home',
   'MainBottomNavy.Market': 'Markets',
   'MainBottomNavy.Trade': 'Trades',
