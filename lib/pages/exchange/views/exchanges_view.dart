@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/components/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/pages/exchange/controllers/exchange_view_controller.dart';
@@ -21,7 +22,7 @@ class ExchangesView extends GetView<ExchangeViewController> {
                 ListTile(
                   title: Text('ExchangesPage.CurrentExchange'.tr),
                   trailing: Text(
-                    exchangeController.currentExchangeId.value,
+                    ExchangeController.getExchangeName(exchangeController.currentExchangeId.value),
                     style: Theme.of(context).textTheme.subtitle1?.copyWith(
                           color: Theme.of(context).accentColor,
                         ),
@@ -30,10 +31,6 @@ class ExchangesView extends GetView<ExchangeViewController> {
                   selectedTileColor: Theme.of(context).accentColor.withOpacity(.1),
                 ),
                 ListTile(
-                  // title: Text(
-                  //   'ExchangesPage.RecommandedExchange'.tr,
-                  //   style: Theme.of(context).textTheme.subtitle2,
-                  // ),
                   title: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: Wrap(
@@ -41,11 +38,11 @@ class ExchangesView extends GetView<ExchangeViewController> {
                       children: [
                         OutlinedButton(
                           onPressed: () => exchangeController.updateCurrentExchangeId('huobipro'),
-                          child: Text('huobipro'),
+                          child: Text(ExchangeController.getExchangeName('huobipro')),
                         ),
                         OutlinedButton(
                           onPressed: () => exchangeController.updateCurrentExchangeId('binance'),
-                          child: Text('binance'),
+                          child: Text(ExchangeController.getExchangeName('binance')),
                         ),
                       ],
                     ),
@@ -80,7 +77,16 @@ class ExchangesView extends GetView<ExchangeViewController> {
                     child: ScrollablePositionedList.builder(
                       itemCount: exchangeController.exchanges.length,
                       itemBuilder: (BuildContext context, int index) => ListTile(
-                        title: Obx(() => Text('${exchangeController.exchanges[index]}')),
+                        leading: ExtendedImage.asset(
+                          'images/ccxt/${exchangeController.exchanges[index]}.jpg',
+                          height: 25.0,
+                          width: 85.0,
+                          loadStateChanged: (state) {
+                            if (state.extendedImageLoadState == LoadState.failed)
+                              return Image.asset('images/ccxt/fail.png');
+                          },
+                        ),
+                        title: Obx(() => Text(ExchangeController.getExchangeName(exchangeController.exchanges[index]))),
                         selected: exchangeController.currentExchangeId.value == exchangeController.exchanges[index],
                         onTap: () => exchangeController.updateCurrentExchangeId(exchangeController.exchanges[index]),
                         trailing: Padding(

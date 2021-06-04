@@ -1,6 +1,7 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/api/ccxt.dart';
+import 'package:flutter_lebei_exchange/utils/ccxt/local.dart';
 import 'package:get/get.dart';
 
 class ExchangeController extends GetxController {
@@ -47,5 +48,20 @@ class ExchangeController extends GetxController {
     } else {
       currentExchangeId.value = '';
     }
+  }
+
+  static String getExchangeName(String _exchangeId) {
+    if (_exchangeId.isEmpty) return '';
+
+    final _localExchange = LocalExchange.exchanges.firstWhere(
+      (e) => e.id == _exchangeId,
+      orElse: () => LocalExchangeModel.empty(),
+    );
+
+    if (_localExchange.id == LocalExchangeModel.empty().id) {
+      return _exchangeId;
+    }
+
+    return _localExchange.name;
   }
 }
