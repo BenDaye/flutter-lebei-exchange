@@ -1,15 +1,15 @@
-import 'package:flutter_lebei_exchange/pages/exchange/bindings/exchange_binding.dart';
-import 'package:flutter_lebei_exchange/pages/exchange/views/exchanges_view.dart';
-import 'package:flutter_lebei_exchange/pages/main/bindings/main_binding.dart';
-import 'package:flutter_lebei_exchange/pages/main/views/main_view.dart';
-import 'package:flutter_lebei_exchange/pages/market/bindings/market_binding.dart';
-import 'package:flutter_lebei_exchange/pages/market/views/market_view.dart';
-import 'package:flutter_lebei_exchange/pages/market/views/search_view.dart';
-import 'package:flutter_lebei_exchange/pages/setting/bindings/settings_binding.dart';
-import 'package:flutter_lebei_exchange/pages/setting/views/currency_view.dart';
-import 'package:flutter_lebei_exchange/pages/setting/views/general_view.dart';
-import 'package:flutter_lebei_exchange/pages/setting/views/language_view.dart';
-import 'package:flutter_lebei_exchange/pages/setting/views/settings_view.dart';
+import 'package:flutter_lebei_exchange/modules/pages/exchange/bindings/exchange_binding.dart';
+import 'package:flutter_lebei_exchange/modules/pages/exchange/views/exchanges_view.dart';
+import 'package:flutter_lebei_exchange/modules/pages/main/bindings/main_binding.dart';
+import 'package:flutter_lebei_exchange/modules/pages/main/views/main_view.dart';
+import 'package:flutter_lebei_exchange/modules/pages/market/bindings/market_binding.dart';
+import 'package:flutter_lebei_exchange/modules/pages/market/views/market_view.dart';
+import 'package:flutter_lebei_exchange/modules/pages/market/views/search_view.dart';
+import 'package:flutter_lebei_exchange/modules/pages/setting/bindings/settings_binding.dart';
+import 'package:flutter_lebei_exchange/modules/pages/setting/views/currency_view.dart';
+import 'package:flutter_lebei_exchange/modules/pages/setting/views/general_view.dart';
+import 'package:flutter_lebei_exchange/modules/pages/setting/views/language_view.dart';
+import 'package:flutter_lebei_exchange/modules/pages/setting/views/settings_view.dart';
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 

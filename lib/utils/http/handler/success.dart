@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
-import 'package:flutter_lebei_exchange/utils/http/models/response.dart' as HttpModel;
+import 'package:flutter_lebei_exchange/models/response.dart' as HttpModel;
 
 HttpResult<T> onSuccess<T>(Response response) {
   HttpModel.Response<T> responseData = HttpModel.Response<T>.fromJson(response.data);
