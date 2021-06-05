@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/controllers/exchange_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:get/get.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/views/ticker_percentage_list_tile.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/views/ticker_percentage_list_tile.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_top_percentage_list_view_controller.dart';
 import 'package:get/get.dart';
 

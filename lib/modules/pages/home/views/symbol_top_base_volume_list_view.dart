@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/controllers/market_controller.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/helpers/helper.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/helpers/number_helper.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/helper.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number_helper.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_top_base_volume_list_view_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';

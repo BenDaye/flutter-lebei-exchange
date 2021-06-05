@@ -1,5 +1,5 @@
 import 'package:flutter_lebei_exchange/api/ccxt.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/controllers/exchange_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/market.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
 import 'package:get/get.dart';

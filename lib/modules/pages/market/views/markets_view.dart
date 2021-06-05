@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/controllers/symbol_controller.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/controllers/ticker_controller.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/views/ticker_percentage_list_tile.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/views/ticker_percentage_list_tile.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/views/home_list_header_view.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/markets_view_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/category_title_view.dart';

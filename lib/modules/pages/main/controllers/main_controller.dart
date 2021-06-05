@@ -1,6 +1,6 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/common/keep_alive_widget.dart';
+import 'package:flutter_lebei_exchange/modules/commons/keep_alive_widget.dart';
 import 'package:flutter_lebei_exchange/modules/pages/balance/views/balances_view.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/views/home_view.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/markets_view.dart';

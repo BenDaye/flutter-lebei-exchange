@@ -1,8 +1,8 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter_lebei_exchange/api/ccxt.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/controllers/exchange_controller.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/controllers/market_controller.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/controllers/symbol_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';

@@ -1,7 +1,7 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/api/ccxt.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/helpers/local.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/local.dart';
 import 'package:get/get.dart';
 
 class ExchangeController extends GetxController {

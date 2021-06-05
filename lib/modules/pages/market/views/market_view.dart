@@ -1,8 +1,8 @@
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart' hide NestedScrollView;
-import 'package:flutter_lebei_exchange/modules/common/ccxt/controllers/market_controller.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/controllers/symbol_controller.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/helpers/helper.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/helper.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_view_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/exchange_list_view.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/exchange_list_view_header.dart';

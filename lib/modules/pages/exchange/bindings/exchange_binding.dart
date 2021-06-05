@@ -1,4 +1,4 @@
-import 'package:flutter_lebei_exchange/modules/common/ccxt/controllers/exchange_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/exchange/controllers/exchange_view_controller.dart';
 import 'package:get/get.dart';
 

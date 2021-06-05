@@ -1,6 +1,6 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/types/number_display.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/types/number_display.dart';
 import 'package:get/get.dart';
 
 class NumberHelper {

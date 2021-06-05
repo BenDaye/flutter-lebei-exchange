@@ -1,4 +1,4 @@
-import 'package:flutter_lebei_exchange/modules/common/ad/google/helpers/helper.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ad/google/helpers/helper.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 

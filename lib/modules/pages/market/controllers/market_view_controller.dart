@@ -1,11 +1,11 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/controllers/market_controller.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/controllers/ohlcv_controller.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/controllers/orderbook_controller.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/controllers/symbol_controller.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/controllers/ticker_controller.dart';
-import 'package:flutter_lebei_exchange/modules/common/ccxt/controllers/trade_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ohlcv_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/orderbook_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/trade_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/market.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/orderbook.dart';
