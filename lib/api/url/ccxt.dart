@@ -3,6 +3,8 @@ class UrlCcxt {
 
   static const String exchanges = '$prefix/exchanges';
 
+  static String exchange(String exchangeId) => '$prefix/$exchangeId';
+
   static String time(String exchangeId) => '$prefix/$exchangeId/time';
   static String status(String exchangeId) => '$prefix/$exchangeId/status';
 
@@ -18,7 +20,7 @@ class UrlCcxt {
 
   static String ids(String exchangeId) => '$prefix/$exchangeId/ids';
 
-  static String orders(String exchangeId, String symbol) => '$prefix/$exchangeId/orders/$symbol';
+  static String orderbook(String exchangeId, String symbol) => '$prefix/$exchangeId/orderbook/$symbol';
   static String depth(String exchangeId, String symbol) => '$prefix/$exchangeId/depth/$symbol';
   static String price(String exchangeId, String symbol) => '$prefix/$exchangeId/price/$symbol';
 

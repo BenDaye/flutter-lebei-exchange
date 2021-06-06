@@ -9,6 +9,7 @@ import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
 import 'package:flutter_lebei_exchange/utils/http/interceptors/network.dart';
 import 'package:get/get.dart' as GetX;
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:sentry/sentry.dart';
 
 class Http {
   static BaseOptions _options = BaseOptions(
@@ -62,6 +63,8 @@ class Http {
 
       return httpError;
     } catch (error) {
+      Sentry.captureException(error);
+
       if (handleError == null) {
         GetX.Get.showSnackbar(GetX.GetBar(
           title: 'UNEXPECTED_NETWORK_ERROR',

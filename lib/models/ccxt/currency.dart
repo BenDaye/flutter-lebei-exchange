@@ -7,12 +7,12 @@ part 'currency.g.dart';
 class Currency {
   String id; //       'btc',       // string literal for referencing within an exchange
   String code; //     'BTC',       // uppercase unified string literal code the currency
-  String name; //     'Bitcoin',   // string, human-readable name, if specified
-  bool active; //    true,       // boolean, currency status (tradeable and withdrawable)
-  double fee; //       0.123,      // withdrawal fee, flat
+  String? name; //     'Bitcoin',   // string, human-readable name, if specified
+  bool? active; //    true,       // boolean, currency status (tradeable and withdrawable)
+  double? fee; //       0.123,      // withdrawal fee, flat
   int precision; // 8,          // number of decimal digits "after the dot" (depends on exchange.precisionMode)
-  Limits limits; // {              // value limits when placing orders on this market
-  Map<String, dynamic>? info; // { ... }, // the original unparsed currency info from the exchange
+  Limits? limits; // {              // value limits when placing orders on this market
+  dynamic info; // { ... }, // the original unparsed currency info from the exchange
 
   Currency(
     this.id,

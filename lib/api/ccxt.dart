@@ -7,6 +7,10 @@ class ApiCcxt {
     return await http.request<List>(UrlCcxt.exchanges);
   }
 
+  static Future<HttpResult<Map<String, dynamic>>> exchange(String exchangeId) async {
+    return await http.request<Map<String, dynamic>>(UrlCcxt.exchange(exchangeId));
+  }
+
   static Future<HttpResult<int>> time(String exchangeId) async {
     return await http.request<int>(UrlCcxt.time(exchangeId));
   }
@@ -48,8 +52,8 @@ class ApiCcxt {
     return await http.request<List>(UrlCcxt.ids(exchangeId));
   }
 
-  static Future<HttpResult<Map<String, dynamic>>> orders(String exchangeId, String symbol) async {
-    return await http.request<Map<String, dynamic>>(UrlCcxt.orders(exchangeId, symbol));
+  static Future<HttpResult<Map<String, dynamic>>> orderbook(String exchangeId, String symbol) async {
+    return await http.request<Map<String, dynamic>>(UrlCcxt.orderbook(exchangeId, symbol));
   }
 
   static Future<HttpResult<Map<String, dynamic>>> depth(String exchangeId, String symbol) async {

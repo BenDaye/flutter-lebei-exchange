@@ -73,7 +73,7 @@ class ExchangesView extends GetView<ExchangeViewController> {
                 Expanded(
                   child: SafeArea(
                     child: RefreshIndicator(
-                      onRefresh: exchangeController.getExchanges,
+                      onRefresh: exchangeController.getExchangesAndUpdate,
                       child: ScrollablePositionedList.separated(
                         separatorBuilder: (BuildContext context, int index) => Divider(indent: 16, height: 1.0),
                         itemCount: exchangeController.exchanges.length,

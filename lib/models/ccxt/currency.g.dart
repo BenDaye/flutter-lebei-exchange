@@ -10,12 +10,14 @@ Currency _$CurrencyFromJson(Map<String, dynamic> json) {
   return Currency(
     json['id'] as String,
     json['code'] as String,
-    json['name'] as String,
-    json['active'] as bool,
-    (json['fee'] as num).toDouble(),
+    json['name'] as String?,
+    json['active'] as bool?,
+    (json['fee'] as num?)?.toDouble(),
     json['precision'] as int,
-    Limits.fromJson(json['limits'] as Map<String, dynamic>),
-    json['info'] as Map<String, dynamic>?,
+    json['limits'] == null
+        ? null
+        : Limits.fromJson(json['limits'] as Map<String, dynamic>),
+    json['info'],
   );
 }
 

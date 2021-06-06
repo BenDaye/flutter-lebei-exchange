@@ -9,7 +9,7 @@ class OrderBookController extends GetxController {
   Future<OrderBook?> getOrderBook(String symbol, {String? exchangeId}) async {
     String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
     if (symbol.isEmpty || _exchangeId.isEmpty) return null;
-    final result = await ApiCcxt.orders(_exchangeId, symbol);
+    final result = await ApiCcxt.orderbook(_exchangeId, symbol);
     if (!result.success) return null;
 
     return OrderBook.fromJson(result.data!);

@@ -1,65 +1,125 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/api/ccxt.dart';
+import 'package:flutter_lebei_exchange/models/ccxt/exchange.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/local.dart';
 import 'package:get/get.dart';
+import 'package:sentry/sentry.dart';
 
 class ExchangeController extends GetxController {
   final exchanges = <String>[].obs;
   final currentExchangeId = ''.obs;
+  final currentExchange = Exchange.empty().obs;
 
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
-    await getExchanges(update: true);
     ever(currentExchangeId, watchCurrentExchangeId);
-    updateCurrentExchangeId(SpUtil.getString('currentExchangeId') ?? '');
   }
 
-  void watchCurrentExchangeId(String exchangeId) async {
+  @override
+  void onReady() async {
+    super.onReady();
+    await getExchangesAndUpdate();
+    updateCurrentExchangeId(SpUtil.getString('Exchange.currentExchangeId') ?? '');
+  }
+
+  void watchCurrentExchangeId(String exchangeId) {
     if (exchangeId.isEmpty) {
       Get.toNamed('/exchanges');
-    } else {
-      if (Get.currentRoute != '/') Get.back();
-
-      Get.snackbar(
-        'Common.Text.Tips'.tr,
-        'Common.Text.SwitchExchangeId'.tr + '[$exchangeId]',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green.withOpacity(.2),
-        duration: Duration(milliseconds: 2000),
-      );
+      return;
     }
+
+    if (Get.currentRoute != '/') Get.back();
+
+    Get.snackbar(
+      'Common.Text.Tips'.tr,
+      'Common.Text.SwitchExchangeId'.tr + '[$exchangeId]',
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.green.withOpacity(.2),
+      duration: Duration(milliseconds: 2000),
+    );
+
+    getExchangeAndUpdate();
   }
 
-  Future<List<String>> getExchanges({bool? update}) async {
-    final result = await ApiCcxt.exchanges();
-    if (!result.success) return [];
+  Future getExchangesAndUpdate() async {
+    final _exchanges = await getExchanges();
+    if (_exchanges == null) return;
+    exchanges.value = _exchanges;
+  }
 
-    final data = List<String>.from(result.data!);
-    if (update == true) exchanges.value = data;
-    return data;
+  Future<List<String>?> getExchanges() async {
+    final result = await ApiCcxt.exchanges();
+    if (!result.success) return null;
+
+    return List<String>.from(result.data!);
   }
 
   void updateCurrentExchangeId(String exchangeId) async {
     if (exchanges.contains(exchangeId)) {
       currentExchangeId.value = exchangeId;
-      SpUtil.putString('currentExchangeId', exchangeId);
-    } else {
-      currentExchangeId.value = '';
+      SpUtil.putString('Exchange.currentExchangeId', exchangeId);
+      return;
+    }
+    currentExchangeId.value = '';
+  }
+
+  void getExchangeAndUpdate({String? exchangeId}) async {
+    final _exchangeId = exchangeId ?? currentExchangeId.value;
+    if (_exchangeId.isEmpty) return;
+
+    final _exchangeLocal = await getExchangeLocal(_exchangeId);
+    if (_exchangeLocal is Exchange) {
+      currentExchange.value = _exchangeLocal;
+      return;
+    }
+
+    final _exchange = await getExchange(_exchangeId);
+    if (_exchange is Exchange) {
+      currentExchange.value = _exchange;
+      SpUtil.putObject('Exchange.$_exchangeId', _exchange.toJson());
+      return;
     }
   }
 
-  static String getExchangeName(String _exchangeId) {
-    if (_exchangeId.isEmpty) return '';
+  Future<Exchange?> getExchangeLocal(String exchangeId) async {
+    try {
+      final exchangeLocalObject = SpUtil.getObject('Exchange.$exchangeId');
+      if (exchangeLocalObject == null) return null;
+      Exchange _exchange = Exchange.fromJson(exchangeLocalObject.map((key, value) => MapEntry(key.toString(), value)));
+      return _exchange;
+    } catch (err) {
+      SpUtil.remove('Exchange.$exchangeId');
+      Sentry.captureException(err);
+      return null;
+    }
+  }
+
+  Future<Exchange?> getExchange(String exchangeId) async {
+    if (exchangeId.isEmpty) return null;
+
+    final result = await ApiCcxt.exchange(exchangeId);
+    if (!result.success) return null;
+
+    try {
+      return Exchange.fromJson(result.data!);
+    } catch (err) {
+      Sentry.captureException(err);
+      return null;
+    }
+  }
+
+  static String getExchangeName(String exchangeId) {
+    if (exchangeId.isEmpty) return '';
 
     final _localExchange = LocalExchange.exchanges.firstWhere(
-      (e) => e.id == _exchangeId,
+      (e) => e.id == exchangeId,
       orElse: () => LocalExchangeModel.empty(),
     );
 
     if (_localExchange.id == LocalExchangeModel.empty().id) {
-      return _exchangeId;
+      return exchangeId;
     }
 
     return _localExchange.name;
