@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/helper.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number_helper.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_top_base_volume_list_view_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_topquotevolume_list_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
 
-class SymbolTopBaseVolumeListView extends GetView<SymbolTopBaseVolumeListViewController> {
+class SymbolTopQuoteVolumeListView extends StatelessWidget {
+  final SymbolTopQuoteVolumeListController controller = Get.put(SymbolTopQuoteVolumeListController());
   final MarketController marketController = Get.find<MarketController>();
   final SettingsController settingsController = Get.find<SettingsController>();
   @override
@@ -29,7 +30,8 @@ class SymbolTopBaseVolumeListView extends GetView<SymbolTopBaseVolumeListViewCon
                   ),
                 ],
               ),
-              Text('${marketController.formatPriceByPrecision(controller.tickers[index])}'),
+              Text(
+                  '${marketController.formatPriceByPrecision(controller.tickers[index].bid, controller.tickers[index].symbol)}'),
             ],
           ),
           trailing: Container(
@@ -37,9 +39,10 @@ class SymbolTopBaseVolumeListView extends GetView<SymbolTopBaseVolumeListViewCon
             child: ElevatedButton(
               onPressed: () => null,
               child: Text(
-                NumberHelper(
+                '${NumberHelper.getCurrencySymbol(settingsController.currency.value)} ${NumberHelper(
+                  currencyRate: settingsController.currencyRate.value,
                   locale: settingsController.locale.value,
-                ).getNumberDisplay(controller.tickers[index].baseVolume).text,
+                ).getNumberDisplay(controller.tickers[index].quoteVolume).text}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

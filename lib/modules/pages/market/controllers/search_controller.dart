@@ -2,7 +2,7 @@ import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_c
 import 'package:get/get.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
-class SearchViewController extends GetxController {
+class SearchController extends GetxController {
   final SymbolController symbolController = Get.find<SymbolController>();
   final FloatingSearchBarController floatingSearchBarController = FloatingSearchBarController();
 

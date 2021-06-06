@@ -11,8 +11,7 @@ import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
 import 'package:get/get.dart';
 
 class SymbolPopularGridView extends StatelessWidget {
-  final SymbolPopularGridViewController controller =
-      Get.put<SymbolPopularGridViewController>(SymbolPopularGridViewController());
+  final SymbolPopularGridViewController controller = Get.put(SymbolPopularGridViewController());
   final SymbolController symbolController = Get.find<SymbolController>();
   final TickerController tickerController = Get.find<TickerController>();
   final MarketController marketController = Get.find<MarketController>();
@@ -75,7 +74,7 @@ class SymbolPopularGridView extends StatelessWidget {
                                               ),
                                             ),
                                             Text(
-                                              '${marketController.formatPriceByPrecision(ticker)}',
+                                              '${marketController.formatPriceByPrecision(ticker.bid, ticker.symbol)}',
                                               style: Theme.of(context).textTheme.subtitle1?.copyWith(
                                                     color: NumUtil.isZero(ticker.percentage)
                                                         ? settingsController.advanceDeclineColors[1]

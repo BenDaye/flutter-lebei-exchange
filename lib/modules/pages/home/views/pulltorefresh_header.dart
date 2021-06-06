@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/home_banner_view_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/home_notice_view_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/home/controllers/banner_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/home/controllers/notice_controller.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
 
-class HomePullToRefreshHeaderView extends StatelessWidget {
+class HomePullToRefreshHeader extends StatelessWidget {
   final PullToRefreshScrollNotificationInfo? info;
-  HomePullToRefreshHeaderView(this.info);
+  HomePullToRefreshHeader(this.info);
 
-  final HomeBannerViewController homeBannerViewController = Get.find<HomeBannerViewController>();
-  final HomeNoticeViewController homeNoticeViewController = Get.find<HomeNoticeViewController>();
+  final HomeBannerController homeBannerController = Get.find<HomeBannerController>();
+  final HomeNoticeController homeNoticeController = Get.find<HomeNoticeController>();
 
   static const double maxDragOffset = 60.0;
 
@@ -38,8 +38,8 @@ class HomePullToRefreshHeaderView extends StatelessWidget {
         }
       case RefreshIndicatorMode.drag:
         {
-          homeBannerViewController.carouselController.stopAutoPlay();
-          homeNoticeViewController.carouselController.stopAutoPlay();
+          homeBannerController.carouselController.stopAutoPlay();
+          homeNoticeController.carouselController.stopAutoPlay();
           return Container(
             height: dragOffset,
             child: Center(
@@ -81,8 +81,8 @@ class HomePullToRefreshHeaderView extends StatelessWidget {
         }
       case RefreshIndicatorMode.canceled:
         {
-          homeBannerViewController.carouselController.startAutoPlay();
-          homeNoticeViewController.carouselController.startAutoPlay();
+          homeBannerController.carouselController.startAutoPlay();
+          homeNoticeController.carouselController.startAutoPlay();
           return Container(
             height: dragOffset,
             child: Center(
@@ -98,8 +98,8 @@ class HomePullToRefreshHeaderView extends StatelessWidget {
         }
       case RefreshIndicatorMode.done:
         {
-          homeBannerViewController.carouselController.startAutoPlay();
-          homeNoticeViewController.carouselController.startAutoPlay();
+          homeBannerController.carouselController.startAutoPlay();
+          homeNoticeController.carouselController.startAutoPlay();
           return Container();
         }
       default:

@@ -1,4 +1,4 @@
-import 'package:flutter_lebei_exchange/modules/pages/exchange/bindings/exchange_binding.dart';
+import 'package:flutter_lebei_exchange/modules/pages/exchange/bindings/exchanges_binding.dart';
 import 'package:flutter_lebei_exchange/modules/pages/exchange/views/exchanges_view.dart';
 import 'package:flutter_lebei_exchange/modules/pages/main/bindings/main_binding.dart';
 import 'package:flutter_lebei_exchange/modules/pages/main/views/main_view.dart';
@@ -27,7 +27,7 @@ class Pages {
     GetPage(
       name: Routes.EXCHANGES,
       page: () => ExchangesView(),
-      binding: ExchangeBinding(),
+      binding: ExchangesBinding(),
     ),
   ]
     ..addAll(marketRoutes)

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/currency_view_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/currency_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
 

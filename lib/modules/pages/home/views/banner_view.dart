@@ -1,10 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/home_banner_view_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/home/controllers/banner_controller.dart';
 import 'package:get/get.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class HomeBannerView extends GetView<HomeBannerViewController> {
+class HomeBannerView extends StatelessWidget {
+  final HomeBannerController controller = Get.put(HomeBannerController());
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -9,7 +9,7 @@ enum SortType {
   UNSET,
 }
 
-class SymbolTopPercentageListViewController extends GetxController {
+class SymbolTopBaseVolumeListController extends GetxController {
   final nameSortType = SortType.UNSET.obs;
   final tickers = <Ticker>[].obs;
 
@@ -28,10 +28,8 @@ class SymbolTopPercentageListViewController extends GetxController {
   }
 
   void watchTickers(List<Ticker> list) {
-    final _tickers = List<Ticker>.from(tickerController.filterTickers(margin: true))
-        .where((t) => t.symbol.endsWith("USDT") || t.symbol.endsWith("BTC"))
-        .toList();
-    _tickers.sort((a, b) => (b.percentage ?? double.nan).compareTo((a.percentage ?? double.nan)));
+    final _tickers = List<Ticker>.from(tickerController.filterTickers(margin: true)).toList();
+    _tickers.sort((a, b) => (b.baseVolume ?? double.nan).compareTo((a.baseVolume ?? double.nan)));
     tickers.value = NumUtil.greaterThan(_tickers.length, 8) ? _tickers.sublist(0, 8) : _tickers;
   }
 }

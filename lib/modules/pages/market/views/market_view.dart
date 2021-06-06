@@ -3,16 +3,13 @@ import 'package:flutter/material.dart' hide NestedScrollView;
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/helper.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_view_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/exchange_list_view.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/views/exchange_list_view_header.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/market_drawer_view.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/ohlcv_chart_view.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/orderbook_list_view.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/views/orderbook_list_view_header.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/ticker_card_view.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/trade_list_view.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/views/trade_list_view_header.dart';
 import 'package:get/get.dart';
 
 class MarketView extends GetView<MarketViewController> {

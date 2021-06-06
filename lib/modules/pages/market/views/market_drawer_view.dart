@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/helper.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_view_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_drawer_view_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_drawer_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
 
 class MarketDrawerView extends StatelessWidget {
-  final MarketDrawerViewController marketDrawerViewController = Get.put(MarketDrawerViewController());
+  final MarketDrawerController marketDrawerViewController = Get.put(MarketDrawerController());
   final SymbolController symbolController = Get.find<SymbolController>();
   final MarketController marketController = Get.find<MarketController>();
   final SettingsController settingsController = Get.find<SettingsController>();
@@ -108,7 +108,7 @@ class MarketDrawerView extends StatelessWidget {
                         baseTextStyle: Get.context?.textTheme.bodyText2,
                       ),
                       trailing: Text(
-                        '${marketController.formatPriceByPrecision(marketDrawerViewController.tickers[index])}',
+                        '${marketController.formatPriceByPrecision(marketDrawerViewController.tickers[index].bid, marketDrawerViewController.tickers[index].symbol)}',
                         style: TextStyle(
                           color: CcxtHelper.getPercentageColor(
                             settingsController.advanceDeclineColors,

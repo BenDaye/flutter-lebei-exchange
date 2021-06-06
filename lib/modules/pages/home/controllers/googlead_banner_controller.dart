@@ -2,7 +2,7 @@ import 'package:flutter_lebei_exchange/modules/commons/ad/google/helpers/helper.
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-class HomeGoogleAdBannerViewController extends GetxController {
+class HomeGoogleAdBannerController extends GetxController {
   late BannerAd ad;
   final isAdLoaded = false.obs;
 
@@ -21,7 +21,7 @@ class HomeGoogleAdBannerViewController extends GetxController {
           // Releases an ad resource when it fails to load
           ad.dispose();
 
-          throw ('Ad load failed (code=${error.code} message=${error.message})');
+          throw Exception('Ad load failed (code=${error.code} message=${error.message})');
         },
       ),
       request: AdRequest(),

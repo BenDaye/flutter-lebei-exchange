@@ -25,7 +25,7 @@ class CurrencyController extends GetxController {
     currencies.value = _currenciesMap.values.toList();
   }
 
-  void getCurrenciesAndUpdate() async {
+  Future getCurrenciesAndUpdate() async {
     final _currenciesMap = await getCurrenciesMap();
     if (_currenciesMap == null) return;
     currenciesMap.value = _currenciesMap;

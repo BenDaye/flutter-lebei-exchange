@@ -25,7 +25,6 @@ class SymbolPopularGridViewController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    timer.startTimer();
     ever(tickerController.tickers, watchTickerControllerTickers);
     ever(tickers, watchTickers);
   }
@@ -45,16 +44,28 @@ class SymbolPopularGridViewController extends GetxController {
   }
 
   void watchTickerControllerTickers(List<Ticker> _tickers) {
-    tickers.value = List<Ticker>.from(tickerController.tickers)
-        .where((t) =>
-            t.symbol.startsWith(RegExp(r"BTC|ETH|XCH|DOT|SHIB|DOGE")) &&
-            t.symbol.endsWith('USDT') &&
-            !RegExp(r"[1-9]\d*[LS]").hasMatch(t.symbol))
-        .take(6)
+    List<Ticker> _list = List<Ticker>.from(_tickers)
+        .where((t) => [
+              'BTC/USDT',
+              'ETH/USDT',
+              'DOT/USDT',
+              'XRP/USDT',
+              'LINK/USDT',
+              'LTC/USDT',
+              'ADA/USDT',
+              'EOS/USDT',
+              'SHIB/USDT',
+              'DOGE/USDT',
+              'FIL/USDT',
+            ].contains(t.symbol))
         .toList();
+    _list = _list.length > 9 ? _list.take(9).toList() : _list;
+    _list.sort((a, b) => a.symbol.substring(0, 1).compareTo(b.symbol.substring(0, 1)));
+    tickers.value = _list;
   }
 
   void watchTickers(List<Ticker> _tickers) {
+    _tickers.sort((a, b) => a.symbol.substring(0, 1).compareTo(b.symbol.substring(0, 1)));
     tickersForRender.value = computeList(_tickers);
   }
 
@@ -76,7 +87,10 @@ class SymbolPopularGridViewController extends GetxController {
     print('SymbolPopularGridViewController getTickers ==> $tick, Timer: ${timer.mInterval}');
     if (tickers.isEmpty) return;
     final tickerSymbols = tickers.map((e) => e.symbol).toList();
+
     final result = await tickerController.getTickers(symbols: tickerSymbols);
+    if (result == null) return;
+
     tickers.value = result.values.toList();
   }
 }

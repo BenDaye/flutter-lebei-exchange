@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/home_google_ad_list_tile_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/home/controllers/googlead_list_tile_controller.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 

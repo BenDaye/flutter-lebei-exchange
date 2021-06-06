@@ -84,7 +84,7 @@ class ExchangeListViewController extends GetxController {
         .map(
           (e) => TickerForRender(
             e.key,
-            marketController.formatPriceByPrecision(e.value),
+            marketController.formatPriceByPrecision(e.value.bid, e.value.symbol),
           ),
         )
         .toList();

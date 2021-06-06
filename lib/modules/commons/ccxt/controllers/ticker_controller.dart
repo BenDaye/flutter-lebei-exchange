@@ -2,6 +2,7 @@ import 'package:flutter_lebei_exchange/api/ccxt.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
 import 'package:get/get.dart';
+import 'package:sentry/sentry.dart';
 
 class TickerController extends GetxController {
   final ExchangeController exchangeController = Get.find<ExchangeController>();
@@ -16,33 +17,53 @@ class TickerController extends GetxController {
   void onInit() {
     super.onInit();
     ever(exchangeController.currentExchangeId, watchCurrentExchangeId);
+    ever(tickersMap, watchTickersMap);
   }
 
   void watchCurrentExchangeId(String _exchangeId) {
-    getTickers(exchangeId: _exchangeId, update: true);
+    getTickersAndUpdate();
   }
 
-  Future<Map<String, Ticker>> getTickers({String? exchangeId, bool? update, List<String>? symbols}) async {
-    String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
-    if (_exchangeId.isEmpty) return {};
-    final result = await ApiCcxt.tickers(_exchangeId, symbols: symbols);
-    if (!result.success) return {};
+  void watchTickersMap(Map<String, Ticker> _tickersMap) {
+    tickers.value = _tickersMap.values.toList();
+  }
 
-    final data = result.data!.map<String, Ticker>((key, value) => MapEntry(key, Ticker.fromJson(value)));
-    if (update == true) {
-      tickersMap.value = data;
-      tickers.value = data.values.toList();
+  Future getTickersAndUpdate() async {
+    final _tickersMap = await getTickers();
+    if (_tickersMap == null) return;
+    tickersMap.value = _tickersMap;
+  }
+
+  Future<Map<String, Ticker>?> getTickers({String? exchangeId, List<String>? symbols}) async {
+    String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
+    if (_exchangeId.isEmpty) return null;
+
+    final result = await ApiCcxt.tickers(_exchangeId, symbols: symbols);
+    if (!result.success) return null;
+
+    try {
+      return result.data!.map<String, Ticker>(
+        (key, value) => MapEntry(key, Ticker.fromJson(value)),
+      );
+    } catch (err) {
+      Sentry.captureException(err);
+      return null;
     }
-    return data;
   }
 
   Future<Ticker?> getTicker(String symbol, {String? exchangeId}) async {
     String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
     if (symbol.isEmpty || _exchangeId.isEmpty) return null;
+
     final result = await ApiCcxt.ticker(_exchangeId, symbol);
     if (!result.success) return null;
 
-    return Ticker.fromJson(result.data!);
+    try {
+      return Ticker.fromJson(result.data!);
+    } catch (err) {
+      Sentry.captureException(err);
+      return null;
+    }
   }
 
   List<Ticker> filterTickers({String? quote, bool? unknown = false, bool? margin = false, bool? standard = true}) {

@@ -1,7 +1,6 @@
 import 'package:flutter_lebei_exchange/api/ccxt.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/market.dart';
-import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number_helper.dart';
 import 'package:get/get.dart';
 import 'package:sentry/sentry.dart';
@@ -27,7 +26,7 @@ class MarketController extends GetxController {
     markets.value = _marketsMap.values.toList();
   }
 
-  void getMarketsAndUpdate() async {
+  Future getMarketsAndUpdate() async {
     final _marketsMap = await getMarkets();
     if (_marketsMap == null) return;
     marketsMap.value = _marketsMap;
@@ -65,12 +64,17 @@ class MarketController extends GetxController {
     }
   }
 
-  String formatPriceByPrecision(Ticker ticker) {
+  String formatPriceByPrecision(dynamic value, String symbol) {
+    final bool hasMarket = markets.any((e) => e.symbol == symbol);
+    if (!hasMarket) return NumberHelper.numberToString(value);
+
     return NumberHelper.decimalToPrecision(
-      ticker.bid,
-      markets.firstWhere((e) => e.symbol == ticker.symbol, orElse: () => Market.empty()).precision.price,
+      value,
+      markets.firstWhere((e) => e.symbol == symbol, orElse: () => Market.empty()).precision.price,
       precisionMode: exchangeController.currentExchange.value.precisionMode,
       paddingMode: exchangeController.currentExchange.value.paddingMode,
     );
   }
+
+  // String formatAmountByPrecision() {}
 }

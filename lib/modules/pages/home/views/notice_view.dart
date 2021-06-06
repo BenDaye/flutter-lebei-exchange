@@ -1,9 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/home_notice_view_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/home/controllers/notice_controller.dart';
 import 'package:get/get.dart';
 
-class HomeNoticeView extends GetView<HomeNoticeViewController> {
+class HomeNoticeView extends StatelessWidget {
+  final HomeNoticeController controller = Get.put(HomeNoticeController());
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -1,8 +1,8 @@
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/exchange/controllers/exchange_view_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/exchange/controllers/exchanges_controller.dart';
 import 'package:get/get.dart';
 
-class ExchangeBinding extends Bindings {
+class ExchangesBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<ExchangeController>(() => ExchangeController());

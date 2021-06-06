@@ -18,7 +18,7 @@ void main() async {
 
     WidgetsFlutterBinding.ensureInitialized();
     MobileAds.instance.initialize();
-    MobileAds.instance.updateRequestConfiguration(RequestConfiguration(testDeviceIds: ['kGADSimulatorID']));
+    await MobileAds.instance.updateRequestConfiguration(RequestConfiguration(testDeviceIds: ['kGADSimulatorID']));
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     if (Platform.isAndroid) {
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent));

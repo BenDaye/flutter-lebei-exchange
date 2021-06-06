@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class HomeListHeaderView extends StatelessWidget {
+class HomeListViewHeader extends StatelessWidget {
   final Key? key;
   final String? first;
   final String? middle;
   final String? last;
   final Widget? custom;
 
-  HomeListHeaderView({
+  HomeListViewHeader({
     this.key,
     this.first,
     this.middle,

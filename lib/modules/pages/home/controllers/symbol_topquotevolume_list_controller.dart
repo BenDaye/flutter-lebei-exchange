@@ -9,7 +9,7 @@ enum SortType {
   UNSET,
 }
 
-class SymbolTopQuoteVolumeListViewController extends GetxController {
+class SymbolTopQuoteVolumeListController extends GetxController {
   final nameSortType = SortType.UNSET.obs;
   final tickers = <Ticker>[].obs;
 

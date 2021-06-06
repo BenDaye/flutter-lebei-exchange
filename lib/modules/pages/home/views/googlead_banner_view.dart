@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/home_google_ad_banner_view_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/home/controllers/googlead_banner_controller.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class HomeGoogleAdBannerView extends StatelessWidget {
-  final HomeGoogleAdBannerViewController homeGoogleAdBannerViewController = Get.put(HomeGoogleAdBannerViewController());
+  final HomeGoogleAdBannerController homeGoogleAdBannerController = Get.put(HomeGoogleAdBannerController());
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class HomeGoogleAdBannerView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8.0),
-        child: new AdWidget(ad: homeGoogleAdBannerViewController.ad),
+        child: new AdWidget(ad: homeGoogleAdBannerController.ad),
       ),
     );
   }
