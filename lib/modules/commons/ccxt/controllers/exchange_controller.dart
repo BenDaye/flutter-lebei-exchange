@@ -21,16 +21,19 @@ class ExchangeController extends GetxController {
   void onReady() async {
     super.onReady();
     await getExchangesAndUpdate();
-    updateCurrentExchangeId(SpUtil.getString('Exchange.currentExchangeId') ?? '');
+    updateCurrentExchangeId(SpUtil.getString('Exchange.currentExchangeId', defValue: '') ?? '');
   }
 
   void watchCurrentExchangeId(String exchangeId) {
     if (exchangeId.isEmpty) {
-      Get.toNamed('/exchanges');
+      Get.offAllNamed('/exchanges');
       return;
     }
 
-    if (Get.currentRoute != '/') Get.back();
+    if (Get.currentRoute == '/exchanges') {
+      Get.reloadAll();
+      Get.offNamed('/');
+    }
 
     Get.snackbar(
       'Common.Text.Tips'.tr,
@@ -44,9 +47,21 @@ class ExchangeController extends GetxController {
   }
 
   Future getExchangesAndUpdate() async {
+    final _exchangesLocal = await getExchangesLocal();
+    if (_exchangesLocal is List<String> && _exchangesLocal.isNotEmpty) {
+      exchanges.value = _exchangesLocal;
+      return;
+    }
+
     final _exchanges = await getExchanges();
     if (_exchanges == null) return;
     exchanges.value = _exchanges;
+    if (_exchanges.isNotEmpty) SpUtil.putStringList('Exchange.exchanges', _exchanges);
+  }
+
+  Future<List<String>?> getExchangesLocal() async {
+    if (SpUtil.haveKey('Exchange.exchanges') == false) return null;
+    return SpUtil.getStringList('Exchange.exchanges', defValue: []);
   }
 
   Future<List<String>?> getExchanges() async {

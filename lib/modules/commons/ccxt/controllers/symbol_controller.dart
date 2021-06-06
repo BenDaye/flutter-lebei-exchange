@@ -21,7 +21,7 @@ class SymbolController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    favoriteSymbols.value = SpUtil.getStringList('favoriteSymbols', defValue: []) ?? [];
+    favoriteSymbols.value = SpUtil.getStringList('Symbol.favoriteSymbols', defValue: []) ?? [];
   }
 
   void watchCurrentExchangeId(String _exchangeId) {
@@ -29,7 +29,7 @@ class SymbolController extends GetxController {
   }
 
   void watchFavoriteSymbols(List<String> _symbols) {
-    SpUtil.putStringList('favoriteSymbols', _symbols);
+    SpUtil.putStringList('Symbol.favoriteSymbols', _symbols);
   }
 
   Future<List<String>> getSymbols({String? exchangeId, bool? update}) async {

@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class HomeGoogleAdListTile extends StatelessWidget {
-  final HomeGoogleAdListTileController homeGoogleAdListTileController = Get.put(HomeGoogleAdListTileController());
+  final HomeGoogleAdListTileController homeGoogleAdListTileController =
+      Get.put(HomeGoogleAdListTileController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class HomeGoogleAdListTile extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 4.0),
       color: Theme.of(context).backgroundColor,
       alignment: Alignment.center,
-      child: AdWidget(ad: homeGoogleAdListTileController.bannerAd),
+      child: new AdWidget(ad: homeGoogleAdListTileController.bannerAd),
     );
   }
 }

@@ -1,8 +1,11 @@
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
 
 class GeneralView extends GetView<SettingsController> {
+  final ExchangeController exchangeController = Get.find<ExchangeController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,7 +136,6 @@ class GeneralView extends GetView<SettingsController> {
                       min: 0.0,
                       max: 300.0,
                       divisions: 10,
-                      // label: controller.autoRefresh.value.round().toString(),
                     ),
                     trailing: Text('${controller.autoRefresh.value.round()}'),
                   ),
@@ -148,7 +150,11 @@ class GeneralView extends GetView<SettingsController> {
                     Icons.chevron_right,
                     color: Theme.of(context).dividerColor,
                   ),
-                  onTap: () => null,
+                  onTap: () async {
+                    await SpUtil.clear();
+                    Get.reloadAll(force: true);
+                    Get.forceAppUpdate();
+                  },
                 ),
               ],
             ),

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class ExchangeViewController extends GetxController {
-  final ExchangeController exchangeController = Get.find<ExchangeController>();
+  final ExchangeController exchangeController = Get.put(ExchangeController());
   final ItemScrollController itemScrollController = ItemScrollController();
   final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
 

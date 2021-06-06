@@ -27,11 +27,11 @@ class SettingsController extends GetxController {
     super.onInit();
     ever(themeMode, (ThemeMode _themeMode) {
       Get.changeThemeMode(_themeMode);
-      SpUtil.putString('themeMode', _themeMode == ThemeMode.dark ? 'dark' : 'light');
+      SpUtil.putString('Settings.themeMode', _themeMode == ThemeMode.dark ? 'dark' : 'light');
     });
     ever(locale, (Locale _locale) {
       Get.updateLocale(_locale);
-      SpUtil.putString('locale', _locale.toLanguageTag());
+      SpUtil.putString('Settings.locale', _locale.toLanguageTag());
     });
 
     ever(currency, watchCurrency);
@@ -40,20 +40,26 @@ class SettingsController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    themeMode.value = SpUtil.getString('themeMode') == 'dark' ? ThemeMode.dark : ThemeMode.light;
+    themeMode.value =
+        SpUtil.getString('Settings.themeMode', defValue: 'dark') == 'dark' ? ThemeMode.dark : ThemeMode.light;
     _initLocale();
-    currency.value = SpUtil.getString('currency') ?? 'USD';
-    advanceDeclineColorMode.value = AdvanceDeclineColorMode.values[SpUtil.getInt('color') ?? 0];
+    currency.value = SpUtil.getString('Settings.currency', defValue: 'USD') ?? 'USD';
+    advanceDeclineColorMode.value = AdvanceDeclineColorMode.values[SpUtil.getInt('Settings.color', defValue: 0) ?? 0];
     if (advanceDeclineColorMode.value == AdvanceDeclineColorMode.AdvanceRed) {
       advanceDeclineColors.value = advanceDeclineColors.reversed.toList();
     }
 
     wakelock.value = await Wakelock.enabled;
-    autoRefresh.value = SpUtil.getDouble('autoRefresh') ?? 60.0;
+    autoRefresh.value = SpUtil.getDouble('Settings.autoRefresh', defValue: 60.0) ?? 60.0;
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
   }
 
   void _initLocale() {
-    String? _localeString = SpUtil.getString('locale');
+    String? _localeString = SpUtil.getString('Settings.locale', defValue: 'en-US');
     Locale _locale;
     switch (_localeString) {
       case 'zh-CN':
@@ -71,7 +77,7 @@ class SettingsController extends GetxController {
     if (TranslationService.supportLanguages.contains(_locale)) {
       locale.value = _locale;
     } else {
-      SpUtil.remove('locale');
+      SpUtil.remove('Settings.locale');
       locale.value = TranslationService.fallbackLocale;
     }
   }
@@ -96,7 +102,7 @@ class SettingsController extends GetxController {
   void onSwitchAdvanceDeclineColorMode(AdvanceDeclineColorMode _mode) {
     advanceDeclineColorMode.value = _mode;
     advanceDeclineColors.value = advanceDeclineColors.reversed.toList();
-    SpUtil.putInt('color', _mode.index);
+    SpUtil.putInt('Settings.color', _mode.index);
   }
 
   void onSwitchWakelock(bool enable) async {
@@ -106,12 +112,12 @@ class SettingsController extends GetxController {
 
   void onChangeAutoRefresh(double second) {
     autoRefresh.value = second;
-    SpUtil.putDouble('autoRefresh', second);
+    SpUtil.putDouble('Settings.autoRefresh', second);
   }
 
   void onChangeCurrency(String _code) {
     currency.value = _code;
-    SpUtil.putString('currency', _code);
+    SpUtil.putString('Settings.currency', _code);
     Get.back();
   }
 
@@ -121,7 +127,7 @@ class SettingsController extends GetxController {
 
   Future<double> getCurrencyRate() async {
     if (currency.value == 'USD') return 1.0;
-    double? rateFromSp = SpUtil.getDouble('currency.${currency.value}');
+    double? rateFromSp = SpUtil.getDouble('Settings.currency.${currency.value}');
     if (rateFromSp is double) {
       return rateFromSp;
     }
@@ -132,7 +138,7 @@ class SettingsController extends GetxController {
     double? rateFromResponse = NumUtil.getDoubleByValueStr(_rates.first.exchange);
 
     if (rateFromResponse is double) {
-      SpUtil.putDouble('currency.${currency.value}', rateFromResponse);
+      SpUtil.putDouble('Settings.currency.${currency.value}', rateFromResponse);
       return rateFromResponse;
     }
     return 1.0;

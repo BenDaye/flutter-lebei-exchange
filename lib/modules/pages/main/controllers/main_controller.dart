@@ -26,6 +26,12 @@ class MainViewController extends GetxController {
       child: BalancesView(),
     ),
   ];
+  // List<Widget> pages = <Widget>[
+  //   HomeView(),
+  //   MarketsView(),
+  //   Container(color: Colors.pink),
+  //   BalancesView(),
+  // ];
   List<BottomNavyBarItem> bottomNavyBarItems(context) => <BottomNavyBarItem>[
         BottomNavyBarItem(
           title: Text('MainBottomNavy.Home'.tr),

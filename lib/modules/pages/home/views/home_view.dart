@@ -2,7 +2,7 @@ import 'package:flutter/material.dart' hide NestedScrollView;
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/controllers/home_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/views/banner_view.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/views/googlead_list_tile.dart';
+// import 'package:flutter_lebei_exchange/modules/pages/home/views/googlead_list_tile.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/views/guide_list_tile.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/views/list_view_header.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/views/notice_view.dart';
@@ -52,7 +52,7 @@ class HomeView extends GetView<HomeViewController> {
               SliverToBoxAdapter(child: Divider(height: 1.0)),
               SliverToBoxAdapter(child: SymbolPopularGridView()),
               SliverToBoxAdapter(child: HomeGuideListTile()),
-              SliverToBoxAdapter(child: HomeGoogleAdListTile()),
+              // SliverToBoxAdapter(child: HomeGoogleAdListTile()),
               SliverToBoxAdapter(child: HomeShortcutGridView()),
             ],
             pinnedHeaderSliverHeightBuilder: () => 0,
