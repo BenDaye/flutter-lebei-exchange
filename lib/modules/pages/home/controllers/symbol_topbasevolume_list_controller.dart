@@ -29,7 +29,7 @@ class SymbolTopBaseVolumeListController extends GetxController {
 
   void watchTickers(List<Ticker> list) {
     final _tickers = List<Ticker>.from(tickerController.filterTickers(margin: true)).toList();
-    _tickers.sort((a, b) => (b.baseVolume ?? double.nan).compareTo((a.baseVolume ?? double.nan)));
+    _tickers.sort((a, b) => b.baseVolume.compareTo(a.baseVolume));
     tickers.value = NumUtil.greaterThan(_tickers.length, 8) ? _tickers.sublist(0, 8) : _tickers;
   }
 }

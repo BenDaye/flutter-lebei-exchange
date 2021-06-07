@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number_helper.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_popular_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
@@ -61,11 +61,11 @@ class SymbolPopularGridView extends StatelessWidget {
                                                 style: Theme.of(context).textTheme.bodyText2,
                                                 children: [
                                                   TextSpan(
-                                                    text: '  ${(ticker.percentage ?? 0).toStringAsFixed(2)}%',
+                                                    text: '  ${(ticker.percentage).toStringAsFixed(2)}%',
                                                     style: Theme.of(context).textTheme.caption?.copyWith(
                                                           color: NumUtil.isZero(ticker.percentage)
                                                               ? settingsController.advanceDeclineColors[1]
-                                                              : NumUtil.greaterThan(ticker.percentage!, 0)
+                                                              : NumUtil.greaterThan(ticker.percentage, 0)
                                                                   ? settingsController.advanceDeclineColors.first
                                                                   : settingsController.advanceDeclineColors.last,
                                                         ),
@@ -78,7 +78,7 @@ class SymbolPopularGridView extends StatelessWidget {
                                               style: Theme.of(context).textTheme.subtitle1?.copyWith(
                                                     color: NumUtil.isZero(ticker.percentage)
                                                         ? settingsController.advanceDeclineColors[1]
-                                                        : NumUtil.greaterThan(ticker.percentage!, 0)
+                                                        : NumUtil.greaterThan(ticker.percentage, 0)
                                                             ? settingsController.advanceDeclineColors.first
                                                             : settingsController.advanceDeclineColors.last,
                                                     fontWeight: FontWeight.bold,
@@ -86,7 +86,7 @@ class SymbolPopularGridView extends StatelessWidget {
                                               maxLines: 1,
                                             ),
                                             Text(
-                                              '${NumberHelper.getCurrencySymbol(settingsController.currency.value)} ${NumUtil.multiply((ticker.bid ?? 0), settingsController.currencyRate.value).toStringAsFixed(2)}',
+                                              '${NumberHelper.getCurrencySymbol(settingsController.currency.value)} ${NumUtil.multiply((ticker.bid), settingsController.currencyRate.value).toStringAsFixed(2)}',
                                               style: Theme.of(context).textTheme.caption,
                                               maxLines: 1,
                                             ),

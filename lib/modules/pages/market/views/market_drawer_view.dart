@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/helper.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/percentage.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/symbol.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_drawer_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
@@ -103,14 +104,14 @@ class MarketDrawerView extends StatelessWidget {
                     keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                     itemBuilder: (BuildContext context, int index) => ListTile(
                       dense: true,
-                      title: CcxtHelper.getSymbolTitle(
+                      title: SymbolHelper.getSymbolTitle(
                         marketDrawerViewController.tickers[index].symbol,
                         baseTextStyle: Get.context?.textTheme.bodyText2,
                       ),
                       trailing: Text(
                         '${marketController.formatPriceByPrecision(marketDrawerViewController.tickers[index].bid, marketDrawerViewController.tickers[index].symbol)}',
                         style: TextStyle(
-                          color: CcxtHelper.getPercentageColor(
+                          color: PercentageHelper.getPercentageColor(
                             settingsController.advanceDeclineColors,
                             marketDrawerViewController.tickers[index].percentage,
                           ),

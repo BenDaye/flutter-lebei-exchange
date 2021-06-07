@@ -1,8 +1,8 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/helper.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number_helper.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/percentage.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
@@ -30,7 +30,7 @@ class TickerCardView extends GetView<MarketViewController> {
                       controller.ticker.value.symbol,
                     ),
                     style: Theme.of(context).textTheme.headline5?.copyWith(
-                          color: CcxtHelper.getPercentageColor(
+                          color: PercentageHelper.getPercentageColor(
                               settingsController.advanceDeclineColors, controller.ticker.value.percentage),
                         ),
                   )),
@@ -42,7 +42,7 @@ class TickerCardView extends GetView<MarketViewController> {
                         '${NumberHelper.getCurrencySymbol(settingsController.currency.value)}' +
                             '${marketController.formatPriceByPrecision(
                               NumUtil.multiply(
-                                controller.ticker.value.bid ?? 0.0,
+                                controller.ticker.value.bid,
                                 settingsController.currencyRate.value,
                               ),
                               controller.ticker.value.symbol,
@@ -50,7 +50,7 @@ class TickerCardView extends GetView<MarketViewController> {
                         maxLines: 1,
                       ),
                       SizedBox(width: 8.0),
-                      CcxtHelper.getPercentageText(
+                      PercentageHelper.getPercentageText(
                         settingsController.advanceDeclineColors,
                         controller.ticker.value.percentage,
                       ),
@@ -96,7 +96,7 @@ class TickerCardView extends GetView<MarketViewController> {
                     children: [
                       Text('MarketPage.TickerCard.24HVol'.tr),
                       SizedBox(width: 8),
-                      Text('${(controller.ticker.value.baseVolume ?? 0).toStringAsFixed(0)}'),
+                      Text('${(controller.ticker.value.baseVolume).split('.')[0]}'),
                     ],
                   ),
                 ],

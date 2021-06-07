@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/helper.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/percentage.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/symbol.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
 import 'package:get/get.dart';
@@ -24,8 +25,8 @@ class TickerPercentageListTile extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CcxtHelper.getSymbolTitle(ticker.symbol),
-              CcxtHelper.getSymbolSubtitle(
+              SymbolHelper.getSymbolTitle(ticker.symbol),
+              SymbolHelper.getSymbolSubtitle(
                 ticker.symbol,
                 settingsController.advanceDeclineColors,
               ),
@@ -39,7 +40,7 @@ class TickerPercentageListTile extends StatelessWidget {
       trailing: Container(
         width: 96.0,
         child: Obx(
-          () => CcxtHelper.getPercentageButton(settingsController.advanceDeclineColors, ticker.percentage),
+          () => PercentageHelper.getPercentageButton(settingsController.advanceDeclineColors, ticker.percentage),
         ),
       ),
       selected: symbolController.favoriteSymbols.any((s) => s == ticker.symbol),

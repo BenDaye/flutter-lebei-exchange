@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/helper.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number_helper.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/symbol.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_topquotevolume_list_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
@@ -23,8 +23,8 @@ class SymbolTopQuoteVolumeListView extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CcxtHelper.getSymbolTitle(controller.tickers[index].symbol),
-                  CcxtHelper.getSymbolSubtitle(
+                  SymbolHelper.getSymbolTitle(controller.tickers[index].symbol),
+                  SymbolHelper.getSymbolSubtitle(
                     controller.tickers[index].symbol,
                     settingsController.advanceDeclineColors,
                   ),

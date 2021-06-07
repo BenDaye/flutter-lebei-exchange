@@ -2,7 +2,7 @@ import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart' hide NestedScrollView;
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/helper.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/symbol.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/exchange_list_view.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/market_drawer_view.dart';
@@ -19,6 +19,7 @@ class MarketView extends GetView<MarketViewController> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: controller.scaffoldKey,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Obx(
           () => InkWell(
@@ -28,7 +29,7 @@ class MarketView extends GetView<MarketViewController> {
                 Icon(Icons.lunch_dining, size: 22),
                 SizedBox(width: 4.0),
                 Text(
-                  CcxtHelper.getSymbolTitleText(symbolController.currentSymbol.value.replaceAll('_', '/')),
+                  SymbolHelper.getSymbolTitleText(symbolController.currentSymbol.value.replaceAll('_', '/')),
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ],

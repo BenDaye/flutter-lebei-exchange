@@ -31,7 +31,7 @@ class SymbolTopPercentageListController extends GetxController {
     final _tickers = List<Ticker>.from(tickerController.filterTickers(margin: true))
         .where((t) => t.symbol.endsWith("USDT") || t.symbol.endsWith("BTC"))
         .toList();
-    _tickers.sort((a, b) => (b.percentage ?? double.nan).compareTo((a.percentage ?? double.nan)));
+    _tickers.sort((a, b) => (b.percentage).compareTo((a.percentage)));
     tickers.value = NumUtil.greaterThan(_tickers.length, 8) ? _tickers.sublist(0, 8) : _tickers;
   }
 }

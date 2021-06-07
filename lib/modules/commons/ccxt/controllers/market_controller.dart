@@ -1,7 +1,8 @@
 import 'package:flutter_lebei_exchange/api/ccxt.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/market.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number_helper.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number.dart';
+import 'package:flutter_lebei_exchange/utils/formatter/number.dart';
 import 'package:get/get.dart';
 import 'package:sentry/sentry.dart';
 
@@ -66,7 +67,7 @@ class MarketController extends GetxController {
 
   String formatPriceByPrecision(dynamic value, String symbol) {
     final bool hasMarket = markets.any((e) => e.symbol == symbol);
-    if (!hasMarket) return NumberHelper.numberToString(value);
+    if (!hasMarket) return NumberFormatter.numberToString(value);
 
     return NumberHelper.decimalToPrecision(
       value,

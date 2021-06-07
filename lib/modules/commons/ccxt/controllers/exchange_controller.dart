@@ -46,11 +46,13 @@ class ExchangeController extends GetxController {
     getExchangeAndUpdate();
   }
 
-  Future getExchangesAndUpdate() async {
-    final _exchangesLocal = await getExchangesLocal();
-    if (_exchangesLocal is List<String> && _exchangesLocal.isNotEmpty) {
-      exchanges.value = _exchangesLocal;
-      return;
+  Future getExchangesAndUpdate({bool reload = false}) async {
+    if (!reload) {
+      final _exchangesLocal = await getExchangesLocal();
+      if (_exchangesLocal is List<String> && _exchangesLocal.isNotEmpty) {
+        exchanges.value = _exchangesLocal;
+        return;
+      }
     }
 
     final _exchanges = await getExchanges();
@@ -80,14 +82,16 @@ class ExchangeController extends GetxController {
     currentExchangeId.value = '';
   }
 
-  void getExchangeAndUpdate({String? exchangeId}) async {
+  void getExchangeAndUpdate({String? exchangeId, bool reload = false}) async {
     final _exchangeId = exchangeId ?? currentExchangeId.value;
     if (_exchangeId.isEmpty) return;
 
-    final _exchangeLocal = await getExchangeLocal(_exchangeId);
-    if (_exchangeLocal is Exchange) {
-      currentExchange.value = _exchangeLocal;
-      return;
+    if (!reload) {
+      final _exchangeLocal = await getExchangeLocal(_exchangeId);
+      if (_exchangeLocal is Exchange) {
+        currentExchange.value = _exchangeLocal;
+        return;
+      }
     }
 
     final _exchange = await getExchange(_exchangeId);
