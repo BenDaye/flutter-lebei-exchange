@@ -74,7 +74,7 @@ class Ticker {
 
   static Ticker empty() => Ticker(
         '[symbol]',
-        null,
+        {},
         0,
         DateTimeFormatter.UNKNOWN_DATE_TIME,
         NumberFormatter.UNKNOWN_DOUBLE,

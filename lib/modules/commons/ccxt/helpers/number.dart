@@ -108,6 +108,8 @@ class NumberHelper {
     PaddingMode paddingMode = PaddingMode.NO_PADDING,
   }) {
     String _value = NumberFormatter.UNKNOWN_NUMBER_TO_STRING;
+    if (value.isNaN || value == null) return _value;
+
     if (value is String) {
       if (value.isEmpty) return _value;
       num? _valueNumber = NumUtil.getNumByValueStr(value);

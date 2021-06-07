@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
 
 class OrderBookListView extends GetView<MarketViewController> {
+  final MarketController marketController = Get.find<MarketController>();
   final SettingsController settingsController = Get.find<SettingsController>();
   @override
   Widget build(BuildContext context) {
@@ -34,13 +36,21 @@ class OrderBookListView extends GetView<MarketViewController> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  '${(controller.orderBook.value.bids[index].last).toStringAsFixed(2)}',
+                                  marketController.formatAmountByPrecision(
+                                    controller.orderBook.value.bids[index].last,
+                                    controller.market.value.symbol,
+                                  ),
+                                  // '${(controller.orderBook.value.bids[index].last).toStringAsFixed(2)}',
                                   style: Theme.of(context).textTheme.caption?.copyWith(
                                         color: Theme.of(context).textTheme.bodyText1?.color,
                                       ),
                                 ),
                                 Text(
-                                  '${(controller.orderBook.value.bids[index].first).toStringAsFixed(controller.market.value.precision.price.toInt())}',
+                                  marketController.formatPriceByPrecision(
+                                    controller.orderBook.value.bids[index].first,
+                                    controller.market.value.symbol,
+                                  ),
+                                  // '${(controller.orderBook.value.bids[index].first).toStringAsFixed(controller.market.value.precision.price.toInt())}',
                                   style: Theme.of(context).textTheme.caption?.copyWith(
                                         color: settingsController.advanceDeclineColors.first,
                                       ),
@@ -62,13 +72,21 @@ class OrderBookListView extends GetView<MarketViewController> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  '${(controller.orderBook.value.asks[index].first).toStringAsFixed(controller.market.value.precision.price.toInt())}',
+                                  marketController.formatPriceByPrecision(
+                                    controller.orderBook.value.asks[index].first,
+                                    controller.market.value.symbol,
+                                  ),
+                                  // '${(controller.orderBook.value.asks[index].first).toStringAsFixed(controller.market.value.precision.price.toInt())}',
                                   style: Theme.of(context).textTheme.caption?.copyWith(
                                         color: settingsController.advanceDeclineColors.last,
                                       ),
                                 ),
                                 Text(
-                                  '${(controller.orderBook.value.asks[index].last).toStringAsFixed(2)}',
+                                  marketController.formatAmountByPrecision(
+                                    controller.orderBook.value.asks[index].last,
+                                    controller.market.value.symbol,
+                                  ),
+                                  // '${(controller.orderBook.value.asks[index].last).toStringAsFixed(2)}',
                                   style: Theme.of(context).textTheme.caption?.copyWith(
                                         color: Theme.of(context).textTheme.bodyText1?.color,
                                       ),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/api/juhe.dart';
 import 'package:flutter_lebei_exchange/assets/translations/main.dart';
 import 'package:flutter_lebei_exchange/models/juhe/exchange.dart';
-import 'package:flutter_lebei_exchange/routes/pages.dart';
 import 'package:get/get.dart';
 import 'package:wakelock/wakelock.dart';
 

@@ -77,5 +77,15 @@ class MarketController extends GetxController {
     );
   }
 
-  // String formatAmountByPrecision() {}
+  String formatAmountByPrecision(dynamic value, String symbol) {
+    final bool hasMarket = markets.any((e) => e.symbol == symbol);
+    if (!hasMarket) return NumberFormatter.numberToString(value);
+
+    return NumberHelper.decimalToPrecision(
+      value,
+      markets.firstWhere((e) => e.symbol == symbol, orElse: () => Market.empty()).precision.amount ?? 2,
+      precisionMode: exchangeController.currentExchange.value.precisionMode,
+      paddingMode: exchangeController.currentExchange.value.paddingMode,
+    );
+  }
 }

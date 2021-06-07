@@ -34,10 +34,12 @@ class TickerPercentageListTile extends StatelessWidget {
             ],
           ),
           Obx(
-            () => Text('${marketController.formatPriceByPrecision(
-              TickerHelper.getValuablePrice(ticker),
-              ticker.symbol,
-            )}'),
+            () => Text(
+              marketController.formatPriceByPrecision(
+                TickerHelper.getValuablePrice(ticker),
+                ticker.symbol,
+              ),
+            ),
           ),
         ],
       ),

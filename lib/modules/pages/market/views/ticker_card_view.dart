@@ -1,8 +1,7 @@
-import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/percentage.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
@@ -26,12 +25,14 @@ class TickerCardView extends GetView<MarketViewController> {
                   Expanded(
                       child: Text(
                     marketController.formatPriceByPrecision(
-                      controller.ticker.value.bid,
+                      TickerHelper.getValuablePrice(controller.ticker.value),
                       controller.ticker.value.symbol,
                     ),
                     style: Theme.of(context).textTheme.headline5?.copyWith(
                           color: PercentageHelper.getPercentageColor(
-                              settingsController.advanceDeclineColors, controller.ticker.value.percentage),
+                            settingsController.advanceDeclineColors,
+                            controller.ticker.value.percentage,
+                          ),
                         ),
                   )),
                   Row(
@@ -39,14 +40,11 @@ class TickerCardView extends GetView<MarketViewController> {
                     textBaseline: TextBaseline.alphabetic,
                     children: [
                       Text(
-                        '${NumberHelper.getCurrencySymbol(settingsController.currency.value)}' +
-                            '${marketController.formatPriceByPrecision(
-                              NumUtil.multiply(
-                                controller.ticker.value.bid,
-                                settingsController.currencyRate.value,
-                              ),
-                              controller.ticker.value.symbol,
-                            )}',
+                        TickerHelper(
+                          ticker: controller.ticker.value,
+                          currency: settingsController.currency.value,
+                          currencyRate: settingsController.currencyRate.value,
+                        ).formatPriceByRate(),
                         maxLines: 1,
                       ),
                       SizedBox(width: 8.0),
@@ -96,7 +94,7 @@ class TickerCardView extends GetView<MarketViewController> {
                     children: [
                       Text('MarketPage.TickerCard.24HVol'.tr),
                       SizedBox(width: 8),
-                      Text('${(controller.ticker.value.baseVolume).split('.')[0]}'),
+                      Text(TickerHelper.getVolumeAsFixed(controller.ticker.value.baseVolume)),
                     ],
                   ),
                 ],

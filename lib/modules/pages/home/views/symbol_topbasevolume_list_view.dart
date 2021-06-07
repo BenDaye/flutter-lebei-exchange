@@ -31,10 +31,12 @@ class SymbolTopBaseVolumeListView extends StatelessWidget {
                   ),
                 ],
               ),
-              Text('${marketController.formatPriceByPrecision(
-                TickerHelper.getValuablePrice(controller.tickers[index]),
-                controller.tickers[index].symbol,
-              )}'),
+              Text(
+                marketController.formatPriceByPrecision(
+                  TickerHelper.getValuablePrice(controller.tickers[index]),
+                  controller.tickers[index].symbol,
+                ),
+              ),
             ],
           ),
           trailing: Container(

@@ -3,6 +3,7 @@ import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_c
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/percentage.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/symbol.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_drawer_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
@@ -109,7 +110,10 @@ class MarketDrawerView extends StatelessWidget {
                         baseTextStyle: Get.context?.textTheme.bodyText2,
                       ),
                       trailing: Text(
-                        '${marketController.formatPriceByPrecision(marketDrawerViewController.tickers[index].bid, marketDrawerViewController.tickers[index].symbol)}',
+                        marketController.formatPriceByPrecision(
+                          TickerHelper.getValuablePrice(marketDrawerViewController.tickers[index]),
+                          marketDrawerViewController.tickers[index].symbol,
+                        ),
                         style: TextStyle(
                           color: PercentageHelper.getPercentageColor(
                             settingsController.advanceDeclineColors,

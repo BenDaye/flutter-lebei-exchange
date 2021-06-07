@@ -1,10 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/percentage.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_popular_controller.dart';
@@ -78,10 +76,10 @@ class SymbolPopularGridView extends StatelessWidget {
                                               ),
                                             ),
                                             Text(
-                                              '${marketController.formatPriceByPrecision(
+                                              marketController.formatPriceByPrecision(
                                                 TickerHelper.getValuablePrice(ticker),
                                                 ticker.symbol,
-                                              )}',
+                                              ),
                                               style: Theme.of(context).textTheme.subtitle1?.copyWith(
                                                     color: PercentageHelper.getPercentageColor(
                                                       settingsController.advanceDeclineColors,
@@ -92,12 +90,11 @@ class SymbolPopularGridView extends StatelessWidget {
                                               maxLines: 1,
                                             ),
                                             Text(
-                                              TickerHelper.getValuablePrice(ticker) == null
-                                                  ? NumberFormatter.UNKNOWN_NUMBER_TO_STRING
-                                                  : '${NumberHelper.getCurrencySymbol(settingsController.currency.value)} ${NumUtil.multiply(
-                                                      TickerHelper.getValuablePrice(ticker),
-                                                      settingsController.currencyRate.value,
-                                                    ).toStringAsFixed(2)}',
+                                              TickerHelper(
+                                                ticker: ticker,
+                                                currency: settingsController.currency.value,
+                                                currencyRate: settingsController.currencyRate.value,
+                                              ).formatPriceByRate(),
                                               style: Theme.of(context).textTheme.caption,
                                               maxLines: 1,
                                             ),
