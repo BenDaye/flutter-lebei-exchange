@@ -1,3 +1,5 @@
+import 'package:flutter_lebei_exchange/utils/formatter/common.dart';
+import 'package:flutter_lebei_exchange/utils/formatter/number.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'market.g.dart';
@@ -106,7 +108,9 @@ class Limits {
 
 @JsonSerializable()
 class MaxMin {
+  @JsonKey(fromJson: NumberFormatter.numberToDouble, toJson: CommonFormatter.whatever)
   double? max;
+  @JsonKey(fromJson: NumberFormatter.numberToDouble, toJson: CommonFormatter.whatever)
   double? min;
 
   MaxMin(

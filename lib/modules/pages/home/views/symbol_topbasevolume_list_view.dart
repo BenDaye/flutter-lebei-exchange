@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/symbol.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_topbasevolume_list_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
@@ -30,8 +31,10 @@ class SymbolTopBaseVolumeListView extends StatelessWidget {
                   ),
                 ],
               ),
-              Text(
-                  '${marketController.formatPriceByPrecision(controller.tickers[index].bid, controller.tickers[index].symbol)}'),
+              Text('${marketController.formatPriceByPrecision(
+                TickerHelper.getValuablePrice(controller.tickers[index]),
+                controller.tickers[index].symbol,
+              )}'),
             ],
           ),
           trailing: Container(
@@ -39,9 +42,9 @@ class SymbolTopBaseVolumeListView extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () => null,
               child: Text(
-                NumberHelper(
-                  locale: settingsController.locale.value,
-                ).getNumberDisplay(controller.tickers[index].baseVolume).text,
+                NumberHelper(locale: settingsController.locale.value)
+                    .getNumberDisplay(controller.tickers[index].baseVolume)
+                    .text,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

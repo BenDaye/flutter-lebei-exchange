@@ -8,6 +8,7 @@ class NumberFormatter {
   static String numberToString(dynamic value) {
     if (value is String) return value;
     if (value is num) {
+      if (value.isNaN) return NumberFormatter.UNKNOWN_NUMBER_TO_STRING;
       String valueString = value.toString();
       if (value.abs().isLowerThan(1)) {
         if (!valueString.contains('e-')) return valueString;

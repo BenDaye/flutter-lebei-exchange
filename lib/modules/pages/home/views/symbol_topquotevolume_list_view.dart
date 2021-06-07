@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/symbol.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_topquotevolume_list_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
@@ -30,8 +31,10 @@ class SymbolTopQuoteVolumeListView extends StatelessWidget {
                   ),
                 ],
               ),
-              Text(
-                  '${marketController.formatPriceByPrecision(controller.tickers[index].bid, controller.tickers[index].symbol)}'),
+              Text('${marketController.formatPriceByPrecision(
+                TickerHelper.getValuablePrice(controller.tickers[index]),
+                controller.tickers[index].symbol,
+              )}'),
             ],
           ),
           trailing: Container(
@@ -39,10 +42,17 @@ class SymbolTopQuoteVolumeListView extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () => null,
               child: Text(
-                '${NumberHelper.getCurrencySymbol(settingsController.currency.value)} ${NumberHelper(
-                  currencyRate: settingsController.currencyRate.value,
-                  locale: settingsController.locale.value,
-                ).getNumberDisplay(controller.tickers[index].quoteVolume).text}',
+                NumberHelper.getCurrencySymbol(
+                      settingsController.currency.value,
+                    ) +
+                    NumberHelper(
+                      currencyRate: settingsController.currencyRate.value,
+                      locale: settingsController.locale.value,
+                    )
+                        .getNumberDisplay(
+                          controller.tickers[index].quoteVolume,
+                        )
+                        .text,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

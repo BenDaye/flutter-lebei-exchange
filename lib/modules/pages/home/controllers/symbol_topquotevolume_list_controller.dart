@@ -1,6 +1,7 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
+import 'package:flutter_lebei_exchange/utils/formatter/number.dart';
 import 'package:get/get.dart';
 
 enum SortType {
@@ -29,7 +30,11 @@ class SymbolTopQuoteVolumeListController extends GetxController {
 
   void watchTickers(List<Ticker> list) {
     final _tickers = List<Ticker>.from(tickerController.filterTickers(margin: true)).toList();
-    _tickers.sort((a, b) => b.quoteVolume.compareTo(a.quoteVolume));
+    _tickers.sort(
+      (a, b) => (NumberFormatter.stringToNumber(b.quoteVolume)).compareTo(
+        NumberFormatter.stringToNumber(a.quoteVolume),
+      ),
+    );
     tickers.value = NumUtil.greaterThan(_tickers.length, 8) ? _tickers.sublist(0, 8) : _tickers;
   }
 }

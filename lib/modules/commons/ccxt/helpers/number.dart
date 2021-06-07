@@ -139,6 +139,7 @@ class NumberHelper {
     PaddingMode paddingMode = PaddingMode.NO_PADDING,
   }) {
     String _value = NumberFormatter.UNKNOWN_NUMBER_TO_STRING;
+    if (value.isNaN) return _value;
     try {
       switch (precisionMode) {
         case PrecisionMode.DECIMAL_PLACES:

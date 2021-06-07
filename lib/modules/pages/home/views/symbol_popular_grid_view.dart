@@ -5,9 +5,12 @@ import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_c
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/percentage.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_popular_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
+import 'package:flutter_lebei_exchange/utils/formatter/number.dart';
 import 'package:get/get.dart';
 
 class SymbolPopularGridView extends StatelessWidget {
@@ -61,32 +64,40 @@ class SymbolPopularGridView extends StatelessWidget {
                                                 style: Theme.of(context).textTheme.bodyText2,
                                                 children: [
                                                   TextSpan(
-                                                    text: '  ${(ticker.percentage).toStringAsFixed(2)}%',
+                                                    text: ticker.percentage.isNaN
+                                                        ? '  ${NumberFormatter.UNKNOWN_NUMBER_TO_STRING}'
+                                                        : '  ${(ticker.percentage).toStringAsFixed(2)}%',
                                                     style: Theme.of(context).textTheme.caption?.copyWith(
-                                                          color: NumUtil.isZero(ticker.percentage)
-                                                              ? settingsController.advanceDeclineColors[1]
-                                                              : NumUtil.greaterThan(ticker.percentage, 0)
-                                                                  ? settingsController.advanceDeclineColors.first
-                                                                  : settingsController.advanceDeclineColors.last,
+                                                          color: PercentageHelper.getPercentageColor(
+                                                            settingsController.advanceDeclineColors,
+                                                            ticker.percentage,
+                                                          ),
                                                         ),
                                                   ),
                                                 ],
                                               ),
                                             ),
                                             Text(
-                                              '${marketController.formatPriceByPrecision(ticker.bid, ticker.symbol)}',
+                                              '${marketController.formatPriceByPrecision(
+                                                TickerHelper.getValuablePrice(ticker),
+                                                ticker.symbol,
+                                              )}',
                                               style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                                                    color: NumUtil.isZero(ticker.percentage)
-                                                        ? settingsController.advanceDeclineColors[1]
-                                                        : NumUtil.greaterThan(ticker.percentage, 0)
-                                                            ? settingsController.advanceDeclineColors.first
-                                                            : settingsController.advanceDeclineColors.last,
+                                                    color: PercentageHelper.getPercentageColor(
+                                                      settingsController.advanceDeclineColors,
+                                                      ticker.percentage,
+                                                    ),
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                               maxLines: 1,
                                             ),
                                             Text(
-                                              '${NumberHelper.getCurrencySymbol(settingsController.currency.value)} ${NumUtil.multiply((ticker.bid), settingsController.currencyRate.value).toStringAsFixed(2)}',
+                                              TickerHelper.getValuablePrice(ticker) == null
+                                                  ? NumberFormatter.UNKNOWN_NUMBER_TO_STRING
+                                                  : '${NumberHelper.getCurrencySymbol(settingsController.currency.value)} ${NumUtil.multiply(
+                                                      TickerHelper.getValuablePrice(ticker),
+                                                      settingsController.currencyRate.value,
+                                                    ).toStringAsFixed(2)}',
                                               style: Theme.of(context).textTheme.caption,
                                               maxLines: 1,
                                             ),

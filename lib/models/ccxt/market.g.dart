@@ -91,12 +91,12 @@ Map<String, dynamic> _$LimitsToJson(Limits instance) => <String, dynamic>{
 
 MaxMin _$MaxMinFromJson(Map<String, dynamic> json) {
   return MaxMin(
-    (json['max'] as num?)?.toDouble(),
-    (json['min'] as num?)?.toDouble(),
+    NumberFormatter.numberToDouble(json['max']),
+    NumberFormatter.numberToDouble(json['min']),
   );
 }
 
 Map<String, dynamic> _$MaxMinToJson(MaxMin instance) => <String, dynamic>{
-      'max': instance.max,
-      'min': instance.min,
+      'max': CommonFormatter.whatever(instance.max),
+      'min': CommonFormatter.whatever(instance.min),
     };
