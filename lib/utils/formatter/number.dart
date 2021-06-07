@@ -55,7 +55,8 @@ class NumberFormatter {
   }
 
   static double numberToDouble(dynamic value) {
-    if (value is num) return value.toDouble();
+    if (value is double) return value;
+    if (value is int) return value.toDouble();
     if (value is String) {
       return NumUtil.getDoubleByValueStr(value) ?? UNKNOWN_DOUBLE;
     }

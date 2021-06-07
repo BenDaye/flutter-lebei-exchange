@@ -21,6 +21,7 @@ class Ticker {
   double bid; // float, // current best bid (buy) price
   @JsonKey(fromJson: NumberFormatter.numberToString, toJson: NumberFormatter.stringToNumber)
   String bidVolume; // float, // current best bid (buy) amount (may be missing or undefined)
+  @JsonKey(fromJson: NumberFormatter.numberToDouble, toJson: CommonFormatter.whatever)
   double ask; // float, // current best ask (sell) price
   @JsonKey(fromJson: NumberFormatter.numberToString, toJson: NumberFormatter.stringToNumber)
   String askVolume; // float, // current best ask (sell) amount (may be missing or undefined)
