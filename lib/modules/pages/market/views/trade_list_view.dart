@@ -1,10 +1,14 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/market/controllers/trade_list_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
 
 class TradeListView extends GetView<MarketViewController> {
+  final TradeListController tradeListController = Get.put(TradeListController());
+  final MarketController marketController = Get.find<MarketController>();
   final SettingsController settingsController = Get.find<SettingsController>();
   @override
   Widget build(BuildContext context) {
@@ -19,18 +23,18 @@ class TradeListView extends GetView<MarketViewController> {
                 SizedBox(
                   width: 80,
                   child: Text(
-                    '${DateUtil.formatDateMs(controller.trades[index].timestamp!, format: 'HH:mm:ss')}',
+                    '${DateUtil.formatDateMs(tradeListController.data[index].timestamp!, format: 'HH:mm:ss')}',
                     style: Theme.of(context).textTheme.caption,
                   ),
                 ),
                 Expanded(
                   child: Text(
-                    controller.trades[index].side == 'buy'
+                    tradeListController.data[index].side == 'buy'
                         ? 'MarketPage.ListView.Buy'.tr
                         : 'MarketPage.ListView.Sell'.tr,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.caption?.copyWith(
-                        color: controller.trades[index].side == 'buy'
+                        color: tradeListController.data[index].side == 'buy'
                             ? settingsController.advanceDeclineColors.first
                             : settingsController.advanceDeclineColors.last),
                   ),
@@ -38,7 +42,10 @@ class TradeListView extends GetView<MarketViewController> {
                 SizedBox(
                   width: Get.width / 3,
                   child: Text(
-                    '${(controller.trades[index].price).toStringAsFixed(controller.market.value.precision.price.toInt())}',
+                    marketController.formatPriceByPrecision(
+                      tradeListController.data[index].price,
+                      controller.market.value.symbol,
+                    ),
                     textAlign: TextAlign.right,
                     style: Theme.of(context).textTheme.caption?.copyWith(
                           color: Theme.of(context).textTheme.bodyText1?.color,
@@ -48,7 +55,10 @@ class TradeListView extends GetView<MarketViewController> {
                 SizedBox(
                   width: Get.width / 3,
                   child: Text(
-                    '${(controller.trades[index].amount).toStringAsFixed(2)}',
+                    marketController.formatAmountByPrecision(
+                      tradeListController.data[index].amount,
+                      controller.market.value.symbol,
+                    ),
                     textAlign: TextAlign.right,
                     style: Theme.of(context).textTheme.caption?.copyWith(
                           color: Theme.of(context).textTheme.bodyText1?.color,
@@ -59,7 +69,7 @@ class TradeListView extends GetView<MarketViewController> {
             ),
           ),
         ),
-        itemCount: controller.trades.length,
+        itemCount: tradeListController.data.length,
         physics: ClampingScrollPhysics(),
       ),
     );

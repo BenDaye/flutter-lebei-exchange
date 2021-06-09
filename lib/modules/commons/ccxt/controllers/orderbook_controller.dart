@@ -1,26 +1,41 @@
 import 'package:flutter_lebei_exchange/api/ccxt.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/orderbook.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:get/get.dart';
+import 'package:sentry/sentry.dart';
 
 class OrderBookController extends GetxController {
   final ExchangeController exchangeController = Get.find<ExchangeController>();
+  final SymbolController symbolController = Get.find<SymbolController>();
 
-  Future<OrderBook?> getOrderBook(String symbol, {String? exchangeId}) async {
-    String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
-    if (symbol.isEmpty || _exchangeId.isEmpty) return null;
-    final result = await ApiCcxt.orderbook(_exchangeId, symbol);
+  Future<OrderBook?> getOrderBook({String? symbol, String? exchangeId}) async {
+    final String _symbol = symbol ?? symbolController.currentSymbol.value;
+    final String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
+    if (_symbol.isEmpty || _exchangeId.isEmpty) return null;
+
+    final result = await ApiCcxt.orderbook(_exchangeId, _symbol);
     if (!result.success) return null;
 
-    return OrderBook.fromJson(result.data!);
+    try {
+      return OrderBook.fromJson(result.data!);
+    } catch (err) {
+      Sentry.captureException(err);
+    }
   }
 
-  Future<OrderBook?> getDepth(String symbol, {String? exchangeId}) async {
-    String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
-    if (symbol.isEmpty || _exchangeId.isEmpty) return null;
-    final result = await ApiCcxt.depth(_exchangeId, symbol);
+  Future<OrderBook?> getDepth({String? symbol, String? exchangeId}) async {
+    final String _symbol = symbol ?? symbolController.currentSymbol.value;
+    final String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
+    if (_symbol.isEmpty || _exchangeId.isEmpty) return null;
+
+    final result = await ApiCcxt.depth(_exchangeId, _symbol);
     if (!result.success) return null;
 
-    return OrderBook.fromJson(result.data!);
+    try {
+      return OrderBook.fromJson(result.data!);
+    } catch (err) {
+      Sentry.captureException(err);
+    }
   }
 }

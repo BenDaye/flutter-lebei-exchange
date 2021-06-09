@@ -48,6 +48,7 @@ dependencies:
   scrollable_positioned_list: ^0.2.0-nullsafety.0
   sentry: ^5.1.0-beta.1
   shimmer: ^2.0.0
+  sliding_up_panel: ^2.0.0+1
   transparent_image: ^2.0.0
   wakelock: ^0.5.2
 

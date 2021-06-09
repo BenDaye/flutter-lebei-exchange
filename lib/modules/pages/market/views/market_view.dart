@@ -1,18 +1,18 @@
-import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
-import 'package:flutter/material.dart' hide NestedScrollView;
+import 'package:flutter/material.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/symbol.dart';
+import 'package:flutter_lebei_exchange/modules/pages/market/controllers/chart_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/views/exchange_list_view.dart';
+import 'package:flutter_lebei_exchange/modules/pages/market/views/chart_view.dart';
+import 'package:flutter_lebei_exchange/modules/pages/market/views/data_panel.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/market_drawer_view.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/views/ohlcv_chart_view.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/views/orderbook_list_view.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/ticker_card_view.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/views/trade_list_view.dart';
 import 'package:get/get.dart';
 
 class MarketView extends GetView<MarketViewController> {
+  final ExchangeController exchangeController = Get.find<ExchangeController>();
   final SymbolController symbolController = Get.find<SymbolController>();
   final MarketController marketController = Get.find<MarketController>();
   @override
@@ -53,98 +53,21 @@ class MarketView extends GetView<MarketViewController> {
         ],
       ),
       drawer: MarketDrawerView(),
-      body: Obx(
-        () => NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool) => <Widget>[
-            SliverToBoxAdapter(
-              child: TickerCardView(),
-            ),
-            SliverToBoxAdapter(
-              child: GetBuilder<MarketViewController>(
-                id: 'ohlcv',
-                builder: (_) => OhlcvChartView(),
-              ),
-            ),
-          ],
-          pinnedHeaderSliverHeightBuilder: () => 0,
-          innerScrollPositionKeyBuilder: () => controller.innerScrollPositionKey.value,
-          body: Column(
+      body: Stack(
+        children: [
+          Column(
             children: [
-              Container(
-                color: Theme.of(context).backgroundColor,
-                height: 48.0,
-                child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: TabBar(
-                        tabs: controller.tabs,
-                        controller: controller.tabController,
-                        indicatorSize: TabBarIndicatorSize.label,
-                        isScrollable: true,
-                      ),
-                    ),
-                    Divider(height: 1.0),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: TabBarView(
-                  controller: controller.tabController,
-                  children: [
-                    Column(
-                      children: [
-                        OrderBookListViewHeader(),
-                        Expanded(
-                          child: NestedScrollViewInnerScrollPositionKeyWidget(
-                            controller.tabs.first.key!,
-                            OrderBookListView(),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        TradeListViewHeader(),
-                        Expanded(
-                          child: NestedScrollViewInnerScrollPositionKeyWidget(
-                            controller.tabs[1].key!,
-                            TradeListView(),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Expanded(
-                          child: NestedScrollViewInnerScrollPositionKeyWidget(
-                            controller.tabs[2].key!,
-                            Container(
-                              height: 1000,
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        ExchangeListViewHeader(),
-                        Expanded(
-                          child: NestedScrollViewInnerScrollPositionKeyWidget(
-                            controller.tabs.last.key!,
-                            ExchangeListView(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+              TickerCardView(),
+              GetBuilder<ChartController>(
+                id: 'chart',
+                init: ChartController(),
+                builder: (_) => ChartView(),
               ),
             ],
           ),
-        ),
+          MarketDataPanel(),
+          Positioned(bottom: 0, child: MarketDataPanelBody()),
+        ],
       ),
     );
   }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/market/controllers/orderbook_list_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
 
 class OrderBookListView extends GetView<MarketViewController> {
+  final OrderBookListController orderBookListController = Get.put(OrderBookListController());
   final MarketController marketController = Get.find<MarketController>();
   final SettingsController settingsController = Get.find<SettingsController>();
   @override
@@ -37,20 +39,18 @@ class OrderBookListView extends GetView<MarketViewController> {
                               children: [
                                 Text(
                                   marketController.formatAmountByPrecision(
-                                    controller.orderBook.value.bids[index].last,
+                                    orderBookListController.data.value.bids[index].last,
                                     controller.market.value.symbol,
                                   ),
-                                  // '${(controller.orderBook.value.bids[index].last).toStringAsFixed(2)}',
                                   style: Theme.of(context).textTheme.caption?.copyWith(
                                         color: Theme.of(context).textTheme.bodyText1?.color,
                                       ),
                                 ),
                                 Text(
                                   marketController.formatPriceByPrecision(
-                                    controller.orderBook.value.bids[index].first,
+                                    orderBookListController.data.value.bids[index].first,
                                     controller.market.value.symbol,
                                   ),
-                                  // '${(controller.orderBook.value.bids[index].first).toStringAsFixed(controller.market.value.precision.price.toInt())}',
                                   style: Theme.of(context).textTheme.caption?.copyWith(
                                         color: settingsController.advanceDeclineColors.first,
                                       ),
@@ -73,17 +73,16 @@ class OrderBookListView extends GetView<MarketViewController> {
                               children: [
                                 Text(
                                   marketController.formatPriceByPrecision(
-                                    controller.orderBook.value.asks[index].first,
+                                    orderBookListController.data.value.asks[index].first,
                                     controller.market.value.symbol,
                                   ),
-                                  // '${(controller.orderBook.value.asks[index].first).toStringAsFixed(controller.market.value.precision.price.toInt())}',
                                   style: Theme.of(context).textTheme.caption?.copyWith(
                                         color: settingsController.advanceDeclineColors.last,
                                       ),
                                 ),
                                 Text(
                                   marketController.formatAmountByPrecision(
-                                    controller.orderBook.value.asks[index].last,
+                                    orderBookListController.data.value.asks[index].last,
                                     controller.market.value.symbol,
                                   ),
                                   // '${(controller.orderBook.value.asks[index].last).toStringAsFixed(2)}',
@@ -111,8 +110,8 @@ class OrderBookListView extends GetView<MarketViewController> {
             ),
           ),
         ),
-        itemCount: controller.orderBook.value.bids.length,
-        physics: ClampingScrollPhysics(),
+        itemCount: orderBookListController.data.value.bids.length,
+        // physics: ClampingScrollPhysics(),
       ),
     );
   }

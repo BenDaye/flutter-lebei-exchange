@@ -22,7 +22,7 @@ class Http {
 
   Http() {
     _dio.interceptors.add(NetworkInterceptor(_dio));
-    _dio.interceptors.add(PrettyDioLogger(maxWidth: 180, responseBody: false));
+    // _dio.interceptors.add(PrettyDioLogger(maxWidth: 180, responseBody: false));
   }
 
   Future<HttpResult<T>> request<T>(

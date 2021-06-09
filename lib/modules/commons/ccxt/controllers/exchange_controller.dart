@@ -11,10 +11,13 @@ class ExchangeController extends GetxController {
   final currentExchangeId = ''.obs;
   final currentExchange = Exchange.empty().obs;
 
+  final timeframes = <String>[].obs;
+
   @override
   void onInit() {
     super.onInit();
     ever(currentExchangeId, watchCurrentExchangeId);
+    ever(currentExchange, watchCurrentExchange);
   }
 
   @override
@@ -44,6 +47,10 @@ class ExchangeController extends GetxController {
     );
 
     getExchangeAndUpdate();
+  }
+
+  void watchCurrentExchange(Exchange _exchange) {
+    timeframes.value = _exchange.timeframes?.keys.toList() ?? [];
   }
 
   Future getExchangesAndUpdate({bool reload = false}) async {
