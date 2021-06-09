@@ -5,6 +5,7 @@ import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_c
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/trade_list_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class TradeListView extends GetView<MarketViewController> {
   final TradeListController tradeListController = Get.put(TradeListController());
@@ -13,64 +14,74 @@ class TradeListView extends GetView<MarketViewController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => ListView.builder(
-        // separatorBuilder: (BuildContext context, int index) => Divider(height: 1.0),
-        itemBuilder: (BuildContext context, int index) => Container(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 80,
-                  child: Text(
-                    '${DateUtil.formatDateMs(tradeListController.data[index].timestamp!, format: 'HH:mm:ss')}',
-                    style: Theme.of(context).textTheme.caption,
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    tradeListController.data[index].side == 'buy'
-                        ? 'MarketPage.ListView.Buy'.tr
-                        : 'MarketPage.ListView.Sell'.tr,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.caption?.copyWith(
-                        color: tradeListController.data[index].side == 'buy'
-                            ? settingsController.advanceDeclineColors.first
-                            : settingsController.advanceDeclineColors.last),
-                  ),
-                ),
-                SizedBox(
-                  width: Get.width / 3,
-                  child: Text(
-                    marketController.formatPriceByPrecision(
-                      tradeListController.data[index].price,
-                      controller.market.value.symbol,
+      () => SmartRefresher(
+        controller: tradeListController.refreshController,
+        header: WaterDropMaterialHeader(),
+        enablePullDown: true,
+        enablePullUp: false,
+        onRefresh: () async {
+          await tradeListController.getTradesAnUpdate();
+          tradeListController.refreshController.refreshCompleted();
+        },
+        child: ListView.builder(
+          // separatorBuilder: (BuildContext context, int index) => Divider(height: 1.0),
+          itemBuilder: (BuildContext context, int index) => Container(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 80,
+                    child: Text(
+                      '${DateUtil.formatDateMs(tradeListController.data[index].timestamp!, format: 'HH:mm:ss')}',
+                      style: Theme.of(context).textTheme.caption,
                     ),
-                    textAlign: TextAlign.right,
-                    style: Theme.of(context).textTheme.caption?.copyWith(
-                          color: Theme.of(context).textTheme.bodyText1?.color,
-                        ),
                   ),
-                ),
-                SizedBox(
-                  width: Get.width / 3,
-                  child: Text(
-                    marketController.formatAmountByPrecision(
-                      tradeListController.data[index].amount,
-                      controller.market.value.symbol,
+                  Expanded(
+                    child: Text(
+                      tradeListController.data[index].side == 'buy'
+                          ? 'MarketPage.ListView.Buy'.tr
+                          : 'MarketPage.ListView.Sell'.tr,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.caption?.copyWith(
+                          color: tradeListController.data[index].side == 'buy'
+                              ? settingsController.advanceDeclineColors.first
+                              : settingsController.advanceDeclineColors.last),
                     ),
-                    textAlign: TextAlign.right,
-                    style: Theme.of(context).textTheme.caption?.copyWith(
-                          color: Theme.of(context).textTheme.bodyText1?.color,
-                        ),
                   ),
-                ),
-              ],
+                  SizedBox(
+                    width: Get.width / 3,
+                    child: Text(
+                      marketController.formatPriceByPrecision(
+                        tradeListController.data[index].price,
+                        controller.market.value.symbol,
+                      ),
+                      textAlign: TextAlign.right,
+                      style: Theme.of(context).textTheme.caption?.copyWith(
+                            color: Theme.of(context).textTheme.bodyText1?.color,
+                          ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: Get.width / 3,
+                    child: Text(
+                      marketController.formatAmountByPrecision(
+                        tradeListController.data[index].amount,
+                        controller.market.value.symbol,
+                      ),
+                      textAlign: TextAlign.right,
+                      style: Theme.of(context).textTheme.caption?.copyWith(
+                            color: Theme.of(context).textTheme.bodyText1?.color,
+                          ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
+          itemCount: tradeListController.data.length,
+          physics: ClampingScrollPhysics(),
         ),
-        itemCount: tradeListController.data.length,
-        physics: ClampingScrollPhysics(),
       ),
     );
   }

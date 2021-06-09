@@ -7,7 +7,7 @@ import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ohlcv_co
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/orderbook_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
-import 'package:flutter_lebei_exchange/utils/funtions/timer.dart';
+import 'package:flutter_lebei_exchange/utils/handlers/timer.dart';
 import 'package:get/get.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:k_chart/flutter_k_chart.dart';
@@ -276,14 +276,15 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
     final String _timeframe = timeframe ?? this.timeframe.value;
     if (_timeframe.isEmpty) return;
 
-    ohlcv.value = await ohlcvController.getOhlcv(symbol: symbol, exchangeId: exchangeId, period: _timeframe);
+    final result = await ohlcvController.getOhlcv(symbol: symbol, exchangeId: exchangeId, period: _timeframe);
+    if (result == null) return;
+    ohlcv.value = result;
   }
 
   Future getDepthAndUpdate({String? symbol, String? exchangeId}) async {
     final OrderBook? result = await orderBookController.getDepth(symbol: symbol, exchangeId: exchangeId);
-    if (result is OrderBook) {
-      depth.value = result;
-    }
+    if (result == null) return;
+    depth.value = result;
   }
 
   void handleClickTab(int _index) {

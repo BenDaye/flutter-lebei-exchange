@@ -7,7 +7,7 @@ import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_c
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/market.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
-import 'package:flutter_lebei_exchange/utils/funtions/timer.dart';
+import 'package:flutter_lebei_exchange/utils/handlers/timer.dart';
 import 'package:get/get.dart' hide Precision;
 // ignore: import_of_legacy_library_into_null_safe
 
@@ -90,16 +90,14 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
 
   Future getMarketAndUpdate({String? symbol, String? exchangeId}) async {
     final result = await marketController.getMarket(symbol: symbol, exchangeId: exchangeId);
-    if (result is Market) {
-      market.value = result;
-    }
+    if (result == null) return;
+    market.value = result;
   }
 
   Future getTickerAndUpdate({String? symbol, String? exchangeId}) async {
     final result = await tickerController.getTicker(symbol: symbol, exchangeId: exchangeId);
-    if (result is Ticker) {
-      ticker.value = result;
-    }
+    if (result == null) return;
+    ticker.value = result;
   }
 
   Future handleTimer(int tick) async {

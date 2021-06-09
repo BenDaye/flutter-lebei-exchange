@@ -3,6 +3,7 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
+import 'package:flutter_lebei_exchange/utils/handlers/timer.dart';
 import 'package:get/get.dart';
 
 class SymbolPopularGridViewController extends GetxController {
@@ -14,12 +15,14 @@ class SymbolPopularGridViewController extends GetxController {
   final tickersForRender = <List<Ticker>>[].obs;
 
   final timer = new TimerUtil(mInterval: 60 * 1000);
+  late Worker timerWorker;
 
   @override
   void onInit() {
     super.onInit();
-    debounce(settingsController.autoRefresh, watchAutoRefresh, time: Duration(milliseconds: 800));
-    timer.setOnTimerTickCallback(handleTimer);
+    timerWorker = debounce(settingsController.autoRefresh, watchAutoRefresh, time: Duration(milliseconds: 800));
+    timer
+        .setOnTimerTickCallback(TimerHandler.common(name: 'SymbolPopularGridViewController', action: getDataAndUpdate));
   }
 
   @override
@@ -31,7 +34,9 @@ class SymbolPopularGridViewController extends GetxController {
 
   @override
   void onClose() {
+    timerWorker.dispose();
     timer.cancel();
+
     super.onClose();
   }
 
@@ -83,8 +88,7 @@ class SymbolPopularGridViewController extends GetxController {
     return _l.values.toList();
   }
 
-  Future handleTimer(int tick) async {
-    print('SymbolPopularGridViewController getTickers ==> $tick, Timer: ${timer.mInterval}');
+  Future getDataAndUpdate() async {
     if (tickers.isEmpty) return;
     final tickerSymbols = tickers.map((e) => e.symbol).toList();
 

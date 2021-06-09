@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/api/ccxt.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:get/get.dart';
+import 'package:sentry/sentry.dart';
 
 class SymbolController extends GetxController {
   final ExchangeController exchangeController = Get.find<ExchangeController>();
@@ -25,24 +26,35 @@ class SymbolController extends GetxController {
   }
 
   void watchCurrentExchangeId(String _exchangeId) {
-    getSymbols(exchangeId: _exchangeId, update: true);
+    getSymbolsAndUpdate(exchangeId: _exchangeId);
   }
 
   void watchFavoriteSymbols(List<String> _symbols) {
     SpUtil.putStringList('Symbol.favoriteSymbols', _symbols);
   }
 
-  Future<List<String>> getSymbols({String? exchangeId, bool? update}) async {
-    String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
-    if (_exchangeId.isEmpty) return [];
-    final result = await ApiCcxt.symbols(_exchangeId);
-    if (!result.success) return [];
+  Future getSymbolsAndUpdate({String? exchangeId}) async {
+    final _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
+    if (_exchangeId.isEmpty) return;
 
-    final data = List<String>.from(result.data!);
-    if (update == true) {
-      symbols.value = data;
+    final result = await getSymbols(exchangeId: _exchangeId);
+    if (result == null) return;
+    symbols.value = result;
+  }
+
+  Future<List<String>?> getSymbols({String? exchangeId}) async {
+    String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
+    if (_exchangeId.isEmpty) return null;
+
+    final result = await ApiCcxt.symbols(_exchangeId);
+    if (!result.success) return null;
+
+    try {
+      return List<String>.from(result.data!);
+    } catch (err) {
+      Sentry.captureException(err);
+      return null;
     }
-    return data;
   }
 
   void toggleFavoriteSymbol(String symbol) {

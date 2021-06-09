@@ -3,13 +3,16 @@ import 'package:flutter_lebei_exchange/models/ccxt/orderbook.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/orderbook_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
-import 'package:flutter_lebei_exchange/utils/funtions/timer.dart';
+import 'package:flutter_lebei_exchange/utils/handlers/timer.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class OrderBookListController extends GetxController {
   final SettingsController settingsController = Get.find<SettingsController>();
   final SymbolController symbolController = Get.find<SymbolController>();
   final OrderBookController orderBookController = Get.find<OrderBookController>();
+
+  final RefreshController refreshController = RefreshController();
 
   final data = OrderBook.empty().obs;
 
@@ -58,9 +61,8 @@ class OrderBookListController extends GetxController {
   }
 
   Future getOrderBookAnUpdate({String? symbol, String? exchangeId}) async {
-    OrderBook? _data = await orderBookController.getOrderBook(symbol: symbol, exchangeId: exchangeId);
-    if (_data is OrderBook) {
-      data.value = _data;
-    }
+    OrderBook? result = await orderBookController.getOrderBook(symbol: symbol, exchangeId: exchangeId);
+    if (result == null) return;
+    data.value = result;
   }
 }

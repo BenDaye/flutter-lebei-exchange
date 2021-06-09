@@ -4,6 +4,7 @@ import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_c
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/orderbook_list_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class OrderBookListView extends GetView<MarketViewController> {
   final OrderBookListController orderBookListController = Get.put(OrderBookListController());
@@ -12,106 +13,116 @@ class OrderBookListView extends GetView<MarketViewController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => ListView.builder(
-        // separatorBuilder: (BuildContext context, int index) => Divider(height: 1.0),
-        itemBuilder: (BuildContext context, int index) => Container(
-          child: IntrinsicHeight(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-              child: Row(
-                children: [
-                  Flexible(
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 28,
-                          child: Text(
-                            '${index + 1}',
-                            textAlign: TextAlign.start,
-                            style: Theme.of(context).textTheme.caption,
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 4.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  marketController.formatAmountByPrecision(
-                                    orderBookListController.data.value.bids[index].last,
-                                    controller.market.value.symbol,
-                                  ),
-                                  style: Theme.of(context).textTheme.caption?.copyWith(
-                                        color: Theme.of(context).textTheme.bodyText1?.color,
-                                      ),
-                                ),
-                                Text(
-                                  marketController.formatPriceByPrecision(
-                                    orderBookListController.data.value.bids[index].first,
-                                    controller.market.value.symbol,
-                                  ),
-                                  style: Theme.of(context).textTheme.caption?.copyWith(
-                                        color: settingsController.advanceDeclineColors.first,
-                                      ),
-                                ),
-                              ],
+      () => SmartRefresher(
+        controller: orderBookListController.refreshController,
+        header: WaterDropMaterialHeader(),
+        enablePullDown: true,
+        enablePullUp: false,
+        onRefresh: () async {
+          await orderBookListController.getOrderBookAnUpdate();
+          orderBookListController.refreshController.refreshCompleted();
+        },
+        child: ListView.builder(
+          // separatorBuilder: (BuildContext context, int index) => Divider(height: 1.0),
+          itemBuilder: (BuildContext context, int index) => Container(
+            child: IntrinsicHeight(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 28,
+                            child: Text(
+                              '${index + 1}',
+                              textAlign: TextAlign.start,
+                              style: Theme.of(context).textTheme.caption,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Flexible(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 4.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  marketController.formatPriceByPrecision(
-                                    orderBookListController.data.value.asks[index].first,
-                                    controller.market.value.symbol,
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 4.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    marketController.formatAmountByPrecision(
+                                      orderBookListController.data.value.bids[index].last,
+                                      controller.market.value.symbol,
+                                    ),
+                                    style: Theme.of(context).textTheme.caption?.copyWith(
+                                          color: Theme.of(context).textTheme.bodyText1?.color,
+                                        ),
                                   ),
-                                  style: Theme.of(context).textTheme.caption?.copyWith(
-                                        color: settingsController.advanceDeclineColors.last,
-                                      ),
-                                ),
-                                Text(
-                                  marketController.formatAmountByPrecision(
-                                    orderBookListController.data.value.asks[index].last,
-                                    controller.market.value.symbol,
+                                  Text(
+                                    marketController.formatPriceByPrecision(
+                                      orderBookListController.data.value.bids[index].first,
+                                      controller.market.value.symbol,
+                                    ),
+                                    style: Theme.of(context).textTheme.caption?.copyWith(
+                                          color: settingsController.advanceDeclineColors.first,
+                                        ),
                                   ),
-                                  // '${(controller.orderBook.value.asks[index].last).toStringAsFixed(2)}',
-                                  style: Theme.of(context).textTheme.caption?.copyWith(
-                                        color: Theme.of(context).textTheme.bodyText1?.color,
-                                      ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 28,
-                          child: Text(
-                            '${index + 1}',
-                            textAlign: TextAlign.end,
-                            style: Theme.of(context).textTheme.caption,
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                    Flexible(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 4.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    marketController.formatPriceByPrecision(
+                                      orderBookListController.data.value.asks[index].first,
+                                      controller.market.value.symbol,
+                                    ),
+                                    style: Theme.of(context).textTheme.caption?.copyWith(
+                                          color: settingsController.advanceDeclineColors.last,
+                                        ),
+                                  ),
+                                  Text(
+                                    marketController.formatAmountByPrecision(
+                                      orderBookListController.data.value.asks[index].last,
+                                      controller.market.value.symbol,
+                                    ),
+                                    // '${(controller.orderBook.value.asks[index].last).toStringAsFixed(2)}',
+                                    style: Theme.of(context).textTheme.caption?.copyWith(
+                                          color: Theme.of(context).textTheme.bodyText1?.color,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 28,
+                            child: Text(
+                              '${index + 1}',
+                              textAlign: TextAlign.end,
+                              style: Theme.of(context).textTheme.caption,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
+          itemCount: orderBookListController.data.value.bids.length,
+          // physics: ClampingScrollPhysics(),
         ),
-        itemCount: orderBookListController.data.value.bids.length,
-        // physics: ClampingScrollPhysics(),
       ),
     );
   }
