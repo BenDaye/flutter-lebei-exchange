@@ -56,6 +56,7 @@ class MarketsViewController extends GetxController with SingleGetTickerProviderM
       standard: selectedCategories[1],
       margin: selectedCategories.last,
     );
+    TickerHelper.sort(tickers, sortType: sortType.value);
   }
 
   void onChangeCategory(int index) {
