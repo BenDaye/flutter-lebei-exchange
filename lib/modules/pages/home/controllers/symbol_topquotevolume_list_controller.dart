@@ -1,25 +1,21 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
 import 'package:flutter_lebei_exchange/utils/formatter/number.dart';
 import 'package:get/get.dart';
 
-enum SortType {
-  ASC,
-  DESC,
-  UNSET,
-}
-
 class SymbolTopQuoteVolumeListController extends GetxController {
-  final nameSortType = SortType.UNSET.obs;
-  final tickers = <Ticker>[].obs;
-
   final TickerController tickerController = Get.find<TickerController>();
+
+  final tickers = <Ticker>[].obs;
+  final sortType = SortType.QuoteVolDesc.obs;
 
   @override
   void onInit() {
     super.onInit();
     ever(tickerController.tickers, watchTickers);
+    debounce(sortType, watchSortType, time: Duration(milliseconds: 300));
   }
 
   @override
@@ -36,5 +32,9 @@ class SymbolTopQuoteVolumeListController extends GetxController {
       ),
     );
     tickers.value = NumUtil.greaterThan(_tickers.length, 8) ? _tickers.sublist(0, 8) : _tickers;
+  }
+
+  void watchSortType(SortType _sortType) {
+    TickerHelper.sort(tickers, sortType: _sortType);
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter_lebei_exchange/api/ccxt.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
 import 'package:get/get.dart';
 import 'package:sentry/sentry.dart';
 
@@ -11,9 +12,6 @@ class TickerController extends GetxController {
 
   final tickers = <Ticker>[].obs;
   final tickersMap = <String, Ticker>{}.obs;
-
-  final sortRegexp =
-      new RegExp(r'^BTC|ETH|DOT|XRP|LINK|BCH|LTC|ADA|EOS|TRX|XMR|IOTA|DASH|ETC|ZEC|USDC|PAX|WBTC|SHIB|DOGE|FIL');
 
   @override
   void onInit() {
@@ -79,15 +77,7 @@ class TickerController extends GetxController {
     if (quote != null && quote.isNotEmpty && quote != 'ALL')
       _tickers = _tickers.where((t) => t.symbol.endsWith(quote)).toList();
 
-    _tickers.sort((a, b) {
-      if (a.symbol.startsWith(sortRegexp) && !b.symbol.startsWith(sortRegexp)) {
-        return -1;
-      } else if (!a.symbol.startsWith(sortRegexp) && b.symbol.startsWith(sortRegexp)) {
-        return 1;
-      } else {
-        return a.symbol.compareTo(b.symbol);
-      }
-    });
+    TickerHelper.sort(_tickers, sortType: SortType.UnSet);
     return _tickers;
   }
 }

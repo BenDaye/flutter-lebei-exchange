@@ -2,6 +2,23 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number.dart';
 import 'package:flutter_lebei_exchange/utils/formatter/number.dart';
+import 'package:sentry/sentry.dart';
+
+enum SortType {
+  UnSet,
+  SymbolAsc,
+  SymbolDesc,
+  PriceAsc,
+  PriceDesc,
+  PercentageAsc,
+  PercentageDesc,
+  BaseVolAsc,
+  BaseVolDesc,
+  QuoteVolAsc,
+  QuoteVolDesc,
+  ExchangeAsc,
+  ExchangeDesc,
+}
 
 class TickerHelper {
   TickerHelper({
@@ -45,5 +62,108 @@ class TickerHelper {
     double? volume = NumUtil.getDoubleByValueStr(value);
     if (volume == null) return value;
     return volume.toStringAsFixed(fractionDigits);
+  }
+
+  static sort(List<Ticker>? tickers, {SortType sortType = SortType.PercentageDesc}) {
+    if (tickers == null || tickers.isEmpty) return;
+    final sortRegexp = new RegExp(
+        r'^BTC/|ETH/|DOT/|XRP/|LINK/|BCH/|LTC/|ADA/|EOS/|TRX/|XMR/|IOTA/|DASH/|ETC/|ZEC/|USDC/|PAX/|WBTC/|SHIB/|DOGE/|FIL/');
+    try {
+      switch (sortType) {
+        case SortType.PercentageAsc:
+          {
+            tickers.sort(
+              (a, b) => (a.percentage.isNaN ? 0 : a.percentage).compareTo(
+                (b.percentage.isNaN ? 0 : b.percentage),
+              ),
+            );
+          }
+          break;
+        case SortType.PercentageDesc:
+          {
+            tickers.sort(
+              (a, b) => (b.percentage.isNaN ? 0 : b.percentage).compareTo(
+                (a.percentage.isNaN ? 0 : a.percentage),
+              ),
+            );
+          }
+          break;
+        case SortType.SymbolAsc:
+          {
+            tickers.sort(
+              (a, b) => a.symbol.compareTo(b.symbol),
+            );
+          }
+          break;
+        case SortType.SymbolDesc:
+          {
+            tickers.sort(
+              (a, b) => b.symbol.compareTo(a.symbol),
+            );
+          }
+          break;
+        case SortType.PriceAsc:
+          {
+            tickers.sort(
+              (a, b) => (TickerHelper.getValuablePrice(a) ?? 0).compareTo((TickerHelper.getValuablePrice(b) ?? 0)),
+            );
+          }
+          break;
+        case SortType.PriceDesc:
+          {
+            tickers.sort(
+              (a, b) => (TickerHelper.getValuablePrice(b) ?? 0).compareTo((TickerHelper.getValuablePrice(a) ?? 0)),
+            );
+          }
+          break;
+        case SortType.BaseVolAsc:
+          {
+            tickers.sort(
+              (a, b) =>
+                  NumberFormatter.stringToNumber(a.baseVolume).compareTo(NumberFormatter.stringToNumber(b.baseVolume)),
+            );
+          }
+          break;
+        case SortType.BaseVolDesc:
+          {
+            tickers.sort(
+              (a, b) =>
+                  NumberFormatter.stringToNumber(b.baseVolume).compareTo(NumberFormatter.stringToNumber(a.baseVolume)),
+            );
+          }
+          break;
+        case SortType.QuoteVolAsc:
+          {
+            tickers.sort(
+              (a, b) => NumberFormatter.stringToNumber(a.quoteVolume)
+                  .compareTo(NumberFormatter.stringToNumber(b.quoteVolume)),
+            );
+          }
+          break;
+        case SortType.QuoteVolDesc:
+          {
+            tickers.sort(
+              (a, b) => NumberFormatter.stringToNumber(b.quoteVolume)
+                  .compareTo(NumberFormatter.stringToNumber(a.quoteVolume)),
+            );
+          }
+          break;
+        default:
+          {
+            tickers.sort((a, b) {
+              if (a.symbol.startsWith(sortRegexp) && !b.symbol.startsWith(sortRegexp)) {
+                return -1;
+              } else if (!a.symbol.startsWith(sortRegexp) && b.symbol.startsWith(sortRegexp)) {
+                return 1;
+              } else {
+                return a.symbol.compareTo(b.symbol);
+              }
+            });
+          }
+          break;
+      }
+    } catch (err) {
+      Sentry.captureException(err);
+    }
   }
 }

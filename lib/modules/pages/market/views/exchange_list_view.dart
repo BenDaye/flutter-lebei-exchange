@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/exchange_list_controller.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -54,18 +55,18 @@ class ExchangeListViewHeader extends GetView<ExchangeListViewController> {
                     style:
                         Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
                   ),
-                  controller.sortType.value == SortType.NameDesc
+                  controller.sortType.value == SortType.ExchangeDesc
                       ? Icon(Icons.trending_down, size: 12, color: Theme.of(context).unselectedWidgetColor)
-                      : controller.sortType.value == SortType.NameAsc
+                      : controller.sortType.value == SortType.ExchangeAsc
                           ? Icon(Icons.trending_up, size: 12, color: Theme.of(context).unselectedWidgetColor)
                           : Icon(Icons.swap_vert, size: 12, color: Theme.of(context).unselectedWidgetColor),
                 ],
               ),
               onTap: () {
-                if (controller.sortType.value == SortType.NameDesc) {
-                  controller.sortType.value = SortType.NameAsc;
+                if (controller.sortType.value == SortType.ExchangeDesc) {
+                  controller.sortType.value = SortType.ExchangeAsc;
                 } else {
-                  controller.sortType.value = SortType.NameDesc;
+                  controller.sortType.value = SortType.ExchangeDesc;
                 }
               },
             ),

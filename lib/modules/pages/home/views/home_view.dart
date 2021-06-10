@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart' hide NestedScrollView;
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/controllers/home_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_topbasevolume_list_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_toppercentage_list_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_topquotevolume_list_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/views/banner_view.dart';
 // import 'package:flutter_lebei_exchange/modules/pages/home/views/googlead_list_tile.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/views/guide_list_tile.dart';
@@ -64,57 +67,58 @@ class HomeView extends GetView<HomeViewController> {
                   child: TabBarView(
                     controller: controller.tabController,
                     children: [
-                      Column(
-                        children: [
-                          HomeListViewHeader(
-                            first: 'ListViewHeader.Symbol'.tr,
-                            middle: 'ListViewHeader.LastPrice'.tr,
-                            last: 'ListViewHeader.Change%'.tr,
-                          ),
-                          Expanded(
-                            child: NestedScrollViewInnerScrollPositionKeyWidget(
-                              Key(controller.tabStrings.first),
-                              SymbolTopPercentageListView(key: Key(controller.tabStrings.first)),
+                      GetBuilder<SymbolTopPercentageListController>(
+                        init: SymbolTopPercentageListController(),
+                        builder: (_) => Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SymbolTopPercentageListViewHeader(),
+                            Expanded(
+                              child: NestedScrollViewInnerScrollPositionKeyWidget(
+                                Key(controller.tabStrings.first),
+                                SymbolTopPercentageListView(key: Key(controller.tabStrings.first)),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
+                      ),
+                      GetBuilder<SymbolTopBaseVolumeListController>(
+                        init: SymbolTopBaseVolumeListController(),
+                        builder: (_) => Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SymbolTopBaseVolumeListViewHeader(),
+                            Expanded(
+                              child: NestedScrollViewInnerScrollPositionKeyWidget(
+                                Key(controller.tabStrings[1]),
+                                SymbolTopBaseVolumeListView(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      GetBuilder<SymbolTopQuoteVolumeListController>(
+                        init: SymbolTopQuoteVolumeListController(),
+                        builder: (_) => Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SymbolTopQuoteVolumeListViewHeader(),
+                            Expanded(
+                              child: NestedScrollViewInnerScrollPositionKeyWidget(
+                                Key(controller.tabStrings[2]),
+                                SymbolTopQuoteVolumeListView(),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           HomeListViewHeader(
-                            first: 'ListViewHeader.Symbol'.tr,
-                            middle: 'ListViewHeader.LastPrice'.tr,
-                            last: 'ListViewHeader.BaseVolume'.tr,
-                          ),
-                          Expanded(
-                            child: NestedScrollViewInnerScrollPositionKeyWidget(
-                              Key(controller.tabStrings[1]),
-                              SymbolTopBaseVolumeListView(),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          HomeListViewHeader(
-                            first: 'ListViewHeader.Symbol'.tr,
-                            middle: 'ListViewHeader.LastPrice'.tr,
-                            last: 'ListViewHeader.QuoteVolume'.tr,
-                          ),
-                          Expanded(
-                            child: NestedScrollViewInnerScrollPositionKeyWidget(
-                              Key(controller.tabStrings[2]),
-                              SymbolTopQuoteVolumeListView(),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          HomeListViewHeader(
-                            first: 'ListViewHeader.Symbol'.tr,
-                            middle: 'ListViewHeader.LastPrice'.tr,
-                            last: 'ListViewHeader.QuoteVolume'.tr,
+                            firstText: 'ListViewHeader.Symbol'.tr,
+                            middleText: 'ListViewHeader.LastPrice'.tr,
+                            lastText: 'ListViewHeader.QuoteVolume'.tr,
                           ),
                           Expanded(
                             child: NestedScrollViewInnerScrollPositionKeyWidget(

@@ -2,18 +2,28 @@ import 'package:flutter/material.dart';
 
 class HomeListViewHeader extends StatelessWidget {
   final Key? key;
-  final String? first;
-  final String? middle;
-  final String? last;
+  final String? firstText;
+  final String? middleText;
+  final String? lastText;
+
+  final Widget? first;
+  final Widget? middle;
+  final Widget? last;
+
   final Widget? custom;
 
   HomeListViewHeader({
     this.key,
+    this.firstText,
+    this.middleText,
+    this.lastText,
     this.first,
     this.middle,
     this.last,
     this.custom,
-  });
+  })  : assert(!(first == null && firstText == null)),
+        assert(!(middle == null && middleText == null)),
+        assert(!(last == null && lastText == null));
 
   @override
   Widget build(BuildContext context) {
@@ -32,24 +42,30 @@ class HomeListViewHeader extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  '${this.first}',
-                  style: Theme.of(context).textTheme.caption,
-                ),
-                Text(
-                  '${this.middle}',
-                  style: Theme.of(context).textTheme.caption,
-                ),
+                first != null
+                    ? first!
+                    : Text(
+                        '${this.firstText}',
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                middle != null
+                    ? middle!
+                    : Text(
+                        '${this.middleText}',
+                        style: Theme.of(context).textTheme.caption,
+                      ),
               ],
             ),
           ),
           SizedBox(
             width: 110.0,
-            child: Text(
-              '${this.last}',
-              style: Theme.of(context).textTheme.caption,
-              textAlign: TextAlign.right,
-            ),
+            child: last != null
+                ? last!
+                : Text(
+                    '${this.lastText}',
+                    style: Theme.of(context).textTheme.caption,
+                    textAlign: TextAlign.right,
+                  ),
           ),
         ],
       ),

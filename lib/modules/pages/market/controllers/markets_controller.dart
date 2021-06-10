@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -15,6 +16,7 @@ class MarketsViewController extends GetxController with SingleGetTickerProviderM
   final TickerController tickerController = Get.find<TickerController>();
 
   final tickers = <Ticker>[].obs;
+  final sortType = SortType.UnSet.obs;
 
   @override
   void onInit() {
@@ -31,6 +33,7 @@ class MarketsViewController extends GetxController with SingleGetTickerProviderM
       vsync: this,
     );
     currentCategoryQuotesController.addListener(updateCurrentCategoryQuoteIndex);
+    debounce(sortType, watchSortType, time: Duration(milliseconds: 300));
   }
 
   @override
@@ -48,9 +51,10 @@ class MarketsViewController extends GetxController with SingleGetTickerProviderM
 
   void updateTickers() {
     tickers.value = tickerController.filterTickers(
-        quote: currentCategoryQuotes[currentCategoryQuoteIndex.value].text,
-        standard: selectedCategories[1],
-        margin: selectedCategories.last);
+      quote: currentCategoryQuotes[currentCategoryQuoteIndex.value].text,
+      standard: selectedCategories[1],
+      margin: selectedCategories.last,
+    );
   }
 
   void onChangeCategory(int index) {
@@ -64,5 +68,9 @@ class MarketsViewController extends GetxController with SingleGetTickerProviderM
     currentCategoryQuotesController.removeListener(updateCurrentCategoryQuoteIndex);
     currentCategoryQuotesController.dispose();
     super.onClose();
+  }
+
+  void watchSortType(SortType _sortType) {
+    TickerHelper.sort(tickers, sortType: _sortType);
   }
 }

@@ -4,6 +4,8 @@ import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
+import 'package:flutter_lebei_exchange/utils/formatter/number.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -14,13 +16,6 @@ class TickerForRender {
   );
   String exchangeId;
   String price;
-}
-
-enum SortType {
-  NameAsc,
-  NameDesc,
-  PriceAsc,
-  PriceDesc,
 }
 
 class ExchangeListViewController extends GetxController {
@@ -84,33 +79,33 @@ class ExchangeListViewController extends GetxController {
         .map(
           (e) => TickerForRender(
             e.key,
-            marketController.formatPriceByPrecision(e.value.bid, e.value.symbol),
+            marketController.formatPriceByPrecision(TickerHelper.getValuablePrice(e.value), e.value.symbol),
           ),
         )
         .toList();
 
-    _exchanges.removeWhere((e) => NumUtil.isZero(NumUtil.getNumByValueStr(e.price)));
+    _exchanges.removeWhere((e) => e.price == NumberFormatter.UNKNOWN_NUMBER_TO_STRING);
 
     _exchanges.sort(
       (a, b) {
         switch (sortType.value) {
           case SortType.PriceDesc:
             {
-              return (NumUtil.getDoubleByValueStr(b.price) ?? double.nan).compareTo(
-                (NumUtil.getDoubleByValueStr(a.price) ?? double.nan),
+              return (NumUtil.getDoubleByValueStr(b.price) ?? 0).compareTo(
+                (NumUtil.getDoubleByValueStr(a.price) ?? 0),
               );
             }
           case SortType.PriceAsc:
             {
-              return (NumUtil.getDoubleByValueStr(a.price) ?? double.nan).compareTo(
-                (NumUtil.getDoubleByValueStr(b.price) ?? double.nan),
+              return (NumUtil.getDoubleByValueStr(a.price) ?? 0).compareTo(
+                (NumUtil.getDoubleByValueStr(b.price) ?? 0),
               );
             }
-          case SortType.NameAsc:
+          case SortType.ExchangeAsc:
             {
               return a.exchangeId.compareTo(b.exchangeId);
             }
-          case SortType.NameDesc:
+          case SortType.ExchangeDesc:
             {
               return b.exchangeId.compareTo(a.exchangeId);
             }
