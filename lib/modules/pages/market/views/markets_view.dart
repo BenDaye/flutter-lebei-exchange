@@ -78,7 +78,7 @@ class MarketsView extends GetView<MarketsViewController> {
                     enablePullDown: true,
                     enablePullUp: false,
                     onRefresh: () async {
-                      await tickerController.getTickers();
+                      await tickerController.getTickersAndUpdate();
                       controller.refreshController.refreshCompleted();
                     },
                     child: ListView.separated(
