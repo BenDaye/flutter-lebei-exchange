@@ -50,7 +50,8 @@ class MarketsViewController extends GetxController with SingleGetTickerProviderM
   }
 
   void updateTickers() {
-    tickers.value = tickerController.filterTickers(
+    tickers.value = TickerHelper.filter(
+      tickerController.tickers,
       quote: currentCategoryQuotes[currentCategoryQuoteIndex.value].text,
       standard: selectedCategories[1],
       margin: selectedCategories.last,

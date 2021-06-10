@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
 import 'package:get/get.dart';
 
 class MarketDrawerController extends GetxController with SingleGetTickerProviderMixin {
@@ -57,7 +58,7 @@ class MarketDrawerController extends GetxController with SingleGetTickerProvider
 
   void watchQuery(String _query) {
     if (_query.isEmpty) return watchCurrenctTabIndex(currentTabIndex.value);
-    final _tickers = List<Ticker>.from(tickerController.filterTickers())
+    final _tickers = TickerHelper.filter(tickerController.tickers)
         .where((e) => e.symbol.startsWith(_query.trim().toUpperCase()))
         .toList();
     tickers.value = _tickers;
@@ -68,6 +69,7 @@ class MarketDrawerController extends GetxController with SingleGetTickerProvider
   }
 
   void watchCurrenctTabIndex(int _index) {
+    textEditingController.clear();
     switch (_index) {
       case 0:
         {
@@ -80,31 +82,32 @@ class MarketDrawerController extends GetxController with SingleGetTickerProvider
                 )
                 .toList(),
           );
-          break;
         }
+        break;
       case 1:
         {
-          tickers.value = List<Ticker>.from(tickerController.filterTickers());
-          break;
+          tickers.value = TickerHelper.filter(tickerController.tickers);
         }
+        break;
       case 2:
         {
-          tickers.value = List<Ticker>.from(tickerController.filterTickers(quote: 'USDT'));
-          break;
+          tickers.value = TickerHelper.filter(tickerController.tickers, quote: 'USDT');
         }
+        break;
       case 3:
         {
-          tickers.value = List<Ticker>.from(tickerController.filterTickers(quote: 'BTC'));
-          break;
+          tickers.value = TickerHelper.filter(tickerController.tickers, quote: 'BTC');
         }
+        break;
       case 4:
         {
-          tickers.value = List<Ticker>.from(tickerController.filterTickers(quote: 'ETH'));
-          break;
+          tickers.value = TickerHelper.filter(tickerController.tickers, quote: 'ETH');
         }
+        break;
       default:
         break;
     }
+    TickerHelper.sort(tickers, sortType: SortType.UnSet);
   }
 
   void wacthTickers(List<Ticker> _tickers) {

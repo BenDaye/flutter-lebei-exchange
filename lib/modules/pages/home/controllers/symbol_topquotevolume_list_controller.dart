@@ -25,7 +25,7 @@ class SymbolTopQuoteVolumeListController extends GetxController {
   }
 
   void watchTickers(List<Ticker> list) {
-    final _tickers = List<Ticker>.from(tickerController.filterTickers(margin: true)).toList();
+    final _tickers = TickerHelper.filter(tickerController.tickers, margin: true);
     _tickers.sort(
       (a, b) => (NumberFormatter.stringToNumber(b.quoteVolume)).compareTo(
         NumberFormatter.stringToNumber(a.quoteVolume),

@@ -24,7 +24,7 @@ class SymbolTopPercentageListController extends GetxController {
   }
 
   void watchTickers(List<Ticker> list) {
-    final _tickers = List<Ticker>.from(tickerController.filterTickers(margin: true))
+    final _tickers = TickerHelper.filter(tickerController.tickers, margin: true)
         .where((t) => t.symbol.endsWith("USDT") || t.symbol.endsWith("BTC"))
         .toList();
     _tickers.sort((a, b) => (b.percentage.isNaN ? 0 : b.percentage).compareTo((a.percentage.isNaN ? 0 : a.percentage)));

@@ -64,6 +64,28 @@ class TickerHelper {
     return volume.toStringAsFixed(fractionDigits);
   }
 
+  static List<Ticker> filter(
+    List<Ticker>? tickers, {
+    String? quote,
+    bool? unknown = false,
+    bool? margin = false,
+    bool? standard = true,
+  }) {
+    if (tickers == null || tickers.isEmpty) return [];
+    List<Ticker> _tickers = List<Ticker>.from(tickers);
+
+    if (unknown == false) _tickers.removeWhere((t) => t.symbol.contains(RegExp(r'[a-z]')));
+    if (standard == false) _tickers.removeWhere((t) => !t.symbol.contains(RegExp(r"[1-9]\d*[LS]")));
+    if (margin == false) _tickers.removeWhere((t) => t.symbol.contains(RegExp(r"[1-9]\d*[LS]")));
+
+    if (quote != null && quote.isNotEmpty && quote != 'ALL')
+      _tickers = _tickers.where((t) => t.symbol.endsWith(quote)).toList();
+
+    TickerHelper.sort(_tickers, sortType: SortType.UnSet);
+
+    return _tickers;
+  }
+
   static sort(List<Ticker>? tickers, {SortType sortType = SortType.PercentageDesc}) {
     if (tickers == null || tickers.isEmpty) return;
     final sortRegexp = new RegExp(

@@ -2,7 +2,6 @@ import 'package:flutter_lebei_exchange/api/ccxt.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
 import 'package:get/get.dart';
 import 'package:sentry/sentry.dart';
 
@@ -65,19 +64,5 @@ class TickerController extends GetxController {
       Sentry.captureException(err);
       return null;
     }
-  }
-
-  List<Ticker> filterTickers({String? quote, bool? unknown = false, bool? margin = false, bool? standard = true}) {
-    List<Ticker> _tickers = List<Ticker>.from(tickers);
-
-    if (unknown == false) _tickers.removeWhere((t) => t.symbol.contains(RegExp(r'[a-z]')));
-    if (standard == false) _tickers.removeWhere((t) => !t.symbol.contains(RegExp(r"[1-9]\d*[LS]")));
-    if (margin == false) _tickers.removeWhere((t) => t.symbol.contains(RegExp(r"[1-9]\d*[LS]")));
-
-    if (quote != null && quote.isNotEmpty && quote != 'ALL')
-      _tickers = _tickers.where((t) => t.symbol.endsWith(quote)).toList();
-
-    TickerHelper.sort(_tickers, sortType: SortType.UnSet);
-    return _tickers;
   }
 }
