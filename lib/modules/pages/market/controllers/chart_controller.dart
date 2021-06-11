@@ -49,8 +49,17 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
   void onInit() {
     super.onInit();
 
-    timerWorker = debounce(settingsController.autoRefresh, watchAutoRefresh, time: Duration(milliseconds: 800));
-    timer.setOnTimerTickCallback(TimerHandler.common(name: 'ChartController', action: getDataAndUpdate));
+    timerWorker = debounce(
+      settingsController.autoRefresh,
+      TimerHandler.watchAutoRefresh(timer),
+      time: Duration(milliseconds: 800),
+    );
+    timer.setOnTimerTickCallback(
+      TimerHandler.common(
+        name: 'ChartController',
+        action: getDataAndUpdate,
+      ),
+    );
 
     ever(exchangeController.timeframes, watchTimeframes);
     watchTimeframes(exchangeController.timeframes, init: true);
@@ -65,7 +74,7 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
   @override
   void onReady() {
     super.onReady();
-    watchAutoRefresh(settingsController.autoRefresh.value);
+    TimerHandler.watchAutoRefresh(timer)(settingsController.autoRefresh.value);
   }
 
   @override
@@ -76,14 +85,6 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
     timeframesController.dispose();
 
     super.onClose();
-  }
-
-  void watchAutoRefresh(double _m) {
-    if (timer.isActive()) timer.cancel();
-    if (!_m.isEqual(0)) {
-      timer.setInterval(_m.toInt() * 1000);
-      timer.startTimer();
-    }
   }
 
   void watchSymbol(String _symbol) {

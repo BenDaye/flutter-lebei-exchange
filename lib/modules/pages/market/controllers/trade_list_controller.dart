@@ -23,14 +23,23 @@ class TradeListController extends GetxController {
   void onInit() {
     super.onInit();
 
-    timerWorker = debounce(settingsController.autoRefresh, watchAutoRefresh, time: Duration(milliseconds: 800));
-    timer.setOnTimerTickCallback(TimerHandler.common(name: 'TradeListController', action: getDataAndUpdate));
+    timerWorker = debounce(
+      settingsController.autoRefresh,
+      TimerHandler.watchAutoRefresh(timer),
+      time: Duration(milliseconds: 800),
+    );
+    timer.setOnTimerTickCallback(
+      TimerHandler.common(
+        name: 'TradeListController',
+        action: getDataAndUpdate,
+      ),
+    );
   }
 
   @override
   void onReady() {
     super.onReady();
-    watchAutoRefresh(settingsController.autoRefresh.value);
+    TimerHandler.watchAutoRefresh(timer)(settingsController.autoRefresh.value);
   }
 
   @override
@@ -39,14 +48,6 @@ class TradeListController extends GetxController {
     timer.cancel();
 
     super.onClose();
-  }
-
-  void watchAutoRefresh(double _m) {
-    if (timer.isActive()) timer.cancel();
-    if (!_m.isEqual(0)) {
-      timer.setInterval(_m.toInt() * 1000);
-      timer.startTimer();
-    }
   }
 
   void watchSymbol(String _symbol) {

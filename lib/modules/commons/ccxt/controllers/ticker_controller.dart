@@ -33,8 +33,22 @@ class TickerController extends GetxController {
     tickersMap.value = _tickersMap;
   }
 
+  Future getTickersAndUpdatePartial({String? exchangeId, required List<String> symbols}) async {
+    final String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
+    if (_exchangeId.isEmpty || symbols.isEmpty) return null;
+
+    final _tickersMap = await getTickers(symbols: symbols);
+    if (_tickersMap == null) return;
+
+    _tickersMap.forEach((key, value) {
+      if (tickersMap.containsKey(key)) {
+        tickersMap[key] = value;
+      }
+    });
+  }
+
   Future<Map<String, Ticker>?> getTickers({String? exchangeId, List<String>? symbols}) async {
-    String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
+    final String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
     if (_exchangeId.isEmpty) return null;
 
     final result = await ApiCcxt.tickers(_exchangeId, symbols: symbols);

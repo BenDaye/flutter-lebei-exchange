@@ -20,9 +20,17 @@ class SymbolPopularGridViewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    timerWorker = debounce(settingsController.autoRefresh, watchAutoRefresh, time: Duration(milliseconds: 800));
-    timer
-        .setOnTimerTickCallback(TimerHandler.common(name: 'SymbolPopularGridViewController', action: getDataAndUpdate));
+    timerWorker = debounce(
+      settingsController.autoRefresh,
+      TimerHandler.watchAutoRefresh(timer),
+      time: Duration(milliseconds: 800),
+    );
+    timer.setOnTimerTickCallback(
+      TimerHandler.common(
+        name: 'SymbolPopularGridViewController',
+        action: getDataAndUpdate,
+      ),
+    );
   }
 
   @override
@@ -38,14 +46,6 @@ class SymbolPopularGridViewController extends GetxController {
     timer.cancel();
 
     super.onClose();
-  }
-
-  void watchAutoRefresh(double _m) {
-    if (timer.isActive()) timer.cancel();
-    if (!_m.isEqual(0)) {
-      timer.setInterval(_m.toInt() * 1000);
-      timer.startTimer();
-    }
   }
 
   void watchTickerControllerTickers(List<Ticker> _tickers) {

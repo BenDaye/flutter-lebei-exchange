@@ -1,3 +1,4 @@
+// import 'package:auto_animated/auto_animated.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_lebei_exchange/modules/pages/home/views/list_view_header
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/markets_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/category_title_view.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
+import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -72,6 +74,28 @@ class MarketsView extends GetView<MarketsViewController> {
                 ),
                 MarketsListViewHeader(),
                 Expanded(
+                  // child: LiveList.options(
+                  //   itemBuilder: (
+                  //     BuildContext context,
+                  //     int index,
+                  //     Animation<double> animation,
+                  //   ) =>
+                  //       FadeTransition(
+                  //     opacity: Tween<double>(
+                  //       begin: 0,
+                  //       end: 1,
+                  //     ).animate(animation),
+                  //     child: SlideTransition(
+                  //       position: Tween<Offset>(
+                  //         begin: Offset(0, -0.1),
+                  //         end: Offset.zero,
+                  //       ).animate(animation),
+                  //       child: TickerPercentageListTile(controller.tickers[index]),
+                  //     ),
+                  //   ),
+                  //   itemCount: controller.tickers.length,
+                  //   options: LiveOptions(),
+                  // ),
                   child: SmartRefresher(
                     header: WaterDropMaterialHeader(),
                     controller: controller.refreshController,
@@ -82,9 +106,17 @@ class MarketsView extends GetView<MarketsViewController> {
                       controller.refreshController.refreshCompleted();
                     },
                     child: ListView.separated(
+                      controller: controller.scrollController,
                       separatorBuilder: (BuildContext context, int index) => Divider(height: 1.0),
-                      itemBuilder: (BuildContext context, int index) =>
-                          TickerPercentageListTile(controller.tickers[index]),
+                      itemBuilder: (BuildContext context, int index) => FocusDetector(
+                        onVisibilityGained: () {
+                          controller.focusIndexes.insert(0, index);
+                        },
+                        onVisibilityLost: () {
+                          controller.focusIndexes.removeWhere((e) => e == index);
+                        },
+                        child: TickerPercentageListTile(controller.tickers[index]),
+                      ),
                       itemCount: controller.tickers.length,
                     ),
                   ),

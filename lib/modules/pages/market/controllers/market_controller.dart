@@ -46,8 +46,17 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
   void onInit() {
     super.onInit();
 
-    timerWorker = debounce(settingsController.autoRefresh, watchAutoRefresh, time: Duration(milliseconds: 800));
-    timer.setOnTimerTickCallback(TimerHandler.common(name: 'MarketViewController', action: getDataAndUpdate));
+    timerWorker = debounce(
+      settingsController.autoRefresh,
+      TimerHandler.watchAutoRefresh(timer),
+      time: Duration(milliseconds: 800),
+    );
+    timer.setOnTimerTickCallback(
+      TimerHandler.common(
+        name: 'MarketViewController',
+        action: getDataAndUpdate,
+      ),
+    );
 
     ever(symbolController.currentSymbol, watchSymbol);
 
@@ -57,7 +66,7 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
   @override
   void onReady() {
     super.onReady();
-    watchAutoRefresh(settingsController.autoRefresh.value);
+    TimerHandler.watchAutoRefresh(timer)(settingsController.autoRefresh.value);
   }
 
   @override
@@ -68,14 +77,6 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
     tabController.dispose();
 
     super.onClose();
-  }
-
-  void watchAutoRefresh(double _m) {
-    if (timer.isActive()) timer.cancel();
-    if (!_m.isEqual(0)) {
-      timer.setInterval(_m.toInt() * 1000);
-      timer.startTimer();
-    }
   }
 
   void watchSymbol(String _symbol) async {
