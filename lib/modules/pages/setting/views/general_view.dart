@@ -152,55 +152,7 @@ class GeneralView extends GetView<SettingsController> {
                     Icons.chevron_right,
                     color: Theme.of(context).dividerColor,
                   ),
-                  onTap: () async {
-                    bool? isConfirm = await Get.dialog<bool>(
-                      Center(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Card(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ListTile(
-                                  leading: Icon(Icons.error),
-                                  title: Text('GeneralPage.Reset'.tr),
-                                  subtitle: Text('GeneralPage.Reset.Desc'.tr),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      TextButton(
-                                        onPressed: () => Get.back<bool>(result: true),
-                                        child: Text('Common.Action.Confirm'.tr),
-                                        style: TextButton.styleFrom(
-                                          primary: Colors.red,
-                                        ),
-                                      ),
-                                      SizedBox(width: 16),
-                                      TextButton(
-                                        onPressed: () => Get.back<bool>(result: false),
-                                        child: Text('Common.Action.Cancel'.tr),
-                                        style: TextButton.styleFrom(
-                                          primary: Theme.of(context).textTheme.caption?.color,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                    if (isConfirm == true) {
-                      await SpUtil.clear();
-                      Get.reloadAll(force: true);
-                      Get.forceAppUpdate();
-                    }
-                  },
+                  onTap: controller.resetAppDialog,
                 ),
               ],
             ),
