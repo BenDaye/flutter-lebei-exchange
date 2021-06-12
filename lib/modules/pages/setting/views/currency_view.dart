@@ -13,7 +13,7 @@ class CurrencyView extends StatelessWidget {
       appBar: AppBar(elevation: 0),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+        children: <Widget>[
           Container(
             color: Theme.of(context).bottomAppBarColor,
             padding: const EdgeInsets.all(16.0),

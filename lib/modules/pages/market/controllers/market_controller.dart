@@ -20,17 +20,17 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final market = Market.empty().obs;
-  final ticker = Ticker.empty().obs;
+  final Rx<Market> market = Market.empty().obs;
+  final Rx<Ticker> ticker = Ticker.empty().obs;
 
-  final tabs = [
+  final RxList<Tab> tabs = <String>[
     'MarketPage.TabBar.Order',
     'MarketPage.TabBar.Trade',
     'MarketPage.TabBar.Intro',
     'MarketPage.TabBar.Exchanges',
   ]
       .map<Tab>(
-        (t) => Tab(
+        (String t) => Tab(
           text: t.tr,
           key: Key(t),
         ),
@@ -39,7 +39,7 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
       .obs;
   late TabController tabController;
 
-  final timer = new TimerUtil(mInterval: 60 * 1000);
+  final TimerUtil timer = TimerUtil(mInterval: 60 * 1000);
   late Worker timerWorker;
 
   @override
@@ -49,7 +49,7 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
     timerWorker = debounce(
       settingsController.autoRefresh,
       TimerHandler.watchAutoRefresh(timer),
-      time: Duration(milliseconds: 800),
+      time: const Duration(milliseconds: 800),
     );
     timer.setOnTimerTickCallback(
       TimerHandler.common(
@@ -79,32 +79,25 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
     super.onClose();
   }
 
-  void watchSymbol(String _symbol) async {
+  void watchSymbol(String _symbol) {
     if (_symbol.isEmpty) return;
     getDataAndUpdate();
   }
 
-  Future getDataAndUpdate() async {
+  Future<void> getDataAndUpdate() async {
     getMarketAndUpdate();
     getTickerAndUpdate();
   }
 
-  Future getMarketAndUpdate({String? symbol, String? exchangeId}) async {
-    final result = await marketController.getMarket(symbol: symbol, exchangeId: exchangeId);
+  Future<void> getMarketAndUpdate({String? symbol, String? exchangeId}) async {
+    final Market? result = await marketController.getMarket(symbol: symbol, exchangeId: exchangeId);
     if (result == null) return;
     market.value = result;
   }
 
-  Future getTickerAndUpdate({String? symbol, String? exchangeId}) async {
-    final result = await tickerController.getTicker(symbol: symbol, exchangeId: exchangeId);
+  Future<void> getTickerAndUpdate({String? symbol, String? exchangeId}) async {
+    final Ticker? result = await tickerController.getTicker(symbol: symbol, exchangeId: exchangeId);
     if (result == null) return;
     ticker.value = result;
-  }
-
-  Future handleTimer(int tick) async {
-    print('MarketViewController AutoRefresh ==> $tick, Timer: ${timer.mInterval}');
-    if (symbolController.currentSymbol.value.isEmpty) return;
-
-    getDataAndUpdate();
   }
 }

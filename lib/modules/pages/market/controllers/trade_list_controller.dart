@@ -14,9 +14,9 @@ class TradeListController extends GetxController {
 
   final RefreshController refreshController = RefreshController();
 
-  final data = <Trade>[].obs;
+  final RxList<Trade> data = <Trade>[].obs;
 
-  final timer = new TimerUtil(mInterval: 60 * 1000);
+  final TimerUtil timer = TimerUtil(mInterval: 60 * 1000);
   late Worker timerWorker;
 
   @override
@@ -26,7 +26,7 @@ class TradeListController extends GetxController {
     timerWorker = debounce(
       settingsController.autoRefresh,
       TimerHandler.watchAutoRefresh(timer),
-      time: Duration(milliseconds: 800),
+      time: const Duration(milliseconds: 800),
     );
     timer.setOnTimerTickCallback(
       TimerHandler.common(
@@ -56,13 +56,13 @@ class TradeListController extends GetxController {
   }
 
   void getDataAndUpdate({String? symbol}) {
-    final _symbol = symbol ?? symbolController.currentSymbol.value;
+    final String _symbol = symbol ?? symbolController.currentSymbol.value;
     if (_symbol.isEmpty) return;
     getTradesAnUpdate();
   }
 
-  Future getTradesAnUpdate({String? symbol, String? exchangeId}) async {
-    List<Trade>? result = await tradeController.getTrades(symbol: symbol, exchangeId: exchangeId);
+  Future<void> getTradesAnUpdate({String? symbol, String? exchangeId}) async {
+    final List<Trade>? result = await tradeController.getTrades(symbol: symbol, exchangeId: exchangeId);
     if (result == null) return;
     data.value = result;
   }

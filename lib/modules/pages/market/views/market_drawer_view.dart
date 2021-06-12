@@ -19,7 +19,7 @@ class MarketDrawerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onPanDown: (_) {
-        FocusScopeNode currentFocus = FocusScope.of(context);
+        final FocusScopeNode currentFocus = FocusScope.of(context);
         if (!currentFocus.hasPrimaryFocus) {
           currentFocus.unfocus();
         }
@@ -35,7 +35,7 @@ class MarketDrawerView extends StatelessWidget {
               child: TabBar(
                 tabs: marketDrawerViewController.tabs
                     .map(
-                      (t) => Tab(
+                      (String t) => Tab(
                         text: t.tr,
                         key: Key(t),
                       ),
@@ -44,19 +44,18 @@ class MarketDrawerView extends StatelessWidget {
                 controller: marketDrawerViewController.tabController,
                 isScrollable: true,
                 indicatorSize: TabBarIndicatorSize.label,
-                labelPadding: EdgeInsets.symmetric(horizontal: 8),
+                labelPadding: const EdgeInsets.symmetric(horizontal: 8),
               ),
             ),
             centerTitle: false,
           ),
           body: Obx(
             () => Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
+              children: <Widget>[
                 IntrinsicHeight(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
+                    children: <Widget>[
                       Expanded(
                         child: Container(
                           color: Theme.of(context).focusColor,
@@ -70,7 +69,7 @@ class MarketDrawerView extends StatelessWidget {
                                 color: Theme.of(context).unselectedWidgetColor,
                               ),
                               border: InputBorder.none,
-                              counterStyle: TextStyle(height: double.minPositive),
+                              counterStyle: const TextStyle(height: double.minPositive),
                               counterText: '',
                             ),
                             textCapitalization: TextCapitalization.characters,
@@ -82,6 +81,7 @@ class MarketDrawerView extends StatelessWidget {
                         () => marketDrawerViewController.query.isEmpty
                             ? Container()
                             : InkWell(
+                                onTap: () => marketDrawerViewController.textEditingController.clear(),
                                 child: Container(
                                   width: 48,
                                   color: Theme.of(context).focusColor,
@@ -93,13 +93,12 @@ class MarketDrawerView extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                onTap: () => marketDrawerViewController.textEditingController.clear(),
                               ),
                       ),
                     ],
                   ),
                 ),
-                Divider(height: 1),
+                const Divider(height: 1),
                 Expanded(
                   child: ListView.builder(
                     keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,

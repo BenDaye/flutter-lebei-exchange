@@ -16,12 +16,11 @@ class TickerCardView extends GetView<MarketViewController> {
         height: 80,
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
         child: Row(
-          children: [
+          children: <Widget>[
             Expanded(
               child: Column(
-                mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   Expanded(
                       child: Text(
                     marketController.formatPriceByPrecision(
@@ -38,7 +37,7 @@ class TickerCardView extends GetView<MarketViewController> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,
-                    children: [
+                    children: <Widget>[
                       Text(
                         TickerHelper(
                           ticker: controller.ticker.value,
@@ -47,7 +46,7 @@ class TickerCardView extends GetView<MarketViewController> {
                         ).formatPriceByRate(),
                         maxLines: 1,
                       ),
-                      SizedBox(width: 8.0),
+                      const SizedBox(width: 8.0),
                       PercentageHelper.getPercentageText(
                         settingsController.advanceDeclineColors,
                         controller.ticker.value.percentage,
@@ -62,12 +61,12 @@ class TickerCardView extends GetView<MarketViewController> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
+                children: <Widget>[
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    children: <Widget>[
                       Text('MarketPage.TickerCard.High'.tr),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       Text(
                         marketController.formatPriceByPrecision(
                           controller.ticker.value.high,
@@ -78,9 +77,9 @@ class TickerCardView extends GetView<MarketViewController> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    children: <Widget>[
                       Text('MarketPage.TickerCard.Low'.tr),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       Text(
                         marketController.formatPriceByPrecision(
                           controller.ticker.value.low,
@@ -91,9 +90,9 @@ class TickerCardView extends GetView<MarketViewController> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    children: <Widget>[
                       Text('MarketPage.TickerCard.24HVol'.tr),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       Text(TickerHelper.getVolumeAsFixed(controller.ticker.value.baseVolume)),
                     ],
                   ),

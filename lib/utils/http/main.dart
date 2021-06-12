@@ -7,23 +7,23 @@ import 'package:flutter_lebei_exchange/utils/http/handler/error.dart';
 import 'package:flutter_lebei_exchange/utils/http/handler/success.dart';
 import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
 import 'package:flutter_lebei_exchange/utils/http/interceptors/network.dart';
-import 'package:get/get.dart' as GetX;
+import 'package:get/get.dart' as getx;
 // import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:sentry/sentry.dart';
 
 class Http {
-  static BaseOptions _options = BaseOptions(
-    receiveTimeout: HttpConfig.HTTP_RECEVE_TIMEOUT,
-    baseUrl: HttpConfig.HOST,
-    receiveDataWhenStatusError: false,
-  );
-
-  Dio _dio = Dio(_options);
-
   Http() {
     _dio.interceptors.add(NetworkInterceptor(_dio));
     // _dio.interceptors.add(PrettyDioLogger(maxWidth: 180, responseBody: false));
   }
+
+  static final BaseOptions _options = BaseOptions(
+    receiveTimeout: HttpConfig.httpReceveTimeout,
+    baseUrl: HttpConfig.host,
+    receiveDataWhenStatusError: false,
+  );
+
+  final Dio _dio = Dio(_options);
 
   Future<HttpResult<T>> request<T>(
     String url, {
@@ -33,14 +33,15 @@ class Http {
     Options? options,
     Function(dynamic)? handleError,
   }) async {
-    Map<String, dynamic> _headers = HashMap<String, dynamic>();
+    final Map<String, dynamic> _headers = HashMap<String, dynamic>();
     if (headers != null) _headers.addAll(headers);
 
-    if (options == null) options = Options(method: 'GET');
+    options ??= Options(method: 'GET');
     options.headers = _headers;
 
     try {
-      Response result = await _dio.request(
+      // ignore: always_specify_types
+      final Response result = await _dio.request(
         url,
         data: data,
         queryParameters: queryParameters,
@@ -48,15 +49,18 @@ class Http {
       );
       return onSuccess<T>(result);
     } on DioError catch (error) {
-      final httpError = onError<T>(error);
+      final HttpResult<T> httpError = onError<T>(error);
       if (handleError == null) {
-        GetX.Get.showSnackbar(GetX.GetBar(
-          title: 'NETWORK_ERROR',
-          message: httpError.message.length > 128 ? '${httpError.message.substring(0, 128)}...' : httpError.message,
-          snackPosition: GetX.SnackPosition.TOP,
-          snackStyle: GetX.SnackStyle.GROUNDED,
-          backgroundColor: Colors.red,
-        ));
+        getx.Get.showSnackbar(
+          // ignore: always_specify_types
+          getx.GetBar(
+            title: 'NETWORK_ERROR',
+            message: httpError.message.length > 128 ? '${httpError.message.substring(0, 128)}...' : httpError.message,
+            snackPosition: getx.SnackPosition.TOP,
+            snackStyle: getx.SnackStyle.GROUNDED,
+            backgroundColor: Colors.red,
+          ),
+        );
       } else {
         handleError(error);
       }
@@ -66,13 +70,16 @@ class Http {
       Sentry.captureException(error);
 
       if (handleError == null) {
-        GetX.Get.showSnackbar(GetX.GetBar(
-          title: 'UNEXPECTED_NETWORK_ERROR',
-          message: error.toString().length > 128 ? '${error.toString().substring(0, 128)}...' : error.toString(),
-          snackPosition: GetX.SnackPosition.TOP,
-          snackStyle: GetX.SnackStyle.GROUNDED,
-          backgroundColor: Colors.red,
-        ));
+        getx.Get.showSnackbar(
+          // ignore: always_specify_types
+          getx.GetBar(
+            title: 'UNEXPECTED_NETWORK_ERROR',
+            message: error.toString().length > 128 ? '${error.toString().substring(0, 128)}...' : error.toString(),
+            snackPosition: getx.SnackPosition.TOP,
+            snackStyle: getx.SnackStyle.GROUNDED,
+            backgroundColor: Colors.red,
+          ),
+        );
       } else {
         handleError(error);
       }

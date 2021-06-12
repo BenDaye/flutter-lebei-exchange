@@ -1,6 +1,7 @@
 import 'package:flutter_lebei_exchange/api/ccxt.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
+import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
 import 'package:get/get.dart';
 import 'package:sentry/sentry.dart';
 
@@ -15,11 +16,11 @@ class OhlcvController extends GetxController {
 
     if (period.isEmpty) return null;
 
-    final result = await ApiCcxt.ohlcv(_exchangeId, _symbol, period: period);
+    final HttpResult<List<dynamic>> result = await ApiCcxt.ohlcv(_exchangeId, _symbol, period: period);
     if (!result.success) return null;
 
     try {
-      return List.from(result.data!).map((item) => List<num>.from(item)).toList();
+      return List<List<num>>.from(result.data!).map((List<num> item) => List<num>.from(item)).toList();
     } catch (err) {
       Sentry.captureException(err);
       return null;

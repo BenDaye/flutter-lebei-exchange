@@ -8,26 +8,26 @@ import 'package:get/get.dart';
 class SymbolTopBaseVolumeListController extends GetxController {
   final TickerController tickerController = Get.find<TickerController>();
 
-  final tickers = <Ticker>[].obs;
-  final sortType = SortType.BaseVolDesc.obs;
+  final RxList<Ticker> tickers = <Ticker>[].obs;
+  final Rx<SortType> sortType = SortType.baseVolDesc.obs;
 
   @override
   void onInit() {
     super.onInit();
     ever(tickerController.tickers, watchTickers);
-    debounce(sortType, watchSortType, time: Duration(milliseconds: 300));
+    debounce(sortType, watchSortType, time: const Duration(milliseconds: 300));
   }
 
   @override
   void onReady() {
     super.onReady();
-    watchTickers([]);
+    watchTickers(<Ticker>[]);
   }
 
   void watchTickers(List<Ticker> list) {
-    final _tickers = TickerHelper.filter(tickerController.tickers, margin: true);
+    final List<Ticker> _tickers = TickerHelper.filter(tickerController.tickers, margin: true);
     _tickers.sort(
-      (a, b) => (NumberFormatter.stringToNumber(b.baseVolume)).compareTo(
+      (Ticker a, Ticker b) => (NumberFormatter.stringToNumber(b.baseVolume)).compareTo(
         NumberFormatter.stringToNumber(a.baseVolume),
       ),
     );

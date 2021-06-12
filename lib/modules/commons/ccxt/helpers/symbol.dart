@@ -4,43 +4,43 @@ import 'package:get/get.dart';
 class SymbolHelper {
   static String getSymbolTitleText(String symbol) {
     if (symbol.isEmpty) return '';
-    String? marginString = getMarginString(symbol);
+    final String? marginString = getMarginString(symbol);
     if (marginString == null) return symbol;
-    String marginText = marginString.substring(marginString.length - 1) == 'L' ? '' : '-';
-    String multipleString = marginString.substring(0, marginString.length - 1);
+    final String marginText = marginString.substring(marginString.length - 1) == 'L' ? '' : '-';
+    final String multipleString = marginString.substring(0, marginString.length - 1);
     return symbol.replaceAll(marginString, '*($marginText$multipleString)');
   }
 
   static bool isMarginSymbol(String symbol) {
     if (symbol.isEmpty) return false;
-    return new RegExp(r"[1-9]\d*[LS]").hasMatch(symbol);
+    return RegExp(r'[1-9]\d*[LS]').hasMatch(symbol);
   }
 
-  static String? getMarginString(String symbol) => new RegExp(r"[1-9]\d*[LS]").stringMatch(symbol);
+  static String? getMarginString(String symbol) => RegExp(r'[1-9]\d*[LS]').stringMatch(symbol);
 
   static String getSymbolSubtitleText(String symbol) {
     if (symbol.isEmpty) return '';
-    String? marginString = getMarginString(symbol);
+    final String? marginString = getMarginString(symbol);
     if (marginString == null) return '';
-    String marginText = marginString.substring(marginString.length - 1) == 'L'
+    final String marginText = marginString.substring(marginString.length - 1) == 'L'
         ? 'MarginSymbolSubtitle.Long'.tr
         : 'MarginSymbolSubtitle.Short'.tr;
-    String multipleString = marginString.substring(0, marginString.length - 1);
-    return '$multipleString' + 'MarginSymbolSubtitle.Multiple'.tr + '$marginText';
+    final String multipleString = marginString.substring(0, marginString.length - 1);
+    return multipleString + 'MarginSymbolSubtitle.Multiple'.tr + marginText;
   }
 
   static Widget getSymbolTitle(String symbol, {TextStyle? baseTextStyle, TextStyle? quoteTextStyle}) {
-    if (symbol.isEmpty) return Text('/');
-    String titleText = getSymbolTitleText(symbol);
+    if (symbol.isEmpty) return const Text('/');
+    final String titleText = getSymbolTitleText(symbol);
     if (!titleText.contains('/')) return Text(titleText);
 
-    final titleTextArray = titleText.split('/');
+    final List<String> titleTextArray = titleText.split('/');
 
     return RichText(
       text: TextSpan(
         text: titleTextArray.first,
         style: baseTextStyle ?? Get.context?.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
-        children: [
+        children: <InlineSpan>[
           TextSpan(
             text: ' /${titleTextArray.last}',
             style: quoteTextStyle ?? Get.context?.textTheme.caption,

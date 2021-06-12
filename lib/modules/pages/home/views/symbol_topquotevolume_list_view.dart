@@ -15,15 +15,15 @@ class SymbolTopQuoteVolumeListView extends GetView<SymbolTopQuoteVolumeListContr
   Widget build(BuildContext context) {
     return Obx(
       () => ListView.separated(
-        separatorBuilder: (BuildContext context, int index) => Divider(height: 1.0),
+        separatorBuilder: (BuildContext context, int index) => const Divider(height: 1.0),
         itemBuilder: (BuildContext context, int index) => ListTile(
           title: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: <Widget>[
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   SymbolHelper.getSymbolTitle(controller.tickers[index].symbol),
                   SymbolHelper.getSymbolSubtitle(
                     controller.tickers[index].symbol,
@@ -39,10 +39,14 @@ class SymbolTopQuoteVolumeListView extends GetView<SymbolTopQuoteVolumeListContr
               ),
             ],
           ),
-          trailing: Container(
+          trailing: SizedBox(
             width: 96.0,
             child: ElevatedButton(
-              onPressed: () => null,
+              onPressed: null,
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue[700],
+                elevation: 0,
+              ),
               child: Text(
                 NumberHelper.getCurrencySymbol(
                       settingsController.currency.value,
@@ -58,15 +62,11 @@ class SymbolTopQuoteVolumeListView extends GetView<SymbolTopQuoteVolumeListContr
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blue[700],
-                elevation: 0,
-              ),
             ),
           ),
         ),
         itemCount: controller.tickers.length,
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
       ),
     );
   }
@@ -79,71 +79,74 @@ class SymbolTopQuoteVolumeListViewHeader extends GetView<SymbolTopQuoteVolumeLis
       () => HomeListViewHeader(
         first: InkWell(
           onTap: () {
-            if (controller.sortType.value == SortType.SymbolDesc) {
-              controller.sortType.value = SortType.SymbolAsc;
+            if (controller.sortType.value == SortType.symbolDesc) {
+              controller.sortType.value = SortType.symbolAsc;
             } else {
-              controller.sortType.value = SortType.SymbolDesc;
+              controller.sortType.value = SortType.symbolDesc;
             }
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            children: [
+            children: <Widget>[
               Text(
                 'ListViewHeader.Symbol'.tr,
                 style: Theme.of(context).textTheme.caption,
               ),
-              controller.sortType.value == SortType.SymbolDesc
-                  ? Icon(Icons.trending_down, size: 12, color: Theme.of(context).unselectedWidgetColor)
-                  : controller.sortType.value == SortType.SymbolAsc
-                      ? Icon(Icons.trending_up, size: 12, color: Theme.of(context).unselectedWidgetColor)
-                      : Icon(Icons.swap_vert, size: 12, color: Theme.of(context).unselectedWidgetColor),
+              if (controller.sortType.value == SortType.symbolDesc)
+                Icon(Icons.trending_down, size: 12, color: Theme.of(context).unselectedWidgetColor)
+              else
+                controller.sortType.value == SortType.symbolAsc
+                    ? Icon(Icons.trending_up, size: 12, color: Theme.of(context).unselectedWidgetColor)
+                    : Icon(Icons.swap_vert, size: 12, color: Theme.of(context).unselectedWidgetColor),
             ],
           ),
         ),
         middle: InkWell(
           onTap: () {
-            if (controller.sortType.value == SortType.PriceDesc) {
-              controller.sortType.value = SortType.PriceAsc;
+            if (controller.sortType.value == SortType.priceDesc) {
+              controller.sortType.value = SortType.priceAsc;
             } else {
-              controller.sortType.value = SortType.PriceDesc;
+              controller.sortType.value = SortType.priceDesc;
             }
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            children: [
+            children: <Widget>[
               Text(
                 'ListViewHeader.LastPrice'.tr,
                 style: Theme.of(context).textTheme.caption,
               ),
-              controller.sortType.value == SortType.PriceDesc
-                  ? Icon(Icons.trending_down, size: 12, color: Theme.of(context).unselectedWidgetColor)
-                  : controller.sortType.value == SortType.PriceAsc
-                      ? Icon(Icons.trending_up, size: 12, color: Theme.of(context).unselectedWidgetColor)
-                      : Icon(Icons.swap_vert, size: 12, color: Theme.of(context).unselectedWidgetColor),
+              if (controller.sortType.value == SortType.priceDesc)
+                Icon(Icons.trending_down, size: 12, color: Theme.of(context).unselectedWidgetColor)
+              else
+                controller.sortType.value == SortType.priceAsc
+                    ? Icon(Icons.trending_up, size: 12, color: Theme.of(context).unselectedWidgetColor)
+                    : Icon(Icons.swap_vert, size: 12, color: Theme.of(context).unselectedWidgetColor),
             ],
           ),
         ),
         last: InkWell(
           onTap: () {
-            if (controller.sortType.value == SortType.QuoteVolDesc) {
-              controller.sortType.value = SortType.QuoteVolAsc;
+            if (controller.sortType.value == SortType.quoteVolDesc) {
+              controller.sortType.value = SortType.quoteVolAsc;
             } else {
-              controller.sortType.value = SortType.QuoteVolDesc;
+              controller.sortType.value = SortType.quoteVolDesc;
             }
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.end,
-            children: [
+            children: <Widget>[
               Text(
                 'ListViewHeader.QuoteVolume'.tr,
                 style: Theme.of(context).textTheme.caption,
               ),
-              controller.sortType.value == SortType.QuoteVolDesc
-                  ? Icon(Icons.trending_down, size: 12, color: Theme.of(context).unselectedWidgetColor)
-                  : controller.sortType.value == SortType.QuoteVolAsc
-                      ? Icon(Icons.trending_up, size: 12, color: Theme.of(context).unselectedWidgetColor)
-                      : Icon(Icons.swap_vert, size: 12, color: Theme.of(context).unselectedWidgetColor),
+              if (controller.sortType.value == SortType.quoteVolDesc)
+                Icon(Icons.trending_down, size: 12, color: Theme.of(context).unselectedWidgetColor)
+              else
+                controller.sortType.value == SortType.quoteVolAsc
+                    ? Icon(Icons.trending_up, size: 12, color: Theme.of(context).unselectedWidgetColor)
+                    : Icon(Icons.swap_vert, size: 12, color: Theme.of(context).unselectedWidgetColor),
             ],
           ),
         ),

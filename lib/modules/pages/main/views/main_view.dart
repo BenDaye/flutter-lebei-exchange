@@ -10,7 +10,7 @@ class MainView extends GetView<MainViewController> {
       () => Scaffold(
         body: PageView(
           controller: controller.pageController,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           children: controller.pages,
         ),
         bottomNavigationBar: BottomNavyBar(

@@ -1,3 +1,3 @@
 class CommonFormatter {
-  static whatever(dynamic value) => value;
+  static dynamic whatever(dynamic value) => value;
 }

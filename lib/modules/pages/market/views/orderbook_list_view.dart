@@ -15,24 +15,22 @@ class OrderBookListView extends GetView<MarketViewController> {
     return Obx(
       () => SmartRefresher(
         controller: orderBookListController.refreshController,
-        header: WaterDropMaterialHeader(),
-        enablePullDown: true,
-        enablePullUp: false,
+        header: const WaterDropMaterialHeader(),
         onRefresh: () async {
           await orderBookListController.getOrderBookAnUpdate();
           orderBookListController.refreshController.refreshCompleted();
         },
         child: ListView.builder(
           // separatorBuilder: (BuildContext context, int index) => Divider(height: 1.0),
-          itemBuilder: (BuildContext context, int index) => Container(
+          itemBuilder: (BuildContext context, int index) => SizedBox(
             child: IntrinsicHeight(
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                 child: Row(
-                  children: [
+                  children: <Widget>[
                     Flexible(
                       child: Row(
-                        children: [
+                        children: <Widget>[
                           SizedBox(
                             width: 28,
                             child: Text(
@@ -46,7 +44,7 @@ class OrderBookListView extends GetView<MarketViewController> {
                               padding: const EdgeInsets.only(right: 4.0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
+                                children: <Widget>[
                                   Text(
                                     marketController.formatAmountByPrecision(
                                       orderBookListController.data.value.bids[index].last,
@@ -74,13 +72,13 @@ class OrderBookListView extends GetView<MarketViewController> {
                     ),
                     Flexible(
                       child: Row(
-                        children: [
+                        children: <Widget>[
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.only(left: 4.0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
+                                children: <Widget>[
                                   Text(
                                     marketController.formatPriceByPrecision(
                                       orderBookListController.data.value.asks[index].first,
@@ -138,7 +136,7 @@ class OrderBookListViewHeader extends GetView<MarketViewController> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.baseline,
           textBaseline: TextBaseline.alphabetic,
-          children: [
+          children: <Widget>[
             SizedBox(
               width: 28,
               child: Text(
@@ -147,18 +145,18 @@ class OrderBookListViewHeader extends GetView<MarketViewController> {
               ),
             ),
             Text(
-              'MarketPage.ListViewHeader.Amount'.tr + '(${controller.market.value.base})',
+              '${'MarketPage.ListViewHeader.Amount'.tr}${'(${controller.market.value.base})'}',
               style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
             ),
             Expanded(
               child: Center(
                   child: Text(
-                'MarketPage.ListViewHeader.Price'.tr + '(${controller.market.value.quote})',
+                '${'MarketPage.ListViewHeader.Price'.tr}${'(${controller.market.value.quote})'}',
                 style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
               )),
             ),
             Text(
-              'MarketPage.ListViewHeader.Amount'.tr + '(${controller.market.value.base})',
+              '${'MarketPage.ListViewHeader.Amount'.tr}${'(${controller.market.value.base})'}',
               style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
             ),
             SizedBox(

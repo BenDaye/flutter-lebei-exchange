@@ -11,7 +11,7 @@ class MarketDrawerController extends GetxController with SingleGetTickerProvider
 
   TextEditingController textEditingController = TextEditingController();
 
-  final tabs = [
+  final List<String> tabs = <String>[
     'MarketDrawer.Tab.Favorites',
     'MarketDrawer.Tab.All',
     'MarketDrawer.Tab.USDT',
@@ -19,12 +19,12 @@ class MarketDrawerController extends GetxController with SingleGetTickerProvider
     'MarketDrawer.Tab.ETH',
   ];
   late TabController tabController;
-  final currentTabIndex = 0.obs;
+  final RxInt currentTabIndex = 0.obs;
 
-  final tickers = <Ticker>[].obs;
+  final RxList<Ticker> tickers = <Ticker>[].obs;
 
   late Worker queryWorker;
-  final query = ''.obs;
+  final RxString query = ''.obs;
 
   @override
   void onInit() {
@@ -38,10 +38,10 @@ class MarketDrawerController extends GetxController with SingleGetTickerProvider
   void onReady() {
     super.onReady();
     ever(tickerController.tickers, wacthTickers);
-    debounce(currentTabIndex, watchCurrenctTabIndex, time: Duration(milliseconds: 300));
+    debounce(currentTabIndex, watchCurrenctTabIndex, time: const Duration(milliseconds: 300));
     watchCurrenctTabIndex(0);
 
-    queryWorker = debounce(query, watchQuery, time: Duration(milliseconds: 300));
+    queryWorker = debounce(query, watchQuery, time: const Duration(milliseconds: 300));
   }
 
   @override
@@ -58,8 +58,8 @@ class MarketDrawerController extends GetxController with SingleGetTickerProvider
 
   void watchQuery(String _query) {
     if (_query.isEmpty) return watchCurrenctTabIndex(currentTabIndex.value);
-    final _tickers = TickerHelper.filter(tickerController.tickers)
-        .where((e) => e.symbol.startsWith(_query.trim().toUpperCase()))
+    final List<Ticker> _tickers = TickerHelper.filter(tickerController.tickers)
+        .where((Ticker e) => e.symbol.startsWith(_query.trim().toUpperCase()))
         .toList();
     tickers.value = _tickers;
   }
@@ -76,8 +76,8 @@ class MarketDrawerController extends GetxController with SingleGetTickerProvider
           tickers.value = List<Ticker>.from(
             symbolController.favoriteSymbols
                 .map(
-                  (s) => tickerController.tickers.firstWhere(
-                    (t) => t.symbol == s.replaceAll('_', '/'),
+                  (String s) => tickerController.tickers.firstWhere(
+                    (Ticker t) => t.symbol == s.replaceAll('_', '/'),
                   ),
                 )
                 .toList(),
@@ -107,7 +107,7 @@ class MarketDrawerController extends GetxController with SingleGetTickerProvider
       default:
         break;
     }
-    TickerHelper.sort(tickers, sortType: SortType.UnSet);
+    TickerHelper.sort(tickers, sortType: SortType.unset);
   }
 
   void wacthTickers(List<Ticker> _tickers) {

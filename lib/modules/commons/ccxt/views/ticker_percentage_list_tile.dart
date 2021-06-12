@@ -9,8 +9,8 @@ import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
 import 'package:get/get.dart';
 
 class TickerPercentageListTile extends StatelessWidget {
-  final Ticker ticker;
   TickerPercentageListTile(this.ticker);
+  final Ticker ticker;
 
   final SymbolController symbolController = Get.find<SymbolController>();
   final SettingsController settingsController = Get.find<SettingsController>();
@@ -22,10 +22,10 @@ class TickerPercentageListTile extends StatelessWidget {
       title: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
+        children: <Widget>[
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               SymbolHelper.getSymbolTitle(ticker.symbol),
               SymbolHelper.getSymbolSubtitle(
                 ticker.symbol,
@@ -43,13 +43,13 @@ class TickerPercentageListTile extends StatelessWidget {
           ),
         ],
       ),
-      trailing: Container(
+      trailing: SizedBox(
         width: 96.0,
         child: Obx(
           () => PercentageHelper.getPercentageButton(settingsController.advanceDeclineColors, ticker.percentage),
         ),
       ),
-      selected: symbolController.favoriteSymbols.any((s) => s == ticker.symbol),
+      selected: symbolController.favoriteSymbols.any((String s) => s == ticker.symbol),
       selectedTileColor: Theme.of(context).accentColor.withOpacity(.1),
       onTap: () {
         symbolController.onChangeCurrentSymbol(ticker.symbol);

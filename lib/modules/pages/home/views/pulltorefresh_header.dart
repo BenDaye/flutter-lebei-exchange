@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
 
 class HomePullToRefreshHeader extends StatelessWidget {
-  final PullToRefreshScrollNotificationInfo? info;
   HomePullToRefreshHeader(this.info);
+  final PullToRefreshScrollNotificationInfo? info;
 
   final HomeBannerController homeBannerController = Get.find<HomeBannerController>();
   final HomeNoticeController homeNoticeController = Get.find<HomeNoticeController>();
@@ -23,9 +23,9 @@ class HomePullToRefreshHeader extends StatelessWidget {
     switch (info?.mode) {
       case RefreshIndicatorMode.armed:
         {
-          return Container(
+          return SizedBox(
             height: dragOffset,
-            child: Center(
+            child: const Center(
               child: SizedBox(
                 height: 24,
                 width: 24,
@@ -40,7 +40,7 @@ class HomePullToRefreshHeader extends StatelessWidget {
         {
           homeBannerController.carouselController.stopAutoPlay();
           homeNoticeController.carouselController.stopAutoPlay();
-          return Container(
+          return SizedBox(
             height: dragOffset,
             child: Center(
               child: SizedBox(
@@ -55,9 +55,9 @@ class HomePullToRefreshHeader extends StatelessWidget {
         }
       case RefreshIndicatorMode.refresh:
         {
-          return Container(
+          return SizedBox(
             height: dragOffset,
-            child: Center(
+            child: const Center(
               child: SizedBox(
                 height: 24,
                 width: 24,
@@ -68,9 +68,9 @@ class HomePullToRefreshHeader extends StatelessWidget {
         }
       case RefreshIndicatorMode.snap:
         {
-          return Container(
+          return SizedBox(
             height: dragOffset,
-            child: Center(
+            child: const Center(
               child: SizedBox(
                 height: 24,
                 width: 24,
@@ -83,7 +83,7 @@ class HomePullToRefreshHeader extends StatelessWidget {
         {
           homeBannerController.carouselController.startAutoPlay();
           homeNoticeController.carouselController.startAutoPlay();
-          return Container(
+          return SizedBox(
             height: dragOffset,
             child: Center(
               child: SizedBox(

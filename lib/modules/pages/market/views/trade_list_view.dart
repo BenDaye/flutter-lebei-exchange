@@ -16,24 +16,22 @@ class TradeListView extends GetView<MarketViewController> {
     return Obx(
       () => SmartRefresher(
         controller: tradeListController.refreshController,
-        header: WaterDropMaterialHeader(),
-        enablePullDown: true,
-        enablePullUp: false,
+        header: const WaterDropMaterialHeader(),
         onRefresh: () async {
           await tradeListController.getTradesAnUpdate();
           tradeListController.refreshController.refreshCompleted();
         },
         child: ListView.builder(
           // separatorBuilder: (BuildContext context, int index) => Divider(height: 1.0),
-          itemBuilder: (BuildContext context, int index) => Container(
+          itemBuilder: (BuildContext context, int index) => SizedBox(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
               child: Row(
-                children: [
+                children: <Widget>[
                   SizedBox(
                     width: 80,
                     child: Text(
-                      '${DateUtil.formatDateMs(tradeListController.data[index].timestamp!, format: 'HH:mm:ss')}',
+                      DateUtil.formatDateMs(tradeListController.data[index].timestamp!, format: 'HH:mm:ss'),
                       style: Theme.of(context).textTheme.caption,
                     ),
                   ),
@@ -80,7 +78,7 @@ class TradeListView extends GetView<MarketViewController> {
             ),
           ),
           itemCount: tradeListController.data.length,
-          physics: ClampingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
         ),
       ),
     );
@@ -97,7 +95,7 @@ class TradeListViewHeader extends GetView<MarketViewController> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.baseline,
           textBaseline: TextBaseline.alphabetic,
-          children: [
+          children: <Widget>[
             SizedBox(
               width: 80,
               child: Text(
@@ -115,7 +113,7 @@ class TradeListViewHeader extends GetView<MarketViewController> {
             SizedBox(
               width: Get.width / 3,
               child: Text(
-                'MarketPage.ListViewHeader.Price'.tr + '(${controller.market.value.quote})',
+                '${'MarketPage.ListViewHeader.Price'.tr}${'(${controller.market.value.quote})'}',
                 textAlign: TextAlign.right,
                 style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
               ),
@@ -123,7 +121,7 @@ class TradeListViewHeader extends GetView<MarketViewController> {
             SizedBox(
               width: Get.width / 3,
               child: Text(
-                'MarketPage.ListViewHeader.Amount'.tr + '(${controller.market.value.base})',
+                '${'MarketPage.ListViewHeader.Amount'.tr}${'(${controller.market.value.base})'}',
                 textAlign: TextAlign.right,
                 style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
               ),

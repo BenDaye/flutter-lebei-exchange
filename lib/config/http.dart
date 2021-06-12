@@ -1,7 +1,7 @@
 class HttpConfig {
-  static const String HOST = 'https://api-lebei-exchange.bendaye.vip';
+  static const String host = 'https://api-lebei-exchange.bendaye.vip';
 
-  static const int HTTP_CONNECT_TIMEOUT = 30000;
+  static const int httpConnectTimeout = 30000;
 
-  static const int HTTP_RECEVE_TIMEOUT = 10000;
+  static const int httpReceveTimeout = 10000;
 }

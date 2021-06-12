@@ -32,28 +32,28 @@ class MainViewController extends GetxController {
   //   Container(color: Colors.pink),
   //   BalancesView(),
   // ];
-  List<BottomNavyBarItem> bottomNavyBarItems(context) => <BottomNavyBarItem>[
+  List<BottomNavyBarItem> bottomNavyBarItems(BuildContext context) => <BottomNavyBarItem>[
         BottomNavyBarItem(
           title: Text('MainBottomNavy.Home'.tr),
-          icon: Icon(Icons.home),
+          icon: const Icon(Icons.home),
           activeColor: Theme.of(context).primaryColor,
           inactiveColor: Theme.of(context).accentColor,
         ),
         BottomNavyBarItem(
           title: Text('MainBottomNavy.Market'.tr),
-          icon: Icon(Icons.assessment),
+          icon: const Icon(Icons.assessment),
           activeColor: Theme.of(context).primaryColor,
           inactiveColor: Theme.of(context).accentColor,
         ),
         BottomNavyBarItem(
           title: Text('MainBottomNavy.Trade'.tr),
-          icon: Icon(Icons.coffee),
+          icon: const Icon(Icons.coffee),
           activeColor: Theme.of(context).primaryColor,
           inactiveColor: Theme.of(context).accentColor,
         ),
         BottomNavyBarItem(
           title: Text('MainBottomNavy.Asset'.tr),
-          icon: Icon(Icons.person),
+          icon: const Icon(Icons.person),
           activeColor: Theme.of(context).primaryColor,
           inactiveColor: Theme.of(context).accentColor,
         ),

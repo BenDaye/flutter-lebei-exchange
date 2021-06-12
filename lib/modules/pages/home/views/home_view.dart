@@ -30,12 +30,12 @@ class HomeView extends GetView<HomeViewController> {
           style: Theme.of(context).textTheme.headline6,
         ),
         leading: IconButton(
-          icon: Icon(Icons.person),
+          icon: const Icon(Icons.person),
           onPressed: () => Get.toNamed('/settings'),
         ),
-        actions: [
+        actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.lunch_dining),
+            icon: const Icon(Icons.lunch_dining),
             onPressed: () => Get.toNamed('/exchanges'),
           ),
         ],
@@ -45,14 +45,14 @@ class HomeView extends GetView<HomeViewController> {
           onRefresh: controller.refreshPageData,
           maxDragOffset: HomePullToRefreshHeader.maxDragOffset,
           child: NestedScrollView(
-            headerSliverBuilder: (BuildContext context, bool) => <Widget>[
+            headerSliverBuilder: (BuildContext context, bool? bool) => <Widget>[
               PullToRefreshContainer(
                 (PullToRefreshScrollNotificationInfo? info) => SliverToBoxAdapter(child: HomePullToRefreshHeader(info)),
               ),
               SliverToBoxAdapter(child: HomeBannerView()),
               // SliverToBoxAdapter(child: HomeGoogleAdBannerView()),
               SliverToBoxAdapter(child: HomeNoticeView()),
-              SliverToBoxAdapter(child: Divider(height: 1.0)),
+              const SliverToBoxAdapter(child: Divider(height: 1.0)),
               SliverToBoxAdapter(child: SymbolPopularGridView()),
               SliverToBoxAdapter(child: HomeGuideListTile()),
               // SliverToBoxAdapter(child: HomeGoogleAdListTile()),
@@ -61,22 +61,22 @@ class HomeView extends GetView<HomeViewController> {
             pinnedHeaderSliverHeightBuilder: () => 0,
             innerScrollPositionKeyBuilder: () => controller.innerScrollPositionKey.value,
             body: Column(
-              children: [
+              children: <Widget>[
                 RankTabBarView(),
                 Expanded(
                   child: TabBarView(
                     controller: controller.tabController,
-                    children: [
+                    children: <Widget>[
                       GetBuilder<SymbolTopPercentageListController>(
                         init: SymbolTopPercentageListController(),
                         builder: (_) => Column(
                           mainAxisSize: MainAxisSize.min,
-                          children: [
+                          children: <Widget>[
                             SymbolTopPercentageListViewHeader(),
                             Expanded(
                               child: NestedScrollViewInnerScrollPositionKeyWidget(
                                 Key(controller.tabStrings.first),
-                                SymbolTopPercentageListView(key: Key(controller.tabStrings.first)),
+                                SymbolTopPercentageListView(),
                               ),
                             ),
                           ],
@@ -86,7 +86,7 @@ class HomeView extends GetView<HomeViewController> {
                         init: SymbolTopBaseVolumeListController(),
                         builder: (_) => Column(
                           mainAxisSize: MainAxisSize.min,
-                          children: [
+                          children: <Widget>[
                             SymbolTopBaseVolumeListViewHeader(),
                             Expanded(
                               child: NestedScrollViewInnerScrollPositionKeyWidget(
@@ -101,7 +101,7 @@ class HomeView extends GetView<HomeViewController> {
                         init: SymbolTopQuoteVolumeListController(),
                         builder: (_) => Column(
                           mainAxisSize: MainAxisSize.min,
-                          children: [
+                          children: <Widget>[
                             SymbolTopQuoteVolumeListViewHeader(),
                             Expanded(
                               child: NestedScrollViewInnerScrollPositionKeyWidget(
@@ -114,7 +114,7 @@ class HomeView extends GetView<HomeViewController> {
                       ),
                       Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: [
+                        children: <Widget>[
                           HomeListViewHeader(
                             firstText: 'ListViewHeader.Symbol'.tr,
                             middleText: 'ListViewHeader.LastPrice'.tr,

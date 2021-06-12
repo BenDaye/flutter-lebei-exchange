@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
-import 'package:flutter_lebei_exchange/models/response.dart' as HttpModel;
+import 'package:flutter_lebei_exchange/models/response.dart' as http_model;
 
+// ignore: always_specify_types
 HttpResult<T> onSuccess<T>(Response response) {
-  HttpModel.Response<T> responseData = HttpModel.Response<T>.fromJson(response.data);
+  final http_model.Response<T> responseData = http_model.Response<T>.fromJson(response.data as Map<String, dynamic>);
   switch (responseData.status) {
     case 1:
       return HttpResult<T>(1, 'success', true, data: responseData.data as T);

@@ -3,6 +3,7 @@ import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/balance/controllers/balances_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/controllers/home_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/main/controllers/main_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/markets_controller.dart';
@@ -23,5 +24,6 @@ class MainBinding extends Bindings {
     Get.lazyPut<MainViewController>(() => MainViewController());
     Get.lazyPut<HomeViewController>(() => HomeViewController());
     Get.lazyPut<MarketsViewController>(() => MarketsViewController());
+    Get.lazyPut<BalancesViewController>(() => BalancesViewController());
   }
 }

@@ -12,10 +12,10 @@ class HomeNoticeView extends StatelessWidget {
       color: Theme.of(context).backgroundColor,
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
-        children: [
+        children: <Widget>[
           Container(
             margin: const EdgeInsets.only(right: 8.0),
-            child: Icon(
+            child: const Icon(
               Icons.emoji_events,
               size: 18,
             ),
@@ -26,24 +26,16 @@ class HomeNoticeView extends StatelessWidget {
                 : CarouselSlider.builder(
                     carouselController: controller.carouselController,
                     itemCount: controller.notices.length,
-                    itemBuilder: (BuildContext context, int index, int realIndex) => Container(
-                      child: Text(controller.notices[index]['title']),
-                    ),
+                    itemBuilder: (BuildContext context, int index, int realIndex) =>
+                        Text(controller.notices[index]['title'] as String),
                     options: CarouselOptions(
                       height: 40.0,
-                      initialPage: 0,
-                      enableInfiniteScroll: true,
-                      reverse: false,
                       autoPlay: true,
-                      autoPlayInterval: Duration(milliseconds: 10 * 1000),
-                      autoPlayAnimationDuration: Duration(milliseconds: 800),
-                      autoPlayCurve: Curves.fastOutSlowIn,
+                      autoPlayInterval: const Duration(milliseconds: 10 * 1000),
                       pauseAutoPlayInFiniteScroll: true,
-                      pauseAutoPlayOnTouch: true,
-                      pauseAutoPlayOnManualNavigate: true,
                       enlargeCenterPage: true,
                       scrollDirection: Axis.vertical,
-                      scrollPhysics: NeverScrollableScrollPhysics(),
+                      scrollPhysics: const NeverScrollableScrollPhysics(),
                     ),
                   ),
           ),

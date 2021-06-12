@@ -1,4 +1,5 @@
-const Map<String, String> zh_CN = {
+// ignore_for_file: file_names,constant_identifier_names
+const Map<String, String> zh_CN = <String, String>{
   'ListViewHeader.Symbol': '交易对',
   'ListViewHeader.LastPrice': '最新价',
   'ListViewHeader.Change%': '涨跌幅',
@@ -65,8 +66,8 @@ const Map<String, String> zh_CN = {
   'GeneralPage.AutoRefresh.stopped': '已停止',
   'GeneralPage.Reset': '重置应用',
   'GeneralPage.Reset.Desc': '此操作将初始化应用, 并清空所有缓存数据。',
-  'AdvanceDeclineColorMode.AdvanceGreen': '绿涨红跌',
-  'AdvanceDeclineColorMode.AdvanceRed': '红涨绿跌',
+  'AdvanceDeclineColorMode.advanceGreen': '绿涨红跌',
+  'AdvanceDeclineColorMode.advanceRed': '红涨绿跌',
   'Language.en-US': 'English',
   'Language.zh-CN': '简体中文',
   'ExchangesPage.AppBar.Title': '交易所列表',

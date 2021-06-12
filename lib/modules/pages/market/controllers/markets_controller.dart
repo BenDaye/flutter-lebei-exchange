@@ -1,67 +1,69 @@
+import 'dart:math' show max, min;
+
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:flutter_lebei_exchange/utils/handlers/timer.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'dart:math';
 
 class MarketsViewController extends GetxController with SingleGetTickerProviderMixin {
   final SettingsController settingsController = Get.find<SettingsController>();
 
-  final selectedCategories = [false, true, false].obs;
+  final RxList<bool> selectedCategories = <bool>[false, true, false].obs;
   late PageController selectedCategoryPageController;
-  final currentCategoryQuoteIndex = 0.obs;
-  final currentCategoryQuotes = <Tab>[].obs;
+  final RxInt currentCategoryQuoteIndex = 0.obs;
+  final RxList<Tab> currentCategoryQuotes = <Tab>[].obs;
   late TabController currentCategoryQuotesController;
   RefreshController refreshController = RefreshController();
   ScrollController scrollController = ScrollController();
 
   final TickerController tickerController = Get.find<TickerController>();
 
-  final tickers = <Ticker>[].obs;
-  final sortType = SortType.UnSet.obs;
-  final focusIndexes = <int>[].obs;
-  final focusSymbols = <String>[].obs;
+  final RxList<Ticker> tickers = <Ticker>[].obs;
+  final Rx<SortType> sortType = SortType.unset.obs;
+  final RxList<int> focusIndexes = <int>[].obs;
+  final RxList<String> focusSymbols = <String>[].obs;
 
-  final timer = new TimerUtil(mInterval: 60 * 1000);
+  final TimerUtil timer = TimerUtil(mInterval: 60 * 1000);
   late Worker timerWorker;
 
   @override
   void onInit() {
     super.onInit();
-    selectedCategoryPageController = PageController(initialPage: selectedCategories.indexWhere((c) => c));
+    selectedCategoryPageController = PageController(initialPage: selectedCategories.indexWhere((bool c) => c));
     currentCategoryQuotes.value = <Tab>[
-      Tab(text: 'ALL'),
-      Tab(text: 'USDT'),
-      Tab(text: 'BTC'),
-      Tab(text: 'ETH'),
+      const Tab(text: 'ALL'),
+      const Tab(text: 'USDT'),
+      const Tab(text: 'BTC'),
+      const Tab(text: 'ETH'),
     ];
     currentCategoryQuotesController = TabController(
       length: currentCategoryQuotes.length,
       vsync: this,
     );
     currentCategoryQuotesController.addListener(updateCurrentCategoryQuoteIndex);
-    debounce(sortType, watchSortType, time: Duration(milliseconds: 300));
+    debounce(sortType, watchSortType, time: const Duration(milliseconds: 300));
     debounce(focusIndexes, (List<int> _indexes) {
       if (_indexes.isEmpty) {
         focusSymbols.clear();
         return;
       }
-      focusSymbols.value = tickers.getRange(_indexes.reduce(min), _indexes.reduce(max)).map((e) => e.symbol).toList();
-    }, time: Duration(milliseconds: 800));
+      focusSymbols.value =
+          tickers.getRange(_indexes.reduce(min), _indexes.reduce(max)).map((Ticker e) => e.symbol).toList();
+    }, time: const Duration(milliseconds: 800));
 
     ever(currentCategoryQuoteIndex, (_) => updateTickers());
-    debounce(tickerController.tickers, (_) => updateTickers(), time: Duration(milliseconds: 300));
+    debounce(tickerController.tickers, (_) => updateTickers(), time: const Duration(milliseconds: 300));
     ever(selectedCategories, (_) => updateTickers());
 
     timerWorker = debounce(
       settingsController.autoRefresh,
       TimerHandler.watchAutoRefresh(timer),
-      time: Duration(milliseconds: 800),
+      time: const Duration(milliseconds: 800),
     );
     timer.setOnTimerTickCallback(
       TimerHandler.common(
@@ -105,7 +107,7 @@ class MarketsViewController extends GetxController with SingleGetTickerProviderM
   }
 
   void onChangeCategory(int index) {
-    selectedCategories.value = List.filled(3, false)..fillRange(index, index + 1, true);
+    selectedCategories.value = List<bool>.filled(3, false)..fillRange(index, index + 1, true);
     index == 0 ? selectedCategoryPageController.jumpToPage(0) : selectedCategoryPageController.jumpToPage(1);
   }
 
@@ -118,20 +120,20 @@ class MarketsViewController extends GetxController with SingleGetTickerProviderM
     if (scrollController.offset.isEqual(0)) {
       if (focusIndexes.isNotEmpty) {
         focusSymbols.value =
-            tickers.getRange(focusIndexes.reduce(min), focusIndexes.reduce(max)).map((e) => e.symbol).toList();
+            tickers.getRange(focusIndexes.reduce(min), focusIndexes.reduce(max)).map((Ticker e) => e.symbol).toList();
       }
     } else {
       scrollController.animateTo(
         scrollController.position.minScrollExtent,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.fastOutSlowIn,
       );
     }
   }
 
-  Future getDataAndUpdate() async {
+  Future<void> getDataAndUpdate() async {
     if (focusSymbols.isEmpty) return;
-    final List<String> symbols = List<String>.from(focusSymbols.map((e) => e.replaceAll('/', '_'))).toList();
+    final List<String> symbols = List<String>.from(focusSymbols.map((String e) => e.replaceAll('/', '_'))).toList();
 
     tickerController.getTickersAndUpdatePartial(symbols: symbols);
   }

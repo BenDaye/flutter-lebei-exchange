@@ -2,50 +2,53 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'status.g.dart';
 
-enum StatusType { OK, SHUTDOWN, ERROR, MAINTENANCE, UNKNOWN }
+enum StatusType { ok, shutdown, error, maintenance, unknown }
 
 @JsonSerializable()
 class Status {
+  Status(this.status, this.updated, this.eta, this.url);
+  Status.empty()
+      : status = StatusType.unknown,
+        updated = null,
+        eta = null,
+        url = null;
+
+  factory Status.fromJson(Map<String, dynamic> json) => _$StatusFromJson(json);
+  Map<String, dynamic> toJson() => _$StatusToJson(this);
+
   @JsonKey(fromJson: _statusFromJson, toJson: _statusToJson)
   StatusType status;
   int? updated;
   dynamic eta;
   dynamic url;
 
-  Status(this.status, this.updated, this.eta, this.url);
-
   static StatusType _statusFromJson(dynamic value) {
     switch (value) {
       case 'ok':
-        return StatusType.OK;
+        return StatusType.ok;
       case 'shutdown':
-        return StatusType.SHUTDOWN;
+        return StatusType.shutdown;
       case 'error':
-        return StatusType.ERROR;
+        return StatusType.error;
       case 'maintenance':
-        return StatusType.MAINTENANCE;
+        return StatusType.maintenance;
       default:
-        return StatusType.UNKNOWN;
+        return StatusType.unknown;
     }
   }
 
   static String _statusToJson(StatusType value) {
     switch (value) {
-      case StatusType.OK:
+      case StatusType.ok:
         return 'ok';
-      case StatusType.SHUTDOWN:
+      case StatusType.shutdown:
         return 'shutdown';
-      case StatusType.ERROR:
+      case StatusType.error:
         return 'error';
-      case StatusType.MAINTENANCE:
+      case StatusType.maintenance:
         return 'maintenance';
       default:
         return 'unknown';
     }
   }
-
-  factory Status.fromJson(Map<String, dynamic> json) => _$StatusFromJson(json);
-  Map<String, dynamic> toJson() => _$StatusToJson(this);
-
-  static Status empty() => Status(StatusType.UNKNOWN, null, null, null);
 }

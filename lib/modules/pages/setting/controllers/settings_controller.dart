@@ -3,24 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/api/juhe.dart';
 import 'package:flutter_lebei_exchange/assets/translations/main.dart';
 import 'package:flutter_lebei_exchange/models/juhe/exchange.dart';
+import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
 import 'package:get/get.dart';
 import 'package:wakelock/wakelock.dart';
 
 enum AdvanceDeclineColorMode {
-  AdvanceGreen,
-  AdvanceRed,
+  advanceGreen,
+  advanceRed,
 }
 
 class SettingsController extends GetxController {
-  final themeMode = ThemeMode.dark.obs;
-  final locale = Locale('en', 'US').obs;
-  final currency = 'USD'.obs;
-  final currencyRate = 1.0.obs;
-  final advanceDeclineColorMode = AdvanceDeclineColorMode.AdvanceGreen.obs;
-  final advanceDeclineColors = <Color>[Colors.green, Colors.grey, Colors.red].obs;
+  final Rx<ThemeMode> themeMode = ThemeMode.dark.obs;
+  final Rx<Locale> locale = const Locale('en', 'US').obs;
+  final RxString currency = 'USD'.obs;
+  final RxDouble currencyRate = 1.0.obs;
+  final Rx<AdvanceDeclineColorMode> advanceDeclineColorMode = AdvanceDeclineColorMode.advanceGreen.obs;
+  final RxList<Color> advanceDeclineColors = <Color>[Colors.green, Colors.grey, Colors.red].obs;
 
-  final wakelock = false.obs;
-  final autoRefresh = 60.0.obs;
+  final RxBool wakelock = false.obs;
+  final RxDouble autoRefresh = 60.0.obs;
 
   @override
   void onInit() {
@@ -31,7 +32,7 @@ class SettingsController extends GetxController {
   }
 
   @override
-  void onReady() async {
+  Future<void> onReady() async {
     super.onReady();
 
     themeMode.value =
@@ -41,8 +42,8 @@ class SettingsController extends GetxController {
 
     currency.value = SpUtil.getString('Settings.currency', defValue: 'USD') ?? 'USD';
 
-    advanceDeclineColorMode.value = AdvanceDeclineColorMode.values[SpUtil.getInt('Settings.color', defValue: 0) ?? 0];
-    if (advanceDeclineColorMode.value == AdvanceDeclineColorMode.AdvanceRed) {
+    advanceDeclineColorMode.value = AdvanceDeclineColorMode.values[SpUtil.getInt('Settings.color') ?? 0];
+    if (advanceDeclineColorMode.value == AdvanceDeclineColorMode.advanceRed) {
       advanceDeclineColors.value = advanceDeclineColors.reversed.toList();
     }
 
@@ -50,23 +51,18 @@ class SettingsController extends GetxController {
     autoRefresh.value = SpUtil.getDouble('Settings.autoRefresh', defValue: 60.0) ?? 60.0;
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
   void _initLocale() {
-    String? _localeString = SpUtil.getString('Settings.locale', defValue: 'en-US');
+    final String? _localeString = SpUtil.getString('Settings.locale', defValue: 'en-US');
     Locale _locale;
     switch (_localeString) {
       case 'zh-CN':
         {
-          _locale = Locale('zh', 'CN');
+          _locale = const Locale('zh', 'CN');
         }
         break;
       default:
         {
-          _locale = Locale('en', 'US');
+          _locale = const Locale('en', 'US');
         }
         break;
     }
@@ -109,6 +105,7 @@ class SettingsController extends GetxController {
     }
   }
 
+  // ignore: use_setters_to_change_properties
   void onSwitchThemeMode(ThemeMode _themeMode) {
     themeMode.value = _themeMode;
   }
@@ -126,7 +123,8 @@ class SettingsController extends GetxController {
     SpUtil.putInt('Settings.color', _mode.index);
   }
 
-  void onSwitchWakelock(bool enable) async {
+  // ignore: avoid_positional_boolean_parameters
+  Future<void> onSwitchWakelock(bool enable) async {
     await Wakelock.toggle(enable: enable);
     wakelock.value = await Wakelock.enabled;
   }
@@ -144,18 +142,18 @@ class SettingsController extends GetxController {
     }
   }
 
-  Future getCurrencyRateAndUpdate({bool reload = false}) async {
+  Future<void> getCurrencyRateAndUpdate({bool reload = false}) async {
     if (currency.value.isEmpty) return;
 
     if (!reload) {
-      double? _currencyRateLocal = await getCurrencyRateLocal();
+      final double? _currencyRateLocal = await getCurrencyRateLocal();
       if (_currencyRateLocal is double && !_currencyRateLocal.isEqual(0)) {
         currencyRate.value = _currencyRateLocal;
         return;
       }
     }
 
-    double? _currencyRate = await getCurrencyRate();
+    final double? _currencyRate = await getCurrencyRate();
     if (_currencyRate is double) {
       currencyRate.value = _currencyRate;
       SpUtil.putDouble('Settings.currency.${currency.value}', _currencyRate);
@@ -170,24 +168,25 @@ class SettingsController extends GetxController {
   Future<double?> getCurrencyRate() async {
     if (currency.value == 'USD') return 1.0;
 
-    final result = await ApiJuhe.exchangeCurrency('USD', currency.value);
+    final HttpResult<List<dynamic>> result = await ApiJuhe.exchangeCurrency('USD', currency.value);
     if (!result.success) return null;
 
-    List<Rate> _rates = List<Rate>.from(result.data!.map((e) => Rate.fromJson(e)));
+    final List<Rate> _rates =
+        List<Rate>.from(result.data!.map((dynamic e) => Rate.fromJson(e as Map<String, dynamic>)));
     return NumUtil.getDoubleByValueStr(_rates.first.exchange);
   }
 
-  Future resetAppDialog() async {
-    bool? isConfirm = await Get.dialog<bool>(
+  Future<void> resetAppDialog() async {
+    final bool? isConfirm = await Get.dialog<bool>(
       Center(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Card(
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: [
+              children: <Widget>[
                 ListTile(
-                  leading: Icon(Icons.error),
+                  leading: const Icon(Icons.error),
                   title: Text('GeneralPage.Reset'.tr),
                   subtitle: Text('GeneralPage.Reset.Desc'.tr),
                 ),
@@ -195,21 +194,21 @@ class SettingsController extends GetxController {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
+                    children: <Widget>[
                       TextButton(
                         onPressed: () => Get.back<bool>(result: true),
-                        child: Text('Common.Action.Confirm'.tr),
                         style: TextButton.styleFrom(
                           primary: Colors.red,
                         ),
+                        child: Text('Common.Action.Confirm'.tr),
                       ),
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       TextButton(
                         onPressed: () => Get.back<bool>(result: false),
-                        child: Text('Common.Action.Cancel'.tr),
                         style: TextButton.styleFrom(
                           primary: Get.context?.textTheme.caption?.color,
                         ),
+                        child: Text('Common.Action.Cancel'.tr),
                       ),
                     ],
                   ),
@@ -225,7 +224,7 @@ class SettingsController extends GetxController {
     }
   }
 
-  Future resetApp() async {
+  Future<void> resetApp() async {
     await SpUtil.clear();
     Get.reloadAll(force: true);
     Get.forceAppUpdate();

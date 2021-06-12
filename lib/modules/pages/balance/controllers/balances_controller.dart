@@ -1,3 +1,5 @@
 import 'package:get/get.dart';
 
-class BalancesController extends GetxController {}
+class BalancesViewController extends GetxController {
+  final RxBool hideLessCurrency = false.obs;
+}

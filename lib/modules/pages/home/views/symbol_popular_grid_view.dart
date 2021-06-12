@@ -21,28 +21,27 @@ class SymbolPopularGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 4.0),
-      padding: EdgeInsets.only(bottom: 8.0),
+      margin: const EdgeInsets.only(bottom: 4.0),
+      padding: const EdgeInsets.only(bottom: 8.0),
       color: Theme.of(context).backgroundColor,
       child: Obx(
         () {
           return Stack(
             alignment: Alignment.bottomCenter,
-            children: [
-              Container(
+            children: <Widget>[
+              SizedBox(
                 height: 80.0,
                 child: CarouselSlider.builder(
                   itemCount: controller.tickersForRender.length,
                   itemBuilder: (BuildContext context, int index, int realIndex) {
-                    final tickers = List<Ticker?>.filled(3, null)
+                    final List<Ticker?> tickers = List<Ticker?>.filled(3, null)
                       ..setRange(0, controller.tickersForRender[index].length, controller.tickersForRender[index]);
                     return Container(
                       margin: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Row(
-                        mainAxisSize: MainAxisSize.max,
                         children: tickers
                             .map(
-                              (ticker) => Expanded(
+                              (Ticker? ticker) => Expanded(
                                 child: ticker == null
                                     ? Container()
                                     : InkWell(
@@ -53,17 +52,17 @@ class SymbolPopularGridView extends StatelessWidget {
                                         child: Column(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
+                                          children: <Widget>[
                                             RichText(
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               text: TextSpan(
                                                 text: ticker.symbol,
                                                 style: Theme.of(context).textTheme.bodyText2,
-                                                children: [
+                                                children: <InlineSpan>[
                                                   TextSpan(
                                                     text: ticker.percentage.isNaN
-                                                        ? '  ${NumberFormatter.UNKNOWN_NUMBER_TO_STRING}'
+                                                        ? '  ${NumberFormatter.unknownNumberToString}'
                                                         : '  ${(ticker.percentage).toStringAsFixed(2)}%',
                                                     style: Theme.of(context).textTheme.caption?.copyWith(
                                                           color: PercentageHelper.getPercentageColor(
@@ -110,13 +109,8 @@ class SymbolPopularGridView extends StatelessWidget {
                   options: CarouselOptions(
                     height: 100.0,
                     viewportFraction: 1,
-                    initialPage: 0,
                     enableInfiniteScroll: false,
-                    reverse: false,
-                    autoPlay: false,
-                    enlargeCenterPage: false,
                     onPageChanged: controller.onChangePageIndex,
-                    scrollDirection: Axis.horizontal,
                   ),
                 ),
               ),
@@ -126,10 +120,10 @@ class SymbolPopularGridView extends StatelessWidget {
                     .asMap()
                     .entries
                     .map(
-                      (e) => Container(
+                      (MapEntry<int, List<Ticker>> e) => Container(
                         width: 8.0,
                         height: 2.0,
-                        margin: EdgeInsets.symmetric(horizontal: 2.0),
+                        margin: const EdgeInsets.symmetric(horizontal: 2.0),
                         decoration: BoxDecoration(
                           color: e.key == controller.currentIndex.value
                               ? Theme.of(context).accentColor

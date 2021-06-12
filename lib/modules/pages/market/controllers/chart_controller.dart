@@ -20,29 +20,29 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
   final OhlcvController ohlcvController = Get.find<OhlcvController>();
   final OrderBookController orderBookController = Get.find<OrderBookController>();
 
-  final ohlcv = <List<num>>[].obs;
-  final depth = OrderBook.empty().obs;
+  final RxList<List<num>> ohlcv = <List<num>>[].obs;
+  final Rx<OrderBook> depth = OrderBook.empty().obs;
 
-  final kline = <KLineEntity>[].obs;
-  final depthBids = <DepthEntity>[].obs;
-  final depthAsks = <DepthEntity>[].obs;
+  final RxList<KLineEntity> kline = <KLineEntity>[].obs;
+  final RxList<DepthEntity> depthBids = <DepthEntity>[].obs;
+  final RxList<DepthEntity> depthAsks = <DepthEntity>[].obs;
 
-  static const List<String> DEFAULT_TIMEFRAMES = ['15m', '1h', '4h', '1d'];
+  static const List<String> defaultTimeframes = <String>['15m', '1h', '4h', '1d'];
 
-  final timeframesTabs = <Tab>[].obs;
-  final timeframesExtra = <String>[].obs;
+  final RxList<Tab> timeframesTabs = <Tab>[].obs;
+  final RxList<String> timeframesExtra = <String>[].obs;
 
   late TabController timeframesController;
 
-  final timeframe = ''.obs;
+  final RxString timeframe = ''.obs;
 
-  final showExtra = false.obs;
+  final RxBool showExtra = false.obs;
 
-  final showSettings = false.obs;
-  final mainState = MainState.MA.obs;
-  final secondaryState = SecondaryState.MACD.obs;
+  final RxBool showSettings = false.obs;
+  final Rx<MainState> mainState = MainState.MA.obs;
+  final Rx<SecondaryState> secondaryState = SecondaryState.MACD.obs;
 
-  final timer = new TimerUtil(mInterval: 60 * 1000);
+  final TimerUtil timer = TimerUtil(mInterval: 60 * 1000);
   late Worker timerWorker;
 
   @override
@@ -52,7 +52,7 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
     timerWorker = debounce(
       settingsController.autoRefresh,
       TimerHandler.watchAutoRefresh(timer),
-      time: Duration(milliseconds: 800),
+      time: const Duration(milliseconds: 800),
     );
     timer.setOnTimerTickCallback(
       TimerHandler.common(
@@ -63,7 +63,7 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
 
     ever(exchangeController.timeframes, watchTimeframes);
     watchTimeframes(exchangeController.timeframes, init: true);
-    debounce(timeframe, watchTimeframe, time: Duration(microseconds: 300));
+    debounce(timeframe, watchTimeframe, time: const Duration(microseconds: 300));
 
     ever(symbolController.currentSymbol, watchSymbol);
     ever(ohlcv, watchOhlcv);
@@ -94,10 +94,10 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
 
   void watchOhlcv(List<List<num>> _ohlcv) {
     try {
-      final list = List<KLineEntity>.from(
+      final List<KLineEntity> list = List<KLineEntity>.from(
         _ohlcv
             .map(
-              (item) => KLineEntity.fromCustom(
+              (List<num> item) => KLineEntity.fromCustom(
                 time: item[0] as int,
                 open: item[1].toDouble(),
                 high: item[2].toDouble(),
@@ -110,7 +110,7 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
       );
       DataUtil.calculate(list);
       kline.value = list;
-      this.update(['chart']);
+      update(<String>['chart']);
     } catch (err) {
       Sentry.captureException(err);
     }
@@ -118,39 +118,43 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
 
   void watchDepth(OrderBook _depth) {
     try {
-      final _bids = List<DepthEntity>.from(
+      final List<DepthEntity> _bids = List<DepthEntity>.from(
         _depth.bids.map(
-          (item) => DepthEntity(item[0], item[1]),
+          (List<double> item) => DepthEntity(item[0], item[1]),
         ),
       ).toList();
-      final _asks = List<DepthEntity>.from(
+      final List<DepthEntity> _asks = List<DepthEntity>.from(
         _depth.asks.map(
-          (item) => DepthEntity(item[0], item[1]),
+          (List<double> item) => DepthEntity(item[0], item[1]),
         ),
       ).toList();
 
       depthBids.value = _bids;
       depthAsks.value = _asks;
 
-      this.update(['chart']);
+      update(<String>['chart']);
     } catch (err) {
       Sentry.captureException(err);
     }
   }
 
+  // ignore: avoid_positional_boolean_parameters
   void watchShowExtra(bool _showExtra) {
     if (_showExtra) return;
-    final _moreIndex = timeframesTabs.indexWhere((t) => t.key == Key('MarketPage.Period.more'));
-    bool isExtra = timeframesExtra.contains(timeframe.value);
+    final int _moreIndex = timeframesTabs.indexWhere((Tab t) => t.key == const Key('MarketPage.Period.more'));
+    final bool isExtra = timeframesExtra.contains(timeframe.value);
     if (!isExtra) {
       if (timeframesController.previousIndex != _moreIndex) {
         timeframesController.animateTo(timeframesController.previousIndex);
 
         timeframesTabs[_moreIndex] = Tab(
-          key: Key('MarketPage.Period.more'),
+          key: const Key('MarketPage.Period.more'),
           child: Stack(
             alignment: Alignment.bottomRight,
-            children: [Text('MarketPage.Period.more'.tr, maxLines: 1), Icon(Icons.signal_cellular_4_bar, size: 4)],
+            children: <Widget>[
+              Text('MarketPage.Period.more'.tr, maxLines: 1),
+              const Icon(Icons.signal_cellular_4_bar, size: 4)
+            ],
           ),
         );
       }
@@ -159,7 +163,7 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
   }
 
   void getDataAndUpdate({String? symbol}) {
-    final _symbol = symbol ?? symbolController.currentSymbol.value;
+    final String _symbol = symbol ?? symbolController.currentSymbol.value;
     if (_symbol.isEmpty) return;
 
     if (timeframe.value == 'depth') {
@@ -170,7 +174,8 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
   }
 
   void timeframesControllerListener() {
-    timeframe.value = new RegExp(r"(?<=').*?(?=')")
+    // ignore: unnecessary_raw_strings
+    timeframe.value = RegExp(r"(?<=').*?(?=')")
         .stringMatch(
           timeframesTabs[timeframesController.index].key!.toString(),
         )!
@@ -202,9 +207,9 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
     if (!init) timeframesController.removeListener(timeframesControllerListener);
 
     if (_timeframes.length > 4) {
-      final _timeframesRender = _timeframes
+      final List<String> _timeframesRender = _timeframes
           .where(
-            (e) => DEFAULT_TIMEFRAMES.contains(e),
+            (String e) => defaultTimeframes.contains(e),
           )
           .toList();
 
@@ -212,18 +217,18 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
         _timeframesRender.addAll(
           _timeframes
               .where(
-                (e) => !_timeframesRender.contains(e),
+                (String e) => !_timeframesRender.contains(e),
               )
               .take(4 - _timeframesRender.length)
               .toList(),
         );
       }
 
-      timeframesExtra.value = _timeframes.where((e) => !_timeframesRender.contains(e)).toList();
+      timeframesExtra.value = _timeframes.where((String e) => !_timeframesRender.contains(e)).toList();
 
       timeframesTabs.value = _timeframesRender
           .map<Tab>(
-            (e) => Tab(
+            (String e) => Tab(
               text: 'MarketPage.Period.$e'.tr,
               key: Key('MarketPage.Period.$e'),
             ),
@@ -233,34 +238,38 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
       if (timeframesExtra.isNotEmpty) {
         timeframesTabs.add(
           Tab(
-            key: Key('MarketPage.Period.more'),
+            key: const Key('MarketPage.Period.more'),
             child: Stack(
               alignment: Alignment.bottomRight,
-              children: [Text('MarketPage.Period.more'.tr, maxLines: 1), Icon(Icons.signal_cellular_4_bar, size: 4)],
+              children: <Widget>[
+                Text('MarketPage.Period.more'.tr, maxLines: 1),
+                const Icon(Icons.signal_cellular_4_bar, size: 4)
+              ],
             ),
           ),
         );
       }
 
-      if (exchangeController.currentExchange.value.has.fetchOrderBook != HasType.FALSE) {
+      if (exchangeController.currentExchange.value.has.fetchOrderBook != HasType.hasFalse) {
         timeframesTabs.add(
           Tab(
             text: 'MarketPage.Period.depth'.tr,
-            key: Key('MarketPage.Period.depth'),
+            key: const Key('MarketPage.Period.depth'),
           ),
         );
       }
 
       timeframe.value = _timeframesRender.first;
     } else {
-      timeframesTabs.value = _timeframes.map<Tab>((e) => Tab(text: 'MarketPage.Period.$e'.tr, key: Key(e))).toList();
+      timeframesTabs.value =
+          _timeframes.map<Tab>((String e) => Tab(text: 'MarketPage.Period.$e'.tr, key: Key(e))).toList();
       if (_timeframes.isNotEmpty) {
         timeframe.value = _timeframes.first;
-        if (exchangeController.currentExchange.value.has.fetchOrderBook != HasType.FALSE) {
+        if (exchangeController.currentExchange.value.has.fetchOrderBook != HasType.hasFalse) {
           timeframesTabs.add(
             Tab(
               text: 'MarketPage.Period.depth'.tr,
-              key: Key('MarketPage.Period.depth'),
+              key: const Key('MarketPage.Period.depth'),
             ),
           );
         }
@@ -273,47 +282,54 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
     timeframesController.addListener(timeframesControllerListener);
   }
 
-  Future getOhlcvAndUpdate({String? symbol, String? exchangeId, String? timeframe}) async {
+  Future<void> getOhlcvAndUpdate({String? symbol, String? exchangeId, String? timeframe}) async {
     final String _timeframe = timeframe ?? this.timeframe.value;
     if (_timeframe.isEmpty) return;
 
-    final result = await ohlcvController.getOhlcv(symbol: symbol, exchangeId: exchangeId, period: _timeframe);
+    final List<List<num>>? result =
+        await ohlcvController.getOhlcv(symbol: symbol, exchangeId: exchangeId, period: _timeframe);
     if (result == null) return;
     ohlcv.value = result;
   }
 
-  Future getDepthAndUpdate({String? symbol, String? exchangeId}) async {
+  Future<void> getDepthAndUpdate({String? symbol, String? exchangeId}) async {
     final OrderBook? result = await orderBookController.getDepth(symbol: symbol, exchangeId: exchangeId);
     if (result == null) return;
     depth.value = result;
   }
 
   void handleClickTab(int _index) {
-    final _moreIndex = timeframesTabs.indexWhere((t) => t.key == Key('MarketPage.Period.more'));
+    final int _moreIndex = timeframesTabs.indexWhere((Tab t) => t.key == const Key('MarketPage.Period.more'));
     if (_moreIndex < 0) return;
     if (_index == _moreIndex) {
       showExtra.value = true;
       return;
     }
     timeframesTabs[_moreIndex] = Tab(
-      key: Key('MarketPage.Period.more'),
+      key: const Key('MarketPage.Period.more'),
       child: Stack(
         alignment: Alignment.bottomRight,
-        children: [Text('MarketPage.Period.more'.tr, maxLines: 1), Icon(Icons.signal_cellular_4_bar, size: 4)],
+        children: <Widget>[
+          Text('MarketPage.Period.more'.tr, maxLines: 1),
+          const Icon(Icons.signal_cellular_4_bar, size: 4)
+        ],
       ),
     );
   }
 
   void onChangeTimeframeExtra(String _timeframe) {
     timeframe.value = _timeframe;
-    final _moreIndex = timeframesTabs.indexWhere((t) => t.key == Key('MarketPage.Period.more'));
+    final int _moreIndex = timeframesTabs.indexWhere((Tab t) => t.key == const Key('MarketPage.Period.more'));
     timeframesController.animateTo(_moreIndex);
 
     timeframesTabs[_moreIndex] = Tab(
-      key: Key('MarketPage.Period.more'),
+      key: const Key('MarketPage.Period.more'),
       child: Stack(
         alignment: Alignment.bottomRight,
-        children: [Text('MarketPage.Period.$timeframe'.tr, maxLines: 1), Icon(Icons.signal_cellular_4_bar, size: 4)],
+        children: <Widget>[
+          Text('MarketPage.Period.$timeframe'.tr, maxLines: 1),
+          const Icon(Icons.signal_cellular_4_bar, size: 4)
+        ],
       ),
     );
 

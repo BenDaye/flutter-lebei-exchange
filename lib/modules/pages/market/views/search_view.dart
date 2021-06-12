@@ -11,7 +11,7 @@ class SearchMarketView extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: Stack(
         fit: StackFit.expand,
-        children: [
+        children: <Widget>[
           Container(color: Theme.of(context).scaffoldBackgroundColor),
           FloatingSearchBar(
             hint: 'MarketsPage.Search.Hint'.tr,
@@ -21,20 +21,20 @@ class SearchMarketView extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             openAxisAlignment: 0.0,
             width: 600,
-            debounceDelay: Duration(milliseconds: 500),
+            debounceDelay: const Duration(milliseconds: 500),
             onQueryChanged: searchViewController.onChangeQuery,
             transition: CircularFloatingSearchBarTransition(),
             controller: searchViewController.floatingSearchBarController,
             automaticallyImplyBackButton: false,
-            leadingActions: [
+            leadingActions: <Widget>[
               FloatingSearchBarAction.icon(
-                icon: Icon(Icons.arrow_back_ios, size: 18),
+                icon: const Icon(Icons.arrow_back_ios, size: 18),
                 onTap: () => Get.back(),
                 showIfOpened: true,
               ),
             ],
-            actions: [FloatingSearchBarAction.searchToClear(showIfClosed: false)],
-            builder: (BuildContext context, transition) => ClipRRect(
+            actions: <Widget>[FloatingSearchBarAction.searchToClear(showIfClosed: false)],
+            builder: (BuildContext context, Animation<double> transition) => ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Container(
                 color: Theme.of(context).backgroundColor,
@@ -44,7 +44,7 @@ class SearchMarketView extends StatelessWidget {
                     children: searchViewController.symbols.isNotEmpty
                         ? searchViewController.symbols
                             .map<ListTile>(
-                              (e) => ListTile(
+                              (String e) => ListTile(
                                 title: Text(e),
                                 trailing: Icon(
                                   Icons.chevron_right,
@@ -63,7 +63,7 @@ class SearchMarketView extends StatelessWidget {
                               ),
                             )
                             .toList()
-                        : [
+                        : <Widget>[
                             ListTile(
                               title: Text('MarketsPage.Search.Recommanded'.tr),
                               subtitle: Wrap(

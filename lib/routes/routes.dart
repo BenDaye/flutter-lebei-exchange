@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names,always_specify_types
+
 part of 'pages.dart';
 
 abstract class Routes {

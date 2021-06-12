@@ -2,6 +2,7 @@ import 'package:flutter_lebei_exchange/api/ccxt.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/trade.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
+import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
 import 'package:get/get.dart';
 import 'package:sentry/sentry.dart';
 
@@ -14,11 +15,11 @@ class TradeController extends GetxController {
     final String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
     if (_symbol.isEmpty || _exchangeId.isEmpty) return null;
 
-    final result = await ApiCcxt.trades(_exchangeId, _symbol);
+    final HttpResult<List<dynamic>> result = await ApiCcxt.trades(_exchangeId, _symbol);
     if (!result.success) return null;
 
     try {
-      return List<Trade>.from(result.data!.map((r) => Trade.fromJson(r)).toList());
+      return List<Trade>.from(result.data!.map((dynamic r) => Trade.fromJson(r as Map<String, dynamic>)).toList());
     } catch (err) {
       Sentry.captureException(err);
     }

@@ -2,6 +2,7 @@ import 'package:flutter_lebei_exchange/api/ccxt.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
+import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
 import 'package:get/get.dart';
 import 'package:sentry/sentry.dart';
 
@@ -9,8 +10,8 @@ class TickerController extends GetxController {
   final ExchangeController exchangeController = Get.find<ExchangeController>();
   final SymbolController symbolController = Get.find<SymbolController>();
 
-  final tickers = <Ticker>[].obs;
-  final tickersMap = <String, Ticker>{}.obs;
+  final RxList<Ticker> tickers = <Ticker>[].obs;
+  final RxMap<String, Ticker> tickersMap = <String, Ticker>{}.obs;
 
   @override
   void onInit() {
@@ -27,20 +28,20 @@ class TickerController extends GetxController {
     tickers.value = _tickersMap.values.toList();
   }
 
-  Future getTickersAndUpdate() async {
-    final _tickersMap = await getTickers();
+  Future<void> getTickersAndUpdate() async {
+    final Map<String, Ticker>? _tickersMap = await getTickers();
     if (_tickersMap == null) return;
     tickersMap.value = _tickersMap;
   }
 
-  Future getTickersAndUpdatePartial({String? exchangeId, required List<String> symbols}) async {
+  Future<void> getTickersAndUpdatePartial({String? exchangeId, required List<String> symbols}) async {
     final String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
-    if (_exchangeId.isEmpty || symbols.isEmpty) return null;
+    if (_exchangeId.isEmpty || symbols.isEmpty) return;
 
-    final _tickersMap = await getTickers(symbols: symbols);
+    final Map<String, Ticker>? _tickersMap = await getTickers(symbols: symbols);
     if (_tickersMap == null) return;
 
-    _tickersMap.forEach((key, value) {
+    _tickersMap.forEach((String key, Ticker value) {
       if (tickersMap.containsKey(key)) {
         tickersMap[key] = value;
       }
@@ -51,12 +52,15 @@ class TickerController extends GetxController {
     final String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
     if (_exchangeId.isEmpty) return null;
 
-    final result = await ApiCcxt.tickers(_exchangeId, symbols: symbols);
+    final HttpResult<Map<String, dynamic>> result = await ApiCcxt.tickers(_exchangeId, symbols: symbols);
     if (!result.success) return null;
 
     try {
       return result.data!.map<String, Ticker>(
-        (key, value) => MapEntry(key, Ticker.fromJson(value)),
+        (String key, dynamic value) => MapEntry<String, Ticker>(
+          key,
+          Ticker.fromJson(value as Map<String, dynamic>),
+        ),
       );
     } catch (err) {
       Sentry.captureException(err);
@@ -69,7 +73,7 @@ class TickerController extends GetxController {
     final String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
     if (_symbol.isEmpty || _exchangeId.isEmpty) return null;
 
-    final result = await ApiCcxt.ticker(_exchangeId, _symbol);
+    final HttpResult<Map<String, dynamic>> result = await ApiCcxt.ticker(_exchangeId, _symbol);
     if (!result.success) return null;
 
     try {

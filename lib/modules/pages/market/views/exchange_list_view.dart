@@ -12,13 +12,11 @@ class ExchangeListView extends GetView<ExchangeListViewController> {
   Widget build(BuildContext context) {
     return Obx(
       () => SmartRefresher(
-        header: WaterDropMaterialHeader(),
+        header: const WaterDropMaterialHeader(),
         controller: controller.refreshController,
-        enablePullUp: false,
-        enablePullDown: true,
         onRefresh: controller.onRefreshExchange,
         child: ListView.separated(
-          separatorBuilder: (BuildContext context, int index) => Divider(indent: 16, height: 1.0),
+          separatorBuilder: (BuildContext context, int index) => const Divider(indent: 16, height: 1.0),
           itemBuilder: (BuildContext context, int index) => ListTile(
             dense: true,
             title: Text(ExchangeController.getExchangeName(controller.exchanges[index].exchangeId)),
@@ -28,7 +26,7 @@ class ExchangeListView extends GetView<ExchangeListViewController> {
             ),
           ),
           itemCount: controller.exchanges.length,
-          physics: ClampingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
         ),
       ),
     );
@@ -46,52 +44,54 @@ class ExchangeListViewHeader extends GetView<ExchangeListViewController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.baseline,
           textBaseline: TextBaseline.alphabetic,
-          children: [
+          children: <Widget>[
             InkWell(
+              onTap: () {
+                if (controller.sortType.value == SortType.exchangeDesc) {
+                  controller.sortType.value = SortType.exchangeAsc;
+                } else {
+                  controller.sortType.value = SortType.exchangeDesc;
+                }
+              },
               child: Row(
-                children: [
+                children: <Widget>[
                   Text(
                     'MarketPage.ListViewHeader.Exchange'.tr,
                     style:
                         Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
                   ),
-                  controller.sortType.value == SortType.ExchangeDesc
-                      ? Icon(Icons.trending_down, size: 12, color: Theme.of(context).unselectedWidgetColor)
-                      : controller.sortType.value == SortType.ExchangeAsc
-                          ? Icon(Icons.trending_up, size: 12, color: Theme.of(context).unselectedWidgetColor)
-                          : Icon(Icons.swap_vert, size: 12, color: Theme.of(context).unselectedWidgetColor),
+                  if (controller.sortType.value == SortType.exchangeDesc)
+                    Icon(Icons.trending_down, size: 12, color: Theme.of(context).unselectedWidgetColor)
+                  else
+                    controller.sortType.value == SortType.exchangeAsc
+                        ? Icon(Icons.trending_up, size: 12, color: Theme.of(context).unselectedWidgetColor)
+                        : Icon(Icons.swap_vert, size: 12, color: Theme.of(context).unselectedWidgetColor),
                 ],
               ),
-              onTap: () {
-                if (controller.sortType.value == SortType.ExchangeDesc) {
-                  controller.sortType.value = SortType.ExchangeAsc;
-                } else {
-                  controller.sortType.value = SortType.ExchangeDesc;
-                }
-              },
             ),
             InkWell(
+              onTap: () {
+                if (controller.sortType.value == SortType.priceDesc) {
+                  controller.sortType.value = SortType.priceAsc;
+                } else {
+                  controller.sortType.value = SortType.priceDesc;
+                }
+              },
               child: Row(
-                children: [
+                children: <Widget>[
                   Text(
                     'MarketPage.ListViewHeader.Price'.tr,
                     style:
                         Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).unselectedWidgetColor),
                   ),
-                  controller.sortType.value == SortType.PriceDesc
-                      ? Icon(Icons.trending_down, size: 12, color: Theme.of(context).unselectedWidgetColor)
-                      : controller.sortType.value == SortType.PriceAsc
-                          ? Icon(Icons.trending_up, size: 12, color: Theme.of(context).unselectedWidgetColor)
-                          : Icon(Icons.swap_vert, size: 12, color: Theme.of(context).unselectedWidgetColor),
+                  if (controller.sortType.value == SortType.priceDesc)
+                    Icon(Icons.trending_down, size: 12, color: Theme.of(context).unselectedWidgetColor)
+                  else
+                    controller.sortType.value == SortType.priceAsc
+                        ? Icon(Icons.trending_up, size: 12, color: Theme.of(context).unselectedWidgetColor)
+                        : Icon(Icons.swap_vert, size: 12, color: Theme.of(context).unselectedWidgetColor),
                 ],
               ),
-              onTap: () {
-                if (controller.sortType.value == SortType.PriceDesc) {
-                  controller.sortType.value = SortType.PriceAsc;
-                } else {
-                  controller.sortType.value = SortType.PriceDesc;
-                }
-              },
             ),
           ],
         ),

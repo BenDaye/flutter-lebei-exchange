@@ -14,19 +14,19 @@ class PercentageHelper {
               : colors.last;
 
   static String getPercentageString(double percentage) => percentage.isNaN
-      ? NumberFormatter.UNKNOWN_NUMBER_TO_STRING
+      ? NumberFormatter.unknownNumberToString
       : '${getPercentageSymbol(percentage)}${percentage.toStringAsFixed(2)}%';
 
   static Widget getPercentageButton(List<Color> colors, double percentage) => ElevatedButton(
-        onPressed: () => null,
+        onPressed: () {},
+        style: ElevatedButton.styleFrom(
+          primary: getPercentageColor(colors, percentage),
+          elevation: 0,
+        ),
         child: Text(
           getPercentageString(percentage),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-        ),
-        style: ElevatedButton.styleFrom(
-          primary: getPercentageColor(colors, percentage),
-          elevation: 0,
         ),
       );
 

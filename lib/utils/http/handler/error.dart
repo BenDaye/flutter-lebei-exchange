@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
-import 'package:flutter_lebei_exchange/models/response.dart' as HttpModel;
+import 'package:flutter_lebei_exchange/models/response.dart' as http_model;
 
-HttpResult<T> onError<T>(error) {
+HttpResult<T> onError<T>(dynamic error) {
   if (error is DioError) {
     switch (error.type) {
       case DioErrorType.cancel:
@@ -16,7 +16,8 @@ HttpResult<T> onError<T>(error) {
       case DioErrorType.response:
         try {
           if (error.response?.statusCode == 200) {
-            HttpModel.Response<T> response = HttpModel.Response<T>.fromJson(error.response?.data);
+            final http_model.Response<T> response =
+                http_model.Response<T>.fromJson(error.response?.data as Map<String, dynamic>);
             return HttpResult<T>(response.status, response.message, false);
           }
 

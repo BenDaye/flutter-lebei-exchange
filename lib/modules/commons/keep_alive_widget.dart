@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 class KeepAliveWidget extends StatefulWidget {
-  final Widget child;
-  KeepAliveWidget({
-    Key? key,
+  const KeepAliveWidget({
     required this.child,
-  }) : super(key: key);
+  });
+  final Widget child;
 
   @override
   _KeepAliveWidgetState createState() => _KeepAliveWidgetState();

@@ -4,11 +4,6 @@ part 'response.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Response<T> {
-  int status;
-  String message;
-  @_Converter()
-  T? data;
-
   Response(
     this.status,
     this.message,
@@ -17,6 +12,11 @@ class Response<T> {
 
   factory Response.fromJson(Map<String, dynamic> json) => _$ResponseFromJson<T>(json);
   Map<String, dynamic> toJson() => _$ResponseToJson(this);
+
+  int status;
+  String message;
+  @_Converter()
+  T? data;
 }
 
 class _Converter<T> implements JsonConverter<T, Object?> {

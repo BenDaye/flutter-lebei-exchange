@@ -4,6 +4,7 @@ import 'package:flutter_lebei_exchange/models/ccxt/market.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number.dart';
 import 'package:flutter_lebei_exchange/utils/formatter/number.dart';
+import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
 import 'package:get/get.dart';
 import 'package:sentry/sentry.dart';
 
@@ -11,8 +12,8 @@ class MarketController extends GetxController {
   final ExchangeController exchangeController = Get.find<ExchangeController>();
   final SymbolController symbolController = Get.find<SymbolController>();
 
-  final markets = <Market>[].obs;
-  final marketsMap = <String, Market>{}.obs;
+  final RxList<Market> markets = <Market>[].obs;
+  final RxMap<String, Market> marketsMap = <String, Market>{}.obs;
 
   @override
   void onInit() {
@@ -29,22 +30,25 @@ class MarketController extends GetxController {
     markets.value = _marketsMap.values.toList();
   }
 
-  Future getMarketsAndUpdate() async {
-    final _marketsMap = await getMarkets();
+  Future<void> getMarketsAndUpdate() async {
+    final Map<String, Market>? _marketsMap = await getMarkets();
     if (_marketsMap == null) return;
     marketsMap.value = _marketsMap;
   }
 
   Future<Map<String, Market>?> getMarkets({String? exchangeId}) async {
-    String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
+    final String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
     if (_exchangeId.isEmpty) return null;
 
-    final result = await ApiCcxt.markets(_exchangeId);
+    final HttpResult<Map<String, dynamic>> result = await ApiCcxt.markets(_exchangeId);
     if (!result.success) return null;
 
     try {
       return result.data!.map<String, Market>(
-        (key, value) => MapEntry(key, Market.fromJson(value)),
+        (String key, dynamic value) => MapEntry<String, Market>(
+          key,
+          Market.fromJson(value as Map<String, dynamic>),
+        ),
       );
     } catch (err) {
       Sentry.captureException(err);
@@ -57,7 +61,7 @@ class MarketController extends GetxController {
     final String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
     if (_symbol.isEmpty || _exchangeId.isEmpty) return null;
 
-    final result = await ApiCcxt.market(_exchangeId, _symbol);
+    final HttpResult<Map<String, dynamic>> result = await ApiCcxt.market(_exchangeId, _symbol);
     if (!result.success) return null;
 
     try {
@@ -69,24 +73,24 @@ class MarketController extends GetxController {
   }
 
   String formatPriceByPrecision(dynamic value, String symbol) {
-    final bool hasMarket = markets.any((e) => e.symbol == symbol);
+    final bool hasMarket = markets.any((Market e) => e.symbol == symbol);
     if (!hasMarket) return NumberFormatter.numberToString(value);
 
     return NumberHelper.decimalToPrecision(
       value,
-      markets.firstWhere((e) => e.symbol == symbol, orElse: () => Market.empty()).precision.price,
+      markets.firstWhere((Market e) => e.symbol == symbol, orElse: () => Market.empty()).precision.price,
       precisionMode: exchangeController.currentExchange.value.precisionMode,
       paddingMode: exchangeController.currentExchange.value.paddingMode,
     );
   }
 
   String formatAmountByPrecision(dynamic value, String symbol) {
-    final bool hasMarket = markets.any((e) => e.symbol == symbol);
+    final bool hasMarket = markets.any((Market e) => e.symbol == symbol);
     if (!hasMarket) return NumberFormatter.numberToString(value);
 
     return NumberHelper.decimalToPrecision(
       value,
-      markets.firstWhere((e) => e.symbol == symbol, orElse: () => Market.empty()).precision.amount ?? 2,
+      markets.firstWhere((Market e) => e.symbol == symbol, orElse: () => Market.empty()).precision.amount ?? 2,
       precisionMode: exchangeController.currentExchange.value.precisionMode,
       paddingMode: exchangeController.currentExchange.value.paddingMode,
     );

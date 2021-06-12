@@ -6,6 +6,7 @@ import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_c
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
 import 'package:flutter_lebei_exchange/utils/formatter/number.dart';
+import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -25,12 +26,12 @@ class ExchangeListViewController extends GetxController {
 
   final RefreshController refreshController = RefreshController(initialRefresh: true);
 
-  final exchangesMap = <String, Ticker>{}.obs;
-  final exchanges = <TickerForRender>[].obs;
+  final RxMap<String, Ticker> exchangesMap = <String, Ticker>{}.obs;
+  final RxList<TickerForRender> exchanges = <TickerForRender>[].obs;
 
-  final refreshing = true.obs;
+  final RxBool refreshing = true.obs;
 
-  final sortType = SortType.PriceDesc.obs;
+  final Rx<SortType> sortType = SortType.priceDesc.obs;
 
   late Worker exchangesWorker;
   late Worker currentSymbolWorker;
@@ -43,11 +44,11 @@ class ExchangeListViewController extends GetxController {
     currentSymbolWorker = debounce(
       symbolController.currentSymbol,
       watchCurrentSymbol,
-      time: Duration(milliseconds: 500),
+      time: const Duration(milliseconds: 500),
     );
 
     ever(exchangesMap, watchExchangesMap);
-    debounce(sortType, watchSortType, time: Duration(milliseconds: 300));
+    debounce(sortType, watchSortType, time: const Duration(milliseconds: 300));
   }
 
   @override
@@ -60,12 +61,12 @@ class ExchangeListViewController extends GetxController {
     super.onClose();
   }
 
-  void watchCurrentSymbol(String _symbol) async {
+  Future<void> watchCurrentSymbol(String _symbol) async {
     await beforeRefresh();
     onRefresh(exchangeController.exchanges);
   }
 
-  void watchExchanges(List<String> _exchanges) async {
+  Future<void> watchExchanges(List<String> _exchanges) async {
     await beforeRefresh();
     onRefresh(_exchanges);
   }
@@ -77,35 +78,35 @@ class ExchangeListViewController extends GetxController {
   void watchExchangesMap(Map<String, Ticker> _maps) {
     final List<TickerForRender> _exchanges = _maps.entries
         .map(
-          (e) => TickerForRender(
+          (MapEntry<String, Ticker> e) => TickerForRender(
             e.key,
             marketController.formatPriceByPrecision(TickerHelper.getValuablePrice(e.value), e.value.symbol),
           ),
         )
         .toList();
 
-    _exchanges.removeWhere((e) => e.price == NumberFormatter.UNKNOWN_NUMBER_TO_STRING);
+    _exchanges.removeWhere((TickerForRender e) => e.price == NumberFormatter.unknownNumberToString);
 
     _exchanges.sort(
-      (a, b) {
+      (TickerForRender a, TickerForRender b) {
         switch (sortType.value) {
-          case SortType.PriceDesc:
+          case SortType.priceDesc:
             {
               return (NumUtil.getDoubleByValueStr(b.price) ?? 0).compareTo(
-                (NumUtil.getDoubleByValueStr(a.price) ?? 0),
+                NumUtil.getDoubleByValueStr(a.price) ?? 0,
               );
             }
-          case SortType.PriceAsc:
+          case SortType.priceAsc:
             {
               return (NumUtil.getDoubleByValueStr(a.price) ?? 0).compareTo(
-                (NumUtil.getDoubleByValueStr(b.price) ?? 0),
+                NumUtil.getDoubleByValueStr(b.price) ?? 0,
               );
             }
-          case SortType.ExchangeAsc:
+          case SortType.exchangeAsc:
             {
               return a.exchangeId.compareTo(b.exchangeId);
             }
-          case SortType.ExchangeDesc:
+          case SortType.exchangeDesc:
             {
               return b.exchangeId.compareTo(a.exchangeId);
             }
@@ -120,19 +121,21 @@ class ExchangeListViewController extends GetxController {
     exchanges.value = _exchanges;
   }
 
-  Future beforeRefresh() async {
+  Future<void> beforeRefresh() async {
     exchangesMap.clear();
     refreshing.value = false;
-    await Future.delayed(Duration(milliseconds: 800));
+    // ignore: always_specify_types
+    await Future.delayed(const Duration(milliseconds: 800));
     refreshing.value = true;
   }
 
-  Future onRefresh(List<String> _exchanges) async {
+  Future<void> onRefresh(List<String> _exchanges) async {
     if (_exchanges.isEmpty || symbolController.currentSymbol.isEmpty) return;
 
-    for (String exchange in _exchanges) {
+    for (final String exchange in _exchanges) {
       if (refreshing.isFalse) break;
-      await Future.delayed(Duration(milliseconds: 500));
+      // ignore: always_specify_types
+      await Future.delayed(const Duration(milliseconds: 500));
       if (refreshing.isFalse) break;
 
       getTicker(exchange);
@@ -141,17 +144,17 @@ class ExchangeListViewController extends GetxController {
     refreshing.value = false;
   }
 
-  Future onRefreshExchange() async {
+  Future<void> onRefreshExchange() async {
     await beforeRefresh();
     await onRefresh(exchangeController.exchanges);
     refreshController.refreshCompleted();
   }
 
-  Future getTicker(String _exchange) async {
+  Future<void> getTicker(String _exchange) async {
     if (_exchange.isEmpty || symbolController.currentSymbol.isEmpty) return;
 
-    final symbol = symbolController.currentSymbol.value.substring(0);
-    final result = await ApiCcxt.ticker(_exchange, symbol, handleError: (_) => null);
+    final String symbol = symbolController.currentSymbol.value.substring(0);
+    final HttpResult<Map<String, dynamic>> result = await ApiCcxt.ticker(_exchange, symbol, handleError: (_) => null);
     if (!result.success || result.data == null) return;
 
     if (symbol != symbolController.currentSymbol.value || refreshing.isFalse) return;

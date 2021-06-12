@@ -14,7 +14,7 @@ class CategoryTitleView extends GetView<MarketsViewController> {
             );
 
     Widget toggleButton(String text, bool actived) => Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Text(
             text,
             style: categoryTextStyle(actived),
@@ -23,15 +23,15 @@ class CategoryTitleView extends GetView<MarketsViewController> {
 
     return Obx(
       () => ToggleButtons(
-        children: [
-          toggleButton('MarketsPage.AppBar.Favorites'.tr, controller.selectedCategories[0]),
-          toggleButton('MarketsPage.AppBar.Spot'.tr, controller.selectedCategories[1]),
-          toggleButton('MarketsPage.AppBar.Margin'.tr, controller.selectedCategories[2]),
-        ],
         isSelected: controller.selectedCategories,
         renderBorder: false,
         fillColor: Colors.transparent,
         onPressed: controller.onChangeCategory,
+        children: <Widget>[
+          toggleButton('MarketsPage.AppBar.Favorites'.tr, controller.selectedCategories[0]),
+          toggleButton('MarketsPage.AppBar.Spot'.tr, controller.selectedCategories[1]),
+          toggleButton('MarketsPage.AppBar.Margin'.tr, controller.selectedCategories[2]),
+        ],
       ),
     );
   }

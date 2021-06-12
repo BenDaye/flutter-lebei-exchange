@@ -4,7 +4,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class HomeGoogleAdBannerController extends GetxController {
   late BannerAd ad;
-  final isAdLoaded = false.obs;
+  final RxBool isAdLoaded = false.obs;
 
   @override
   void onInit() {
@@ -17,14 +17,14 @@ class HomeGoogleAdBannerController extends GetxController {
         onAdLoaded: (_) {
           isAdLoaded.value = true;
         },
-        onAdFailedToLoad: (ad, error) {
+        onAdFailedToLoad: (Ad ad, LoadAdError error) {
           // Releases an ad resource when it fails to load
           ad.dispose();
 
           throw Exception('Ad load failed (code=${error.code} message=${error.message})');
         },
       ),
-      request: AdRequest(),
+      request: const AdRequest(),
     );
 
     ad.load();

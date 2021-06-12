@@ -1,4 +1,5 @@
-const Map<String, String> en_US = {
+// ignore_for_file: file_names,constant_identifier_names
+const Map<String, String> en_US = <String, String>{
   'ListViewHeader.Symbol': 'Symbol',
   'ListViewHeader.LastPrice': 'Last Price',
   'ListViewHeader.Change%': 'Change%',
@@ -65,8 +66,8 @@ const Map<String, String> en_US = {
   'GeneralPage.AutoRefresh.stopped': 'Stopped',
   'GeneralPage.Reset': 'Reset App',
   'GeneralPage.Reset.Desc': 'This operation will initialize the application and clear all cached data.',
-  'AdvanceDeclineColorMode.AdvanceGreen': 'Green Up & Red Down',
-  'AdvanceDeclineColorMode.AdvanceRed': 'Red Up & Green Down',
+  'AdvanceDeclineColorMode.advanceGreen': 'Green Up & Red Down',
+  'AdvanceDeclineColorMode.advanceRed': 'Red Up & Green Down',
   'Language.en-US': 'English',
   'Language.zh-CN': '简体中文',
   'ExchangesPage.AppBar.Title': 'Exchanges',

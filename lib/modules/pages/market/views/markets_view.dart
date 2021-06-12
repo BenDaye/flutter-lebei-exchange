@@ -23,9 +23,9 @@ class MarketsView extends GetView<MarketsViewController> {
         elevation: 1,
         centerTitle: false,
         title: CategoryTitleView(),
-        actions: [
+        actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () => Get.toNamed('/search_symbol'),
           ),
         ],
@@ -33,17 +33,17 @@ class MarketsView extends GetView<MarketsViewController> {
       body: Obx(
         () => PageView(
           controller: controller.selectedCategoryPageController,
-          physics: NeverScrollableScrollPhysics(),
-          children: [
+          physics: const NeverScrollableScrollPhysics(),
+          children: <Widget>[
             Column(
-              children: [
+              children: <Widget>[
                 MarketsListViewHeader(),
                 Expanded(
                   child: ListView.separated(
-                    separatorBuilder: (BuildContext context, int index) => Divider(height: 1.0),
+                    separatorBuilder: (BuildContext context, int index) => const Divider(height: 1.0),
                     itemBuilder: (BuildContext context, int index) {
-                      Ticker? ticker = tickerController.tickers
-                          .firstWhere((t) => t.symbol == symbolController.favoriteSymbols[index]);
+                      final Ticker ticker = tickerController.tickers
+                          .firstWhere((Ticker t) => t.symbol == symbolController.favoriteSymbols[index]);
                       return TickerPercentageListTile(ticker);
                     },
                     itemCount: symbolController.favoriteSymbols.length,
@@ -52,7 +52,7 @@ class MarketsView extends GetView<MarketsViewController> {
               ],
             ),
             Column(
-              children: [
+              children: <Widget>[
                 Container(
                   height: 40,
                   decoration: BoxDecoration(
@@ -97,23 +97,21 @@ class MarketsView extends GetView<MarketsViewController> {
                   //   options: LiveOptions(),
                   // ),
                   child: SmartRefresher(
-                    header: WaterDropMaterialHeader(),
+                    header: const WaterDropMaterialHeader(),
                     controller: controller.refreshController,
-                    enablePullDown: true,
-                    enablePullUp: false,
                     onRefresh: () async {
                       await tickerController.getTickersAndUpdate();
                       controller.refreshController.refreshCompleted();
                     },
                     child: ListView.separated(
                       controller: controller.scrollController,
-                      separatorBuilder: (BuildContext context, int index) => Divider(height: 1.0),
+                      separatorBuilder: (BuildContext context, int index) => const Divider(height: 1.0),
                       itemBuilder: (BuildContext context, int index) => FocusDetector(
                         onVisibilityGained: () {
                           controller.focusIndexes.insert(0, index);
                         },
                         onVisibilityLost: () {
-                          controller.focusIndexes.removeWhere((e) => e == index);
+                          controller.focusIndexes.removeWhere((int e) => e == index);
                         },
                         child: TickerPercentageListTile(controller.tickers[index]),
                       ),
@@ -137,77 +135,80 @@ class MarketsListViewHeader extends GetView<MarketsViewController> {
       () => HomeListViewHeader(
         first: InkWell(
           onTap: () {
-            if (controller.sortType.value == SortType.SymbolDesc) {
-              controller.sortType.value = SortType.SymbolAsc;
-            } else if (controller.sortType.value == SortType.SymbolAsc) {
-              controller.sortType.value = SortType.UnSet;
+            if (controller.sortType.value == SortType.symbolDesc) {
+              controller.sortType.value = SortType.symbolAsc;
+            } else if (controller.sortType.value == SortType.symbolAsc) {
+              controller.sortType.value = SortType.unset;
             } else {
-              controller.sortType.value = SortType.SymbolDesc;
+              controller.sortType.value = SortType.symbolDesc;
             }
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            children: [
+            children: <Widget>[
               Text(
                 'ListViewHeader.Symbol'.tr,
                 style: Theme.of(context).textTheme.caption,
               ),
-              controller.sortType.value == SortType.SymbolDesc
-                  ? Icon(Icons.trending_down, size: 12, color: Theme.of(context).unselectedWidgetColor)
-                  : controller.sortType.value == SortType.SymbolAsc
-                      ? Icon(Icons.trending_up, size: 12, color: Theme.of(context).unselectedWidgetColor)
-                      : Icon(Icons.swap_vert, size: 12, color: Theme.of(context).unselectedWidgetColor),
+              if (controller.sortType.value == SortType.symbolDesc)
+                Icon(Icons.trending_down, size: 12, color: Theme.of(context).unselectedWidgetColor)
+              else
+                controller.sortType.value == SortType.symbolAsc
+                    ? Icon(Icons.trending_up, size: 12, color: Theme.of(context).unselectedWidgetColor)
+                    : Icon(Icons.swap_vert, size: 12, color: Theme.of(context).unselectedWidgetColor),
             ],
           ),
         ),
         middle: InkWell(
           onTap: () {
-            if (controller.sortType.value == SortType.PriceDesc) {
-              controller.sortType.value = SortType.PriceAsc;
-            } else if (controller.sortType.value == SortType.PriceAsc) {
-              controller.sortType.value = SortType.UnSet;
+            if (controller.sortType.value == SortType.priceDesc) {
+              controller.sortType.value = SortType.priceAsc;
+            } else if (controller.sortType.value == SortType.priceAsc) {
+              controller.sortType.value = SortType.unset;
             } else {
-              controller.sortType.value = SortType.PriceDesc;
+              controller.sortType.value = SortType.priceDesc;
             }
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            children: [
+            children: <Widget>[
               Text(
                 'ListViewHeader.LastPrice'.tr,
                 style: Theme.of(context).textTheme.caption,
               ),
-              controller.sortType.value == SortType.PriceDesc
-                  ? Icon(Icons.trending_down, size: 12, color: Theme.of(context).unselectedWidgetColor)
-                  : controller.sortType.value == SortType.PriceAsc
-                      ? Icon(Icons.trending_up, size: 12, color: Theme.of(context).unselectedWidgetColor)
-                      : Icon(Icons.swap_vert, size: 12, color: Theme.of(context).unselectedWidgetColor),
+              if (controller.sortType.value == SortType.priceDesc)
+                Icon(Icons.trending_down, size: 12, color: Theme.of(context).unselectedWidgetColor)
+              else
+                controller.sortType.value == SortType.priceAsc
+                    ? Icon(Icons.trending_up, size: 12, color: Theme.of(context).unselectedWidgetColor)
+                    : Icon(Icons.swap_vert, size: 12, color: Theme.of(context).unselectedWidgetColor),
             ],
           ),
         ),
         last: InkWell(
           onTap: () {
-            if (controller.sortType.value == SortType.PercentageDesc) {
-              controller.sortType.value = SortType.PercentageAsc;
-            } else if (controller.sortType.value == SortType.PercentageAsc) {
-              controller.sortType.value = SortType.UnSet;
+            if (controller.sortType.value == SortType.percentageDesc) {
+              controller.sortType.value = SortType.percentageAsc;
+            } else if (controller.sortType.value == SortType.percentageAsc) {
+              controller.sortType.value = SortType.unset;
             } else {
-              controller.sortType.value = SortType.PercentageDesc;
+              controller.sortType.value = SortType.percentageDesc;
             }
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.end,
-            children: [
+            children: <Widget>[
               Text(
                 'ListViewHeader.Change%'.tr,
                 style: Theme.of(context).textTheme.caption,
               ),
-              controller.sortType.value == SortType.PercentageDesc
-                  ? Icon(Icons.trending_down, size: 12, color: Theme.of(context).unselectedWidgetColor)
-                  : controller.sortType.value == SortType.PercentageAsc
-                      ? Icon(Icons.trending_up, size: 12, color: Theme.of(context).unselectedWidgetColor)
-                      : Icon(Icons.swap_vert, size: 12, color: Theme.of(context).unselectedWidgetColor),
+              if (controller.sortType.value == SortType.percentageDesc)
+                Icon(Icons.trending_down, size: 12, color: Theme.of(context).unselectedWidgetColor)
+              else
+                controller.sortType.value == SortType.percentageAsc
+                    ? Icon(Icons.trending_up, size: 12, color: Theme.of(context).unselectedWidgetColor)
+                    : Icon(Icons.swap_vert, size: 12, color: Theme.of(context).unselectedWidgetColor),
             ],
           ),
         ),

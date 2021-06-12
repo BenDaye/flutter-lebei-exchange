@@ -6,7 +6,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class HomeViewController extends GetxController with SingleGetTickerProviderMixin {
   final TickerController tickerController = Get.find<TickerController>();
 
-  List<String> tabStrings = [
+  final RxList<String> tabStrings = <String>[
     'RankingList.Hot',
     'RankingList.BaseVol',
     'RankingList.QuoteVol',
@@ -15,7 +15,7 @@ class HomeViewController extends GetxController with SingleGetTickerProviderMixi
 
   late TabController tabController;
 
-  final innerScrollPositionKey = Key('innerScrollPositionKey').obs;
+  final Rx<Key> innerScrollPositionKey = const Key('innerScrollPositionKey').obs;
 
   final RefreshController refreshController = RefreshController();
 

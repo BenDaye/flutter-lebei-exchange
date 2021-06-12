@@ -1,3 +1,5 @@
+// ignore_for_file: overridden_fields,annotate_overrides
+
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/chart_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
@@ -14,11 +16,11 @@ class ChartView extends GetView<ChartController> {
     return Obx(
       () => Expanded(
         child: Column(
-          children: [
-            Container(
+          children: <Widget>[
+            SizedBox(
               height: 32,
               child: Row(
-                children: [
+                children: <Widget>[
                   Expanded(
                     child: TabBar(
                       tabs: controller.timeframesTabs,
@@ -28,7 +30,7 @@ class ChartView extends GetView<ChartController> {
                       onTap: controller.handleClickTab,
                     ),
                   ),
-                  VerticalDivider(width: 1, indent: 8, endIndent: 8),
+                  const VerticalDivider(width: 1, indent: 8, endIndent: 8),
                   InkWell(
                     onTap: () => controller.showSettings.toggle(),
                     child: Container(
@@ -52,8 +54,8 @@ class ChartView extends GetView<ChartController> {
             Expanded(
               child: Stack(
                 alignment: Alignment.topCenter,
-                children: [
-                  Container(
+                children: <Widget>[
+                  SizedBox(
                     width: double.infinity,
                     child: controller.timeframe.value == 'depth'
                         ? DepthChart(
@@ -76,72 +78,71 @@ class ChartView extends GetView<ChartController> {
                             secondaryState: controller.secondaryState.value,
                           ),
                   ),
-                  (controller.showSettings.isTrue || controller.showExtra.isTrue)
-                      ? InkWell(
-                          onTap: () {
-                            controller.showSettings.value = false;
-                            controller.showExtra.value = false;
-                          },
-                          child: Container(
-                            color: Colors.black26,
-                          ),
-                        )
-                      : Container(height: 0),
+                  if (controller.showSettings.isTrue || controller.showExtra.isTrue)
+                    InkWell(
+                      onTap: () {
+                        controller.showSettings.value = false;
+                        controller.showExtra.value = false;
+                      },
+                      child: Container(
+                        color: Colors.black26,
+                      ),
+                    )
+                  else
+                    Container(height: 0),
                   AnimatedSize(
-                    duration: Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 300),
                     vsync: controller,
-                    curve: Curves.linear,
                     child: controller.showSettings.isTrue
                         ? Container(
                             color: Colors.transparent,
                             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                             child: Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(4)),
+                                borderRadius: const BorderRadius.all(Radius.circular(4)),
                                 color: Theme.of(context).dialogBackgroundColor,
                               ),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
-                                children: [
+                                children: <Widget>[
                                   ListTile(
                                     leading: Text('MarketPage.KChart.MainState'.tr),
                                     title: Wrap(
                                       spacing: 8,
                                       children: MainState.values
                                           .map(
-                                            (e) => ElevatedButton(
-                                              onPressed: () => {controller.mainState.value = e},
-                                              child: Text(e.toString().split('.').last),
+                                            (MainState e) => ElevatedButton(
+                                              onPressed: () => controller.mainState.value = e,
                                               style: ElevatedButton.styleFrom(
                                                 primary: controller.mainState.value == e
                                                     ? Theme.of(context).buttonColor
                                                     : Theme.of(context).dividerColor,
                                                 elevation: 0,
                                               ),
+                                              child: Text(e.toString().split('.').last),
                                             ),
                                           )
                                           .toList(),
                                     ),
                                   ),
-                                  Divider(height: 1),
+                                  const Divider(height: 1),
                                   ListTile(
                                     leading: Text('MarketPage.KChart.SecondaryState'.tr),
                                     title: Wrap(
-                                      alignment: WrapAlignment.start,
                                       runAlignment: WrapAlignment.center,
                                       crossAxisAlignment: WrapCrossAlignment.center,
                                       spacing: 8,
                                       children: SecondaryState.values
                                           .map(
-                                            (e) => ElevatedButton(
-                                              onPressed: () => {controller.secondaryState.value = e},
-                                              child: Text(e.toString().split('.').last),
+                                            (SecondaryState e) => ElevatedButton(
+                                              onPressed: () => controller.secondaryState.value = e,
                                               style: ElevatedButton.styleFrom(
                                                 primary: controller.secondaryState.value == e
                                                     ? Theme.of(context).buttonColor
                                                     : Theme.of(context).dividerColor,
                                                 elevation: 0,
                                               ),
+                                              child: Text(e.toString().split('.').last),
                                             ),
                                           )
                                           .toList(),
@@ -154,35 +155,33 @@ class ChartView extends GetView<ChartController> {
                         : Container(height: 0),
                   ),
                   AnimatedSize(
-                    duration: Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 300),
                     vsync: controller,
-                    curve: Curves.linear,
                     child: controller.showExtra.isTrue
                         ? Container(
                             color: Colors.transparent,
                             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                             child: Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(4)),
+                                borderRadius: const BorderRadius.all(Radius.circular(4)),
                                 color: Theme.of(context).dialogBackgroundColor,
                               ),
                               child: ListTile(
                                 title: Wrap(
-                                  alignment: WrapAlignment.start,
                                   runAlignment: WrapAlignment.center,
                                   crossAxisAlignment: WrapCrossAlignment.center,
                                   spacing: 8,
                                   children: controller.timeframesExtra
                                       .map<ElevatedButton>(
-                                        (e) => ElevatedButton(
+                                        (String e) => ElevatedButton(
                                           onPressed: () => controller.onChangeTimeframeExtra(e),
-                                          child: Text('MarketPage.Period.$e'.tr),
                                           style: ElevatedButton.styleFrom(
                                             primary: controller.timeframe.value == e
                                                 ? Theme.of(context).buttonColor
                                                 : Theme.of(context).dividerColor,
                                             elevation: 0,
                                           ),
+                                          child: Text('MarketPage.Period.$e'.tr),
                                         ),
                                       )
                                       .toList(),
@@ -304,6 +303,7 @@ class CustomChartColors extends ChartColors {
   //选中后显示值背景的填充颜色
   final Color selectFillColor;
 
+  @override
   Color getMAColor(int index) {
     Color maColor = ma5Color;
     switch (index % 3) {

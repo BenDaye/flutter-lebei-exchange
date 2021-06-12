@@ -12,7 +12,7 @@ class HomeBannerView extends StatelessWidget {
       height: 128.0,
       color: Theme.of(context).backgroundColor,
       child: controller.banners.isEmpty
-          ? SizedBox()
+          ? Container()
           : Stack(
               alignment: Alignment.bottomCenter,
               children: <Widget>[
@@ -25,7 +25,7 @@ class HomeBannerView extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8.0),
                       child: FadeInImage.memoryNetwork(
                         placeholder: kTransparentImage,
-                        image: controller.banners[index]['image'],
+                        image: controller.banners[index]['image'] as String,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -33,30 +33,22 @@ class HomeBannerView extends StatelessWidget {
                   options: CarouselOptions(
                     height: 120.0,
                     viewportFraction: 1,
-                    initialPage: 0,
-                    enableInfiniteScroll: true,
-                    reverse: false,
                     autoPlay: true,
-                    autoPlayInterval: Duration(milliseconds: 10 * 1000),
-                    autoPlayAnimationDuration: Duration(milliseconds: 800),
-                    autoPlayCurve: Curves.fastOutSlowIn,
+                    autoPlayInterval: const Duration(milliseconds: 10 * 1000),
                     pauseAutoPlayInFiniteScroll: true,
-                    pauseAutoPlayOnTouch: true,
-                    pauseAutoPlayOnManualNavigate: true,
                     enlargeCenterPage: true,
                     onPageChanged: controller.onPageChanged,
-                    scrollDirection: Axis.horizontal,
                   ),
                 ),
                 Obx(
                   () => Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: controller.banners.asMap().entries.map((entry) {
-                      int index = entry.key;
+                    children: controller.banners.asMap().entries.map((MapEntry<int, Map<String, dynamic>> entry) {
+                      final int index = entry.key;
                       return Container(
                         width: 8.0,
                         height: 2.0,
-                        margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                        margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
                         decoration: BoxDecoration(
                           color: controller.currentIndex.value == index
                               ? Theme.of(context).accentColor

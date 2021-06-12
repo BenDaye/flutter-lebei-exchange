@@ -4,11 +4,15 @@ class LocalExchangeModel {
     required this.icon,
     required this.name,
   });
+
+  LocalExchangeModel.empty()
+      : id = '[UNKNOWN_ID]',
+        icon = '',
+        name = '[UNKNOWN_NAME]';
+
   String id;
   String icon;
   String name;
-
-  static LocalExchangeModel empty() => LocalExchangeModel(id: '[UNKNOWN_ID]', icon: '', name: '[UNKNOWN_NAME]');
 }
 
 class LocalExchange {

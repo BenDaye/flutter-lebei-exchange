@@ -2,15 +2,16 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/api/ccxt.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
+import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
 import 'package:get/get.dart';
 import 'package:sentry/sentry.dart';
 
 class SymbolController extends GetxController {
   final ExchangeController exchangeController = Get.find<ExchangeController>();
-  final symbols = <String>[].obs;
-  final currentSymbol = ''.obs;
+  final RxList<String> symbols = <String>[].obs;
+  final RxString currentSymbol = ''.obs;
 
-  final favoriteSymbols = <String>[].obs;
+  final RxList<String> favoriteSymbols = <String>[].obs;
 
   @override
   void onInit() {
@@ -22,7 +23,7 @@ class SymbolController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    favoriteSymbols.value = SpUtil.getStringList('Symbol.favoriteSymbols', defValue: []) ?? [];
+    favoriteSymbols.value = SpUtil.getStringList('Symbol.favoriteSymbols', defValue: <String>[]) ?? <String>[];
   }
 
   void watchCurrentExchangeId(String _exchangeId) {
@@ -33,20 +34,20 @@ class SymbolController extends GetxController {
     SpUtil.putStringList('Symbol.favoriteSymbols', _symbols);
   }
 
-  Future getSymbolsAndUpdate({String? exchangeId}) async {
-    final _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
+  Future<void> getSymbolsAndUpdate({String? exchangeId}) async {
+    final String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
     if (_exchangeId.isEmpty) return;
 
-    final result = await getSymbols(exchangeId: _exchangeId);
+    final List<String>? result = await getSymbols(exchangeId: _exchangeId);
     if (result == null) return;
     symbols.value = result;
   }
 
   Future<List<String>?> getSymbols({String? exchangeId}) async {
-    String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
+    final String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
     if (_exchangeId.isEmpty) return null;
 
-    final result = await ApiCcxt.symbols(_exchangeId);
+    final HttpResult<List<dynamic>> result = await ApiCcxt.symbols(_exchangeId);
     if (!result.success) return null;
 
     try {
@@ -63,8 +64,8 @@ class SymbolController extends GetxController {
         favoriteSymbols.remove(symbol);
         Get.snackbar(
           'Common.Text.Tips'.tr,
-          'Common.Text.Dislike'.tr + '[$symbol]',
-          duration: Duration(milliseconds: 2000),
+          '${'Common.Text.Dislike'.tr}${'[$symbol]'}',
+          duration: const Duration(milliseconds: 2000),
           backgroundColor: Colors.red.withOpacity(.2),
           snackPosition: SnackPosition.BOTTOM,
         );
@@ -72,8 +73,8 @@ class SymbolController extends GetxController {
         favoriteSymbols.add(symbol);
         Get.snackbar(
           'Common.Text.Tips'.tr,
-          'Common.Text.Like'.tr + '[$symbol]',
-          duration: Duration(milliseconds: 2000),
+          '${'Common.Text.Like'.tr}${'[$symbol]'}',
+          duration: const Duration(milliseconds: 2000),
           backgroundColor: Colors.green.withOpacity(.2),
           snackPosition: SnackPosition.BOTTOM,
         );

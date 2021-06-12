@@ -23,30 +23,30 @@ class MarketView extends GetView<MarketViewController> {
       appBar: AppBar(
         title: Obx(
           () => InkWell(
+            onTap: () => controller.scaffoldKey.currentState!.openDrawer(),
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.lunch_dining, size: 22),
-                SizedBox(width: 4.0),
+              children: <Widget>[
+                const Icon(Icons.lunch_dining, size: 22),
+                const SizedBox(width: 4.0),
                 Text(
                   SymbolHelper.getSymbolTitleText(symbolController.currentSymbol.value.replaceAll('_', '/')),
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ],
             ),
-            onTap: () => controller.scaffoldKey.currentState!.openDrawer(),
           ),
         ),
         centerTitle: false,
         automaticallyImplyLeading: false,
-        leading: BackButton(),
-        actions: [
+        leading: const BackButton(),
+        actions: <Widget>[
           Obx(
             () => IconButton(
               onPressed: () =>
                   symbolController.toggleFavoriteSymbol(symbolController.currentSymbol.value.replaceAll('_', '/')),
               icon: symbolController.favoriteSymbols.contains(symbolController.currentSymbol.value.replaceAll('_', '/'))
-                  ? Icon(Icons.favorite, color: Colors.red)
+                  ? const Icon(Icons.favorite, color: Colors.red)
                   : Icon(Icons.favorite_border, color: Theme.of(context).unselectedWidgetColor),
             ),
           ),
@@ -54,9 +54,9 @@ class MarketView extends GetView<MarketViewController> {
       ),
       drawer: MarketDrawerView(),
       body: Stack(
-        children: [
+        children: <Widget>[
           Column(
-            children: [
+            children: <Widget>[
               TickerCardView(),
               GetBuilder<ChartController>(
                 id: 'chart',

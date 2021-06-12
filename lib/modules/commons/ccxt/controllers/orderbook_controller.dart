@@ -2,6 +2,7 @@ import 'package:flutter_lebei_exchange/api/ccxt.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/orderbook.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
+import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
 import 'package:get/get.dart';
 import 'package:sentry/sentry.dart';
 
@@ -14,7 +15,7 @@ class OrderBookController extends GetxController {
     final String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
     if (_symbol.isEmpty || _exchangeId.isEmpty) return null;
 
-    final result = await ApiCcxt.orderbook(_exchangeId, _symbol);
+    final HttpResult<Map<String, dynamic>> result = await ApiCcxt.orderbook(_exchangeId, _symbol);
     if (!result.success) return null;
 
     try {
@@ -29,7 +30,7 @@ class OrderBookController extends GetxController {
     final String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
     if (_symbol.isEmpty || _exchangeId.isEmpty) return null;
 
-    final result = await ApiCcxt.depth(_exchangeId, _symbol);
+    final HttpResult<Map<String, dynamic>> result = await ApiCcxt.depth(_exchangeId, _symbol);
     if (!result.success) return null;
 
     try {

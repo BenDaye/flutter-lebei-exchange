@@ -2,33 +2,30 @@ import 'package:flustars/flustars.dart';
 import 'package:get/get.dart';
 
 class NumberFormatter {
-  static const String UNKNOWN_NUMBER_TO_STRING = '--';
-  static const double UNKNOWN_DOUBLE = double.nan;
+  static const String unknownNumberToString = '--';
+  static const double unknownDouble = double.nan;
 
   static String numberToString(dynamic value) {
     if (value is String) return value;
     if (value is num) {
-      if (value.isNaN) return NumberFormatter.UNKNOWN_NUMBER_TO_STRING;
-      String valueString = value.toString();
+      if (value.isNaN) return NumberFormatter.unknownNumberToString;
+      final String valueString = value.toString();
       if (value.abs().isLowerThan(1)) {
         if (!valueString.contains('e-')) return valueString;
 
-        final ne = valueString.split('e-');
-        final n = ne[0].replaceAll('.', '');
-        final e = int.parse(ne[1]);
+        final List<String> ne = valueString.split('e-');
+        final String n = ne[0].replaceAll('.', '');
+        final int e = int.parse(ne[1]);
         if (e.isGreaterThan(0)) {
-          return (value.isNegative ? '-' : '') +
-              '0.' +
-              List.filled(e - 1, '0').join('') +
-              n.substring(value.isNegative ? 1 : 0);
+          return '${value.isNegative ? '-' : ''}0.${List<String>.filled(e - 1, '0').join()}${n.substring(value.isNegative ? 1 : 0)}';
         } else {
           return ne[0];
         }
       } else {
         if (!valueString.contains('e')) return valueString;
 
-        final ne = valueString.split('e');
-        final n = ne[0].split('.');
+        final List<String> ne = valueString.split('e');
+        final List<String> n = ne[0].split('.');
         int e = int.parse(ne[1]);
 
         if (n.length == 2) {
@@ -36,31 +33,31 @@ class NumberFormatter {
         }
 
         if (e.isGreaterThan(-1)) {
-          return n.join('') + List.filled(e, '0').join('');
+          return n.join() + List<String>.filled(e, '0').join();
         } else {
-          final m = n.join('').split('');
+          final List<String> m = n.join().split('');
           m.insert(m.length - e, '.');
-          return m.join('');
+          return m.join();
         }
       }
     }
-    return NumberFormatter.UNKNOWN_NUMBER_TO_STRING;
+    return NumberFormatter.unknownNumberToString;
   }
 
   static num stringToNumber(dynamic value) {
     if (value is num) return value;
     if (value is String) {
-      return NumUtil.getNumByValueStr(value) ?? UNKNOWN_DOUBLE;
+      return NumUtil.getNumByValueStr(value) ?? unknownDouble;
     }
-    return UNKNOWN_DOUBLE;
+    return unknownDouble;
   }
 
   static double numberToDouble(dynamic value) {
     if (value is double) return value;
     if (value is int) return value.toDouble();
     if (value is String) {
-      return NumUtil.getDoubleByValueStr(value) ?? UNKNOWN_DOUBLE;
+      return NumUtil.getDoubleByValueStr(value) ?? unknownDouble;
     }
-    return UNKNOWN_DOUBLE;
+    return unknownDouble;
   }
 }

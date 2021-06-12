@@ -10,13 +10,13 @@ class RankTabBarView extends GetView<HomeViewController> {
       height: 48.0,
       child: Stack(
         alignment: Alignment.bottomCenter,
-        children: [
+        children: <Widget>[
           Align(
             alignment: Alignment.centerLeft,
             child: TabBar(
               tabs: controller.tabStrings
                   .map(
-                    (t) => Tab(
+                    (String t) => Tab(
                       text: t.tr,
                       key: Key(t),
                     ),
@@ -27,7 +27,7 @@ class RankTabBarView extends GetView<HomeViewController> {
               isScrollable: true,
             ),
           ),
-          Divider(height: 1.0),
+          const Divider(height: 1.0),
         ],
       ),
     );

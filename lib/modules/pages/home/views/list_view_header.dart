@@ -1,19 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HomeListViewHeader extends StatelessWidget {
-  final Key? key;
-  final String? firstText;
-  final String? middleText;
-  final String? lastText;
-
-  final Widget? first;
-  final Widget? middle;
-  final Widget? last;
-
-  final Widget? custom;
-
-  HomeListViewHeader({
-    this.key,
+  const HomeListViewHeader({
     this.firstText,
     this.middleText,
     this.lastText,
@@ -25,9 +13,19 @@ class HomeListViewHeader extends StatelessWidget {
         assert(!(middle == null && middleText == null)),
         assert(!(last == null && lastText == null));
 
+  final String? firstText;
+  final String? middleText;
+  final String? lastText;
+
+  final Widget? first;
+  final Widget? middle;
+  final Widget? last;
+
+  final Widget? custom;
+
   @override
   Widget build(BuildContext context) {
-    if (this.custom != null) return this.custom!;
+    if (custom != null) return custom!;
 
     return Container(
       color: Theme.of(context).backgroundColor,
@@ -37,23 +35,25 @@ class HomeListViewHeader extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
+        children: <Widget>[
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                first != null
-                    ? first!
-                    : Text(
-                        '${this.firstText}',
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                middle != null
-                    ? middle!
-                    : Text(
-                        '${this.middleText}',
-                        style: Theme.of(context).textTheme.caption,
-                      ),
+              children: <Widget>[
+                if (first != null)
+                  first!
+                else
+                  Text(
+                    firstText!,
+                    style: Theme.of(context).textTheme.caption,
+                  ),
+                if (middle != null)
+                  middle!
+                else
+                  Text(
+                    middleText!,
+                    style: Theme.of(context).textTheme.caption,
+                  ),
               ],
             ),
           ),
@@ -62,7 +62,7 @@ class HomeListViewHeader extends StatelessWidget {
             child: last != null
                 ? last!
                 : Text(
-                    '${this.lastText}',
+                    lastText!,
                     style: Theme.of(context).textTheme.caption,
                     textAlign: TextAlign.right,
                   ),

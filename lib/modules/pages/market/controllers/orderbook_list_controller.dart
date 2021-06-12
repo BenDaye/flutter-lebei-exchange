@@ -14,9 +14,9 @@ class OrderBookListController extends GetxController {
 
   final RefreshController refreshController = RefreshController();
 
-  final data = OrderBook.empty().obs;
+  final Rx<OrderBook> data = OrderBook.empty().obs;
 
-  final timer = new TimerUtil(mInterval: 60 * 1000);
+  final TimerUtil timer = TimerUtil(mInterval: 60 * 1000);
   late Worker timerWorker;
 
   @override
@@ -26,7 +26,7 @@ class OrderBookListController extends GetxController {
     timerWorker = debounce(
       settingsController.autoRefresh,
       TimerHandler.watchAutoRefresh(timer),
-      time: Duration(milliseconds: 800),
+      time: const Duration(milliseconds: 800),
     );
     timer.setOnTimerTickCallback(
       TimerHandler.common(
@@ -56,13 +56,13 @@ class OrderBookListController extends GetxController {
   }
 
   void getDataAndUpdate({String? symbol}) {
-    final _symbol = symbol ?? symbolController.currentSymbol.value;
+    final String _symbol = symbol ?? symbolController.currentSymbol.value;
     if (_symbol.isEmpty) return;
     getOrderBookAnUpdate();
   }
 
-  Future getOrderBookAnUpdate({String? symbol, String? exchangeId}) async {
-    OrderBook? result = await orderBookController.getOrderBook(symbol: symbol, exchangeId: exchangeId);
+  Future<void> getOrderBookAnUpdate({String? symbol, String? exchangeId}) async {
+    final OrderBook? result = await orderBookController.getOrderBook(symbol: symbol, exchangeId: exchangeId);
     if (result == null) return;
     data.value = result;
   }

@@ -9,7 +9,7 @@ class HomeGuideListTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
       color: Theme.of(context).backgroundColor,
       child: ListTile(
-        leading: Container(
+        leading: const SizedBox(
           width: 48,
           child: Center(
             child: Icon(Icons.emoji_emotions),
@@ -24,7 +24,7 @@ class HomeGuideListTile extends StatelessWidget {
         onTap: () => Get.snackbar(
           'Common.Text.Tips'.tr,
           'TODO',
-          duration: Duration(milliseconds: 2000),
+          duration: const Duration(milliseconds: 2000),
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.orangeAccent.withOpacity(.2),
         ),

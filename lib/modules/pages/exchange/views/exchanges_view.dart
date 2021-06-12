@@ -14,9 +14,9 @@ class ExchangesView extends GetView<ExchangeViewController> {
       body: Obx(
         () => Stack(
           alignment: Alignment.centerRight,
-          children: [
+          children: <Widget>[
             Column(
-              children: [
+              children: <Widget>[
                 ListTile(
                   title: Text('ExchangesPage.CurrentExchange'.tr),
                   trailing: Text(
@@ -33,7 +33,7 @@ class ExchangesView extends GetView<ExchangeViewController> {
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: Wrap(
                       spacing: 16,
-                      children: [
+                      children: <Widget>[
                         OutlinedButton(
                           onPressed: () => exchangeController.updateCurrentExchangeId('huobipro'),
                           child: Text(ExchangeController.getExchangeName('huobipro')),
@@ -46,7 +46,7 @@ class ExchangesView extends GetView<ExchangeViewController> {
                     ),
                   ),
                 ),
-                Divider(height: 1),
+                const Divider(height: 1),
                 // ValueListenableBuilder(
                 //   valueListenable: controller.itemPositionsListener.itemPositions,
                 //   builder: (BuildContext context, Iterable<ItemPosition> positions, child) {
@@ -75,16 +75,17 @@ class ExchangesView extends GetView<ExchangeViewController> {
                     child: RefreshIndicator(
                       onRefresh: () => exchangeController.getExchangesAndUpdate(reload: true),
                       child: ScrollablePositionedList.separated(
-                        separatorBuilder: (BuildContext context, int index) => Divider(indent: 16, height: 1.0),
+                        separatorBuilder: (BuildContext context, int index) => const Divider(indent: 16, height: 1.0),
                         itemCount: exchangeController.exchanges.length,
                         itemBuilder: (BuildContext context, int index) => ListTile(
                           leading: ExtendedImage.asset(
                             'images/ccxt/${exchangeController.exchanges[index]}.jpg',
                             height: 25.0,
                             width: 85.0,
-                            loadStateChanged: (state) {
-                              if (state.extendedImageLoadState == LoadState.failed)
+                            loadStateChanged: (ExtendedImageState state) {
+                              if (state.extendedImageLoadState == LoadState.failed) {
                                 return Image.asset('images/ccxt/fail.png');
+                              }
                             },
                           ),
                           title:
@@ -104,41 +105,38 @@ class ExchangesView extends GetView<ExchangeViewController> {
                         ),
                         itemPositionsListener: controller.itemPositionsListener,
                         itemScrollController: controller.itemScrollController,
-                        physics: BouncingScrollPhysics(),
+                        physics: const BouncingScrollPhysics(),
                       ),
                     ),
                   ),
                 ),
               ],
             ),
-            Container(
-              // color: Theme.of(context).backgroundColor,
-              child: GestureDetector(
-                onVerticalDragUpdate: (DragUpdateDetails details) {
-                  controller.currentOffsetY.value = details.localPosition.dy;
-                },
-                onTapDown: (TapDownDetails details) {
-                  controller.currentOffsetY.value = details.localPosition.dy;
-                },
-                behavior: HitTestBehavior.opaque,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: controller.indexes
-                      .map(
-                        (i) => Container(
-                          width: 32,
-                          height: controller.itemHeight.value,
-                          padding: const EdgeInsets.only(right: 4),
-                          child: Center(
-                            child: Text(
-                              i,
-                              style: Theme.of(context).textTheme.caption,
-                            ),
+            GestureDetector(
+              onVerticalDragUpdate: (DragUpdateDetails details) {
+                controller.currentOffsetY.value = details.localPosition.dy;
+              },
+              onTapDown: (TapDownDetails details) {
+                controller.currentOffsetY.value = details.localPosition.dy;
+              },
+              behavior: HitTestBehavior.opaque,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: controller.indexes
+                    .map(
+                      (String i) => Container(
+                        width: 32,
+                        height: controller.itemHeight.value,
+                        padding: const EdgeInsets.only(right: 4),
+                        child: Center(
+                          child: Text(
+                            i,
+                            style: Theme.of(context).textTheme.caption,
                           ),
                         ),
-                      )
-                      .toList(),
-                ),
+                      ),
+                    )
+                    .toList(),
               ),
             )
           ],

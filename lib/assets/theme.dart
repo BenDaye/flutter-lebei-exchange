@@ -18,6 +18,7 @@ class CustomTheme {
     overline: GoogleFonts.oswald(),
   );
 
+  // ignore: avoid_positional_boolean_parameters
   static ThemeData themeData(bool isDarkTheme, BuildContext context) {
     return ThemeData(
       primaryColorBrightness: isDarkTheme ? Brightness.dark : Brightness.light,
@@ -43,7 +44,7 @@ class CustomTheme {
       toggleableActiveColor: Colors.orange,
       backgroundColor: isDarkTheme ? Colors.grey[800] : Colors.white,
       tabBarTheme: TabBarTheme(
-        indicator: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.orange, width: 2.0))),
+        indicator: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.orange, width: 2.0))),
         labelStyle: GoogleFonts.oswald().copyWith(fontWeight: FontWeight.bold),
         labelColor: Colors.orange,
         unselectedLabelStyle: GoogleFonts.oswald(),

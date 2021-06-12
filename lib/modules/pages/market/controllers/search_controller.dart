@@ -6,16 +6,16 @@ class SearchController extends GetxController {
   final SymbolController symbolController = Get.find<SymbolController>();
   final FloatingSearchBarController floatingSearchBarController = FloatingSearchBarController();
 
-  final symbols = <String>[].obs;
+  final RxList<String> symbols = <String>[].obs;
 
-  final query = ''.obs;
+  final RxString query = ''.obs;
 
   late Worker queryWorker;
 
   @override
   void onInit() {
     super.onInit();
-    queryWorker = debounce(query, watchQuery, time: Duration(milliseconds: 500));
+    queryWorker = debounce(query, watchQuery, time: const Duration(milliseconds: 500));
   }
 
   @override
@@ -39,13 +39,13 @@ class SearchController extends GetxController {
     if (_query.isEmpty) {
       return symbols.clear();
     }
-    final _symbol = List<String>.from(
+    final List<String> _symbol = List<String>.from(
       symbolController.symbols.where(
-        (e) => e.startsWith(_query.trim().toUpperCase()),
+        (String e) => e.startsWith(_query.trim().toUpperCase()),
       ),
     ).toList();
-    _symbol.removeWhere((e) => e.contains(RegExp(r"[1-9]\d*[LS]")));
-    _symbol.sort((a, b) => a.compareTo(b));
+    _symbol.removeWhere((String e) => e.contains(RegExp(r'[1-9]\d*[LS]')));
+    _symbol.sort((String a, String b) => a.compareTo(b));
 
     symbols.value = _symbol;
   }

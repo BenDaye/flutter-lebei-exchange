@@ -14,7 +14,7 @@ class HomeGoogleAdListTile extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 4.0),
       color: Theme.of(context).backgroundColor,
       alignment: Alignment.center,
-      child: new AdWidget(ad: homeGoogleAdListTileController.bannerAd),
+      child: AdWidget(ad: homeGoogleAdListTileController.bannerAd),
     );
   }
 }

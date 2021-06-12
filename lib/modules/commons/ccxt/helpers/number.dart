@@ -11,83 +11,88 @@ class NumberHelper {
   double currencyRate;
   Locale? locale;
 
-  bool get isChinese => <Locale>[Locale('zh', 'CN')].any((e) => e == locale);
+  bool get isChinese => <Locale>[const Locale('zh', 'CN')].any((Locale e) => e == locale);
 
   NumberDisplay getNumberDisplay(dynamic value, {double? currencyRate, bool? isChinese}) {
-    if (value == NumberFormatter.UNKNOWN_NUMBER_TO_STRING || value == null || !(value is String))
-      return NumberDisplay(NumberFormatter.UNKNOWN_NUMBER_TO_STRING, '0.0', '');
-    double valueToDouble = NumUtil.getDoubleByValueStr(value) ?? double.nan;
-    if (valueToDouble.isNaN || valueToDouble.isInfinite)
-      return NumberDisplay(NumberFormatter.UNKNOWN_NUMBER_TO_STRING, '0.0', '');
+    // ignore: prefer_is_not_operator
+    if (value == NumberFormatter.unknownNumberToString || value == null || !(value is String)) {
+      return NumberDisplay(NumberFormatter.unknownNumberToString, '0.0', '');
+    }
+    final double valueToDouble = NumUtil.getDoubleByValueStr(value) ?? double.nan;
+    if (valueToDouble.isNaN || valueToDouble.isInfinite) {
+      return NumberDisplay(NumberFormatter.unknownNumberToString, '0.0', '');
+    }
 
-    final _currencyRate = currencyRate ?? this.currencyRate;
-    final _isChinese = isChinese ?? this.isChinese;
-    final _value = NumUtil.multiply(valueToDouble, _currencyRate);
-    final _valueAbs = _value.abs();
+    final double _currencyRate = currencyRate ?? this.currencyRate;
+    final bool _isChinese = isChinese ?? this.isChinese;
+    final double _value = NumUtil.multiply(valueToDouble, _currencyRate);
+    final double _valueAbs = _value.abs();
 
     if (_isChinese) {
-      if (_valueAbs.isGreaterThan(1000 * 1000 * 1000 * 1000))
+      if (_valueAbs.isGreaterThan(1000 * 1000 * 1000 * 1000)) {
         return NumberDisplay(
-          '${NumUtil.divide(_value, 1000 * 1000 * 1000 * 1000).toStringAsFixed(2)}' + 'Common.Unit.ZHAO'.tr,
+          NumUtil.divide(_value, 1000 * 1000 * 1000 * 1000).toStringAsFixed(2) + 'Common.Unit.ZHAO'.tr,
           NumUtil.divide(_value, 1000 * 1000 * 1000 * 1000).toStringAsFixed(2),
           'ZHAO',
         );
-      else if (_valueAbs.isGreaterThan(1000 * 1000 * 100))
+      } else if (_valueAbs.isGreaterThan(1000 * 1000 * 100)) {
         return NumberDisplay(
-          '${NumUtil.divide(_value, 1000 * 1000 * 100).toStringAsFixed(2)}' + 'Common.Unit.YI'.tr,
+          NumUtil.divide(_value, 1000 * 1000 * 100).toStringAsFixed(2) + 'Common.Unit.YI'.tr,
           NumUtil.divide(_value, 1000 * 1000 * 100).toStringAsFixed(2),
           'YI',
         );
-      else if (_valueAbs.isGreaterThan(1000 * 10))
+      } else if (_valueAbs.isGreaterThan(1000 * 10)) {
         return NumberDisplay(
-          '${NumUtil.divide(_value, 1000 * 10).toStringAsFixed(2)}' + 'Common.Unit.WAN'.tr,
+          NumUtil.divide(_value, 1000 * 10).toStringAsFixed(2) + 'Common.Unit.WAN'.tr,
           NumUtil.divide(_value, 1000 * 10).toStringAsFixed(2),
           'WAN',
         );
-      else if (_valueAbs.isGreaterThan(1000))
+      } else if (_valueAbs.isGreaterThan(1000)) {
         return NumberDisplay(
-          '${NumUtil.divide(_value, 1000).toStringAsFixed(2)}' + 'Common.Unit.QIAN'.tr,
+          NumUtil.divide(_value, 1000).toStringAsFixed(2) + 'Common.Unit.QIAN'.tr,
           NumUtil.divide(_value, 1000).toStringAsFixed(2),
           'QIAN',
         );
-      else
+      } else {
         return NumberDisplay(
-          '${_value.toStringAsFixed(2)}',
+          _value.toStringAsFixed(2),
           _value.toStringAsFixed(2),
           '',
         );
+      }
     }
 
-    if (_valueAbs.isGreaterThan(1000 * 1000 * 1000 * 1000))
+    if (_valueAbs.isGreaterThan(1000 * 1000 * 1000 * 1000)) {
       return NumberDisplay(
         '${NumUtil.divide(_value, 1000 * 1000 * 1000 * 1000).toStringAsFixed(2)}T',
         NumUtil.divide(_value, 1000 * 1000 * 1000 * 1000).toStringAsFixed(2),
         'T',
       );
-    else if (_valueAbs.isGreaterThan(1000 * 1000 * 1000))
+    } else if (_valueAbs.isGreaterThan(1000 * 1000 * 1000)) {
       return NumberDisplay(
         '${NumUtil.divide(_value, 1000 * 1000 * 1000).toStringAsFixed(2)}B',
         NumUtil.divide(_value, 1000 * 1000 * 1000).toStringAsFixed(2),
         'B',
       );
-    else if (_valueAbs.isGreaterThan(1000 * 1000))
+    } else if (_valueAbs.isGreaterThan(1000 * 1000)) {
       return NumberDisplay(
         '${NumUtil.divide(_value, 1000 * 1000).toStringAsFixed(2)}M',
         NumUtil.divide(_value, 1000 * 1000).toStringAsFixed(2),
         'M',
       );
-    else if (_valueAbs.isGreaterThan(1000))
+    } else if (_valueAbs.isGreaterThan(1000)) {
       return NumberDisplay(
         '${NumUtil.divide(_value, 1000).toStringAsFixed(2)}k',
         NumUtil.divide(_value, 1000).toStringAsFixed(2),
         'k',
       );
-    else
+    } else {
       return NumberDisplay(
-        '${_value.toStringAsFixed(2)}',
+        _value.toStringAsFixed(2),
         _value.toStringAsFixed(2),
         '',
       );
+    }
   }
 
   static String getCurrencySymbol(String code) {
@@ -104,15 +109,15 @@ class NumberHelper {
   static String decimalToPrecision(
     dynamic value,
     num precision, {
-    PrecisionMode precisionMode = PrecisionMode.DECIMAL_PLACES,
-    PaddingMode paddingMode = PaddingMode.NO_PADDING,
+    PrecisionMode precisionMode = PrecisionMode.decimalPlaces,
+    PaddingMode paddingMode = PaddingMode.noPadding,
   }) {
-    String _value = NumberFormatter.UNKNOWN_NUMBER_TO_STRING;
-    if (value.isNaN || value == null) return _value;
+    final String _value = NumberFormatter.unknownNumberToString;
+    if (value.isNaN == true || value == null) return _value;
 
     if (value is String) {
       if (value.isEmpty) return _value;
-      num? _valueNumber = NumUtil.getNumByValueStr(value);
+      final num? _valueNumber = NumUtil.getNumByValueStr(value);
       if (_valueNumber is num) {
         return _decimalToPrecision(
           _valueNumber,
@@ -137,26 +142,26 @@ class NumberHelper {
   static String _decimalToPrecision(
     num value,
     num precision, {
-    PrecisionMode precisionMode = PrecisionMode.DECIMAL_PLACES,
-    PaddingMode paddingMode = PaddingMode.NO_PADDING,
+    PrecisionMode precisionMode = PrecisionMode.decimalPlaces,
+    PaddingMode paddingMode = PaddingMode.noPadding,
   }) {
-    String _value = NumberFormatter.UNKNOWN_NUMBER_TO_STRING;
+    String _value = NumberFormatter.unknownNumberToString;
     if (value.isNaN) return _value;
     try {
       switch (precisionMode) {
-        case PrecisionMode.DECIMAL_PLACES:
+        case PrecisionMode.decimalPlaces:
           {
             _value = value.toStringAsFixed(precision.toInt());
-            // if (paddingMode == PaddingMode.NO_PADDING) {
+            // if (paddingMode == PaddingMode.noPadding) {
             //   _value = NumberFormatter.numberToString(NumUtil.getNumByValueStr(_value));
             // }
           }
           break;
-        case PrecisionMode.SIGNIFICANT_DIGITS:
+        case PrecisionMode.significantDigits:
           {
-            if (precision.toInt().isGreaterThan(NumberFormatter.numberToString(value).split('.').join('').length)) {
+            if (precision.toInt().isGreaterThan(NumberFormatter.numberToString(value).split('.').join().length)) {
               _value = value.toStringAsFixed(precision.toInt());
-              // if (paddingMode == PaddingMode.NO_PADDING) {
+              // if (paddingMode == PaddingMode.noPadding) {
               //   _value = NumberFormatter.numberToString(NumUtil.getNumByValueStr(_value));
               // }
             } else {
@@ -164,11 +169,11 @@ class NumberHelper {
             }
           }
           break;
-        case PrecisionMode.TICK_SIZE:
+        case PrecisionMode.tickSize:
           {
             if (precision.isGreaterThan(0)) {
               _value = NumberFormatter.numberToString(value - (value % precision) + precision);
-              if (paddingMode == PaddingMode.PAD_WITH_ZERO &&
+              if (paddingMode == PaddingMode.padWithZero &&
                   NumberFormatter.numberToString(precision).split('.').length == 2) {
                 _value = NumUtil.getDoubleByValueStr(_value)!
                     .toStringAsFixed(NumberFormatter.numberToString(precision).split('.')[1].length);

@@ -7,7 +7,7 @@ class SettingsView extends GetView<SettingsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [
+        actions: <Widget>[
           IconButton(
             icon: Icon(Get.isDarkMode ? Icons.mode_night : Icons.light_mode),
             onPressed: () => controller.onSwitchThemeMode(Get.isDarkMode ? ThemeMode.light : ThemeMode.dark),
@@ -16,29 +16,26 @@ class SettingsView extends GetView<SettingsController> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
+            children: <Widget>[
               Container(
                 color: Theme.of(context).bottomAppBarColor,
-                child: ListTile(
+                child: const ListTile(
                   title: Text('Hi, LeBeiGlobal'),
                   subtitle: Text('yypsgdsg@163.com'),
                 ),
               ),
-              Container(
+              SizedBox(
                 child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: List.filled(4, 0, growable: true)
+                  children: List<int>.filled(4, 0, growable: true)
                       .map(
-                        (i) => Expanded(
-                          child: Container(
+                        (int i) => Expanded(
+                          child: SizedBox(
                             height: 80.0,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
+                              children: const <Widget>[
                                 Icon(Icons.emoji_emotions),
                                 Text('LeBei'),
                               ],
@@ -50,7 +47,7 @@ class SettingsView extends GetView<SettingsController> {
                 ),
               ),
               ListTile(
-                leading: Icon(Icons.security),
+                leading: const Icon(Icons.security),
                 title: Text('SettingsPage.Security'.tr),
                 trailing: Icon(
                   Icons.chevron_right,
@@ -59,7 +56,7 @@ class SettingsView extends GetView<SettingsController> {
                 enabled: false,
               ),
               ListTile(
-                leading: Icon(Icons.settings),
+                leading: const Icon(Icons.settings),
                 title: Text('SettingsPage.General'.tr),
                 trailing: Icon(
                   Icons.chevron_right,
@@ -68,7 +65,7 @@ class SettingsView extends GetView<SettingsController> {
                 onTap: () => Get.toNamed('/settings/general'),
               ),
               ListTile(
-                leading: Icon(Icons.menu_book),
+                leading: const Icon(Icons.menu_book),
                 title: Text('SettingsPage.About'.tr),
                 trailing: Icon(
                   Icons.chevron_right,
@@ -77,7 +74,7 @@ class SettingsView extends GetView<SettingsController> {
                 enabled: false,
               ),
               ListTile(
-                leading: Icon(Icons.thumb_up),
+                leading: const Icon(Icons.thumb_up),
                 title: Text('SettingsPage.Share'.tr),
                 trailing: Icon(
                   Icons.chevron_right,

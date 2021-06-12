@@ -3,15 +3,15 @@ import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
 import 'package:flutter_lebei_exchange/utils/http/main.dart';
 
 class ApiJuhe {
-  static Future<HttpResult<List>> exchangeQuery() async {
-    return await http.request<List>(UrlJuhe.exchangeQuery);
+  static Future<HttpResult<List<dynamic>>> exchangeQuery() async {
+    return http.request<List<dynamic>>(UrlJuhe.exchangeQuery);
   }
 
-  static Future<HttpResult<List>> exchangeList() async {
-    return await http.request<List>(UrlJuhe.exchangeList);
+  static Future<HttpResult<List<dynamic>>> exchangeList() async {
+    return http.request<List<dynamic>>(UrlJuhe.exchangeList);
   }
 
-  static Future<HttpResult<List>> exchangeCurrency(String from, String to) async {
-    return await http.request<List>(UrlJuhe.exchangeCurrency(from, to));
+  static Future<HttpResult<List<dynamic>>> exchangeCurrency(String from, String to) async {
+    return http.request<List<dynamic>>(UrlJuhe.exchangeCurrency(from, to));
   }
 }

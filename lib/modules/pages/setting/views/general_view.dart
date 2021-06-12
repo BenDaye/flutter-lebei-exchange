@@ -1,4 +1,3 @@
-import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
@@ -12,7 +11,7 @@ class GeneralView extends GetView<SettingsController> {
       appBar: AppBar(elevation: 0),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+        children: <Widget>[
           Container(
             color: Theme.of(context).bottomAppBarColor,
             padding: const EdgeInsets.all(16.0),
@@ -24,11 +23,11 @@ class GeneralView extends GetView<SettingsController> {
           ),
           Expanded(
             child: ListView(
-              children: [
+              children: <Widget>[
                 ListTile(
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    children: <Widget>[
                       Text('GeneralPage.Language'.tr),
                       Obx(
                         () => Text(
@@ -44,18 +43,18 @@ class GeneralView extends GetView<SettingsController> {
                   ),
                   onTap: () => Get.toNamed('/settings/general/language'),
                 ),
-                Divider(
+                const Divider(
                   height: 1.0,
                   indent: 16.0,
                 ),
                 ListTile(
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    children: <Widget>[
                       Text('GeneralPage.Currency'.tr),
                       Obx(
                         () => Text(
-                          '${controller.currency.value}',
+                          controller.currency.value,
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),
@@ -67,14 +66,14 @@ class GeneralView extends GetView<SettingsController> {
                   ),
                   onTap: () => Get.toNamed('/settings/general/currency'),
                 ),
-                Divider(
+                const Divider(
                   height: 1.0,
                   indent: 16.0,
                 ),
                 ListTile(
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    children: <Widget>[
                       Text('GeneralPage.Color'.tr),
                       Obx(
                         () => Text(
@@ -88,7 +87,7 @@ class GeneralView extends GetView<SettingsController> {
                     Icons.chevron_right,
                     color: Theme.of(context).dividerColor,
                   ),
-                  onTap: () => {
+                  onTap: () {
                     Get.bottomSheet(
                       Container(
                         color: Theme.of(context).backgroundColor,
@@ -96,7 +95,7 @@ class GeneralView extends GetView<SettingsController> {
                           child: Wrap(
                             children: AdvanceDeclineColorMode.values
                                 .map(
-                                  (e) => ListTile(
+                                  (AdvanceDeclineColorMode e) => ListTile(
                                     title: Text(e.toString().tr),
                                     selected: controller.advanceDeclineColorMode.value == e,
                                     onTap: () {
@@ -109,10 +108,10 @@ class GeneralView extends GetView<SettingsController> {
                           ),
                         ),
                       ),
-                    )
+                    );
                   },
                 ),
-                Divider(
+                const Divider(
                   height: 1.0,
                   indent: 16.0,
                 ),
@@ -123,7 +122,7 @@ class GeneralView extends GetView<SettingsController> {
                     onChanged: controller.onSwitchWakelock,
                   ),
                 ),
-                Divider(
+                const Divider(
                   height: 1.0,
                   indent: 16.0,
                 ),
@@ -133,7 +132,6 @@ class GeneralView extends GetView<SettingsController> {
                     subtitle: Slider(
                       value: controller.autoRefresh.value,
                       onChanged: controller.onChangeAutoRefresh,
-                      min: 0.0,
                       max: 300.0,
                       divisions: 10,
                     ),
@@ -142,7 +140,7 @@ class GeneralView extends GetView<SettingsController> {
                         : '${controller.autoRefresh.value.round()}'),
                   ),
                 ),
-                Divider(
+                const Divider(
                   height: 1.0,
                   indent: 16.0,
                 ),

@@ -16,7 +16,7 @@ class MarketDataPanel extends GetView<MarketPanelController> {
       color: Theme.of(context).dialogBackgroundColor,
       backdropEnabled: true,
       maxHeight: MarketPanelController.panelMaxHeight,
-      borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+      borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
       header: Container(
         height: MarketPanelController.panelHeaderHeight,
         width: Get.width,
@@ -26,7 +26,7 @@ class MarketDataPanel extends GetView<MarketPanelController> {
             height: 4,
             width: 64,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
               color: Theme.of(context).highlightColor,
             ),
           ),
@@ -35,7 +35,7 @@ class MarketDataPanel extends GetView<MarketPanelController> {
       panel: Obx(
         () => Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(8),
               topRight: Radius.circular(8),
             ),
@@ -44,13 +44,13 @@ class MarketDataPanel extends GetView<MarketPanelController> {
           padding: const EdgeInsets.only(top: MarketPanelController.panelHeaderHeight),
           child: controller.panelSlide.value > .1
               ? Column(
-                  children: [
+                  children: <Widget>[
                     Container(
                       color: Theme.of(context).scaffoldBackgroundColor,
                       height: MarketPanelController.panelTabBarHeight,
                       child: Stack(
                         alignment: Alignment.bottomCenter,
-                        children: [
+                        children: <Widget>[
                           Align(
                             alignment: Alignment.centerLeft,
                             child: TabBar(
@@ -60,21 +60,21 @@ class MarketDataPanel extends GetView<MarketPanelController> {
                               isScrollable: true,
                             ),
                           ),
-                          Divider(height: 1.0),
+                          const Divider(height: 1.0),
                         ],
                       ),
                     ),
                   ],
                 )
-              : Container(
+              : SizedBox(
                   child: Column(
-                    children: [
-                      Container(
+                    children: <Widget>[
+                      SizedBox(
                         height: 60,
                         width: Get.width,
                         child: Center(
                           child: AnimatedTextKit(
-                            animatedTexts: [
+                            animatedTexts: <AnimatedText>[
                               FadeAnimatedText(
                                 'MarketPage.TabBar.More'.tr,
                                 textStyle: Theme.of(context).textTheme.subtitle1,
@@ -121,45 +121,45 @@ class MarketDataPanelBody extends GetView<MarketPanelController> {
   @override
   Widget build(BuildContext context) {
     return AnimatedSize(
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       vsync: marketViewController,
       alignment: Alignment.bottomCenter,
       child: Obx(
-        () => Container(
+        () => SizedBox(
           height: controller.panelTabViewHeight.value,
           width: Get.width,
           child: controller.panelSlide > 0.1
               ? AnimatedOpacity(
-                  duration: Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 300),
                   opacity: controller.panelSlide.value,
                   child: TabBarView(
                     controller: marketViewController.tabController,
-                    physics: NeverScrollableScrollPhysics(),
-                    children: [
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: <Widget>[
                       Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: [
+                        children: <Widget>[
                           OrderBookListViewHeader(),
-                          Divider(height: 1),
+                          const Divider(height: 1),
                           Expanded(child: OrderBookListView()),
                         ],
                       ),
                       Column(
-                        children: [
+                        children: <Widget>[
                           TradeListViewHeader(),
-                          Divider(height: 1),
+                          const Divider(height: 1),
                           Expanded(child: TradeListView()),
                         ],
                       ),
                       Column(
-                        children: [
+                        children: <Widget>[
                           Expanded(child: Container(height: 1000, color: Colors.blue)),
                         ],
                       ),
                       Column(
-                        children: [
+                        children: <Widget>[
                           ExchangeListViewHeader(),
-                          Divider(height: 1),
+                          const Divider(height: 1),
                           Expanded(child: ExchangeListView()),
                         ],
                       ),

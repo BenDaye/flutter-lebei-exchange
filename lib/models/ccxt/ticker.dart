@@ -7,6 +7,53 @@ part 'ticker.g.dart';
 
 @JsonSerializable()
 class Ticker {
+  Ticker(
+    this.symbol,
+    this.info,
+    this.timestamp,
+    this.datetime,
+    this.high,
+    this.low,
+    this.bid,
+    this.bidVolume,
+    this.ask,
+    this.askVolume,
+    this.vwap,
+    this.open,
+    this.close,
+    this.last,
+    this.previousClose,
+    this.change,
+    this.percentage,
+    this.average,
+    this.baseVolume,
+    this.quoteVolume,
+  );
+  Ticker.empty()
+      : symbol = '[symbol]',
+        info = null,
+        timestamp = 0,
+        datetime = DateTimeFormatter.UNKNOWN_DATE_TIME,
+        high = NumberFormatter.unknownDouble,
+        low = NumberFormatter.unknownDouble,
+        bid = NumberFormatter.unknownDouble,
+        bidVolume = NumberFormatter.unknownNumberToString,
+        ask = NumberFormatter.unknownDouble,
+        askVolume = NumberFormatter.unknownNumberToString,
+        vwap = NumberFormatter.unknownNumberToString,
+        open = NumberFormatter.unknownNumberToString,
+        close = NumberFormatter.unknownNumberToString,
+        last = NumberFormatter.unknownNumberToString,
+        previousClose = NumberFormatter.unknownNumberToString,
+        change = NumberFormatter.unknownNumberToString,
+        percentage = NumberFormatter.unknownDouble,
+        average = NumberFormatter.unknownNumberToString,
+        baseVolume = NumberFormatter.unknownNumberToString,
+        quoteVolume = NumberFormatter.unknownNumberToString;
+
+  factory Ticker.fromJson(Map<String, dynamic> json) => _$TickerFromJson(json);
+  Map<String, dynamic> toJson() => _$TickerToJson(this);
+
   String symbol; // string symbol of the market ('BTC/USD', 'ETH/BTC', ...)
   dynamic info; // { the original non-modified unparsed reply from exchange API },
   @JsonKey(defaultValue: 0)
@@ -45,53 +92,4 @@ class Ticker {
   String baseVolume; // float, // volume of base currency traded for last 24 hours
   @JsonKey(fromJson: NumberFormatter.numberToString, toJson: NumberFormatter.stringToNumber)
   String quoteVolume; // float, // volume of quote currency traded for last 24 hours
-
-  Ticker(
-    this.symbol,
-    this.info,
-    this.timestamp,
-    this.datetime,
-    this.high,
-    this.low,
-    this.bid,
-    this.bidVolume,
-    this.ask,
-    this.askVolume,
-    this.vwap,
-    this.open,
-    this.close,
-    this.last,
-    this.previousClose,
-    this.change,
-    this.percentage,
-    this.average,
-    this.baseVolume,
-    this.quoteVolume,
-  );
-
-  factory Ticker.fromJson(Map<String, dynamic> json) => _$TickerFromJson(json);
-  Map<String, dynamic> toJson() => _$TickerToJson(this);
-
-  static Ticker empty() => Ticker(
-        '[symbol]',
-        {},
-        0,
-        DateTimeFormatter.UNKNOWN_DATE_TIME,
-        NumberFormatter.UNKNOWN_DOUBLE,
-        NumberFormatter.UNKNOWN_DOUBLE,
-        NumberFormatter.UNKNOWN_DOUBLE,
-        NumberFormatter.UNKNOWN_NUMBER_TO_STRING,
-        NumberFormatter.UNKNOWN_DOUBLE,
-        NumberFormatter.UNKNOWN_NUMBER_TO_STRING,
-        NumberFormatter.UNKNOWN_NUMBER_TO_STRING,
-        NumberFormatter.UNKNOWN_NUMBER_TO_STRING,
-        NumberFormatter.UNKNOWN_NUMBER_TO_STRING,
-        NumberFormatter.UNKNOWN_NUMBER_TO_STRING,
-        NumberFormatter.UNKNOWN_NUMBER_TO_STRING,
-        NumberFormatter.UNKNOWN_NUMBER_TO_STRING,
-        NumberFormatter.UNKNOWN_DOUBLE,
-        NumberFormatter.UNKNOWN_NUMBER_TO_STRING,
-        NumberFormatter.UNKNOWN_NUMBER_TO_STRING,
-        NumberFormatter.UNKNOWN_NUMBER_TO_STRING,
-      );
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names,always_specify_types
+
 import 'package:flutter_lebei_exchange/modules/pages/exchange/bindings/exchanges_binding.dart';
 import 'package:flutter_lebei_exchange/modules/pages/exchange/views/exchanges_view.dart';
 import 'package:flutter_lebei_exchange/modules/pages/main/bindings/main_binding.dart';
@@ -16,9 +18,9 @@ import 'package:get/route_manager.dart';
 part 'routes.dart';
 
 class Pages {
-  static const INITIAL = Routes.INITIAL;
+  static const String INITIAL = Routes.INITIAL;
 
-  static final routes = [
+  static final List<GetPage> routes = <GetPage>[
     GetPage(
       name: INITIAL,
       page: () => MainView(),
@@ -29,11 +31,11 @@ class Pages {
       page: () => ExchangesView(),
       binding: ExchangesBinding(),
     ),
-  ]
-    ..addAll(marketRoutes)
-    ..addAll(settingRoutes);
+    ...marketRoutes,
+    ...settingRoutes,
+  ];
 
-  static final marketRoutes = [
+  static final List<GetPage> marketRoutes = <GetPage>[
     GetPage(
       name: Routes.MARKET,
       page: () => MarketView(),

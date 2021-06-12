@@ -15,7 +15,7 @@ class HomeGoogleAdBannerView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8.0),
-        child: new AdWidget(ad: homeGoogleAdBannerController.ad),
+        child: AdWidget(ad: homeGoogleAdBannerController.ad),
       ),
     );
   }

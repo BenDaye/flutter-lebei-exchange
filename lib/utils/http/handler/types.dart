@@ -1,10 +1,4 @@
 class HttpResult<T> {
-  int status;
-  String message;
-  T? data;
-  bool success;
-  dynamic headers;
-
   HttpResult(
     this.status,
     this.message,
@@ -12,4 +6,10 @@ class HttpResult<T> {
     this.data,
     this.headers,
   });
+
+  int status;
+  String message;
+  T? data;
+  bool success;
+  dynamic headers;
 }
