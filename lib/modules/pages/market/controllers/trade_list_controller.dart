@@ -39,7 +39,11 @@ class TradeListController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    TimerHandler.watchAutoRefresh(timer)(settingsController.autoRefresh.value);
+    watchSymbol(symbolController.currentSymbol.value);
+    Future<void>.delayed(
+      Duration(seconds: settingsController.autoRefresh.value.toInt()),
+      () => TimerHandler.watchAutoRefresh(timer)(settingsController.autoRefresh.value),
+    );
   }
 
   @override

@@ -24,7 +24,7 @@ class SettingsController extends GetxController {
   final RxList<Color> advanceDeclineColors = <Color>[Colors.green, Colors.grey, Colors.red].obs;
 
   final RxBool wakelock = false.obs;
-  final RxDouble autoRefresh = 60.0.obs;
+  final RxDouble autoRefresh = 0.0.obs;
 
   final Rx<ConnectivityResult> connectivityResult = ConnectivityResult.none.obs;
   late StreamSubscription<ConnectivityResult> connectivitySubscription;
@@ -58,7 +58,7 @@ class SettingsController extends GetxController {
     }
 
     wakelock.value = await Wakelock.enabled;
-    autoRefresh.value = SpUtil.getDouble('Settings.autoRefresh', defValue: 60.0) ?? 60.0;
+    autoRefresh.value = SpUtil.getDouble('Settings.autoRefresh') ?? 0.0;
   }
 
   @override
