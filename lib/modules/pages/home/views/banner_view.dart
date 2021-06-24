@@ -4,8 +4,7 @@ import 'package:flutter_lebei_exchange/modules/pages/home/controllers/banner_con
 import 'package:get/get.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class HomeBannerView extends StatelessWidget {
-  final HomeBannerController controller = Get.put(HomeBannerController());
+class HomeBannerView extends GetView<HomeBannerController> {
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -20,7 +20,15 @@ class OhlcvController extends GetxController {
     if (!result.success) return null;
 
     try {
-      return List<List<num>>.from(result.data!).map((List<num> item) => List<num>.from(item)).toList();
+      return result.data!
+          .map<List<num>>(
+            (dynamic item) => (item as List<dynamic>)
+                .map(
+                  (dynamic e) => num.parse(e.toString()),
+                )
+                .toList(),
+          )
+          .toList();
     } catch (err) {
       Sentry.captureException(err);
       return null;

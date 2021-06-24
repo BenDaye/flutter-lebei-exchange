@@ -14,11 +14,14 @@ class ExchangeController extends GetxController {
 
   final RxList<String> timeframes = <String>[].obs;
 
+  late Worker exchangeIdWorker;
+  late Worker exchangeWorker;
+
   @override
   void onInit() {
     super.onInit();
-    ever(currentExchangeId, watchCurrentExchangeId);
-    ever(currentExchange, watchCurrentExchange);
+    exchangeIdWorker = ever(currentExchangeId, watchCurrentExchangeId);
+    exchangeWorker = ever(currentExchange, watchCurrentExchange);
   }
 
   @override
@@ -28,24 +31,34 @@ class ExchangeController extends GetxController {
     updateCurrentExchangeId(SpUtil.getString('Exchange.currentExchangeId') ?? '');
   }
 
+  @override
+  void onClose() {
+    exchangeIdWorker.dispose();
+    exchangeWorker.dispose();
+    super.onClose();
+  }
+
   void watchCurrentExchangeId(String exchangeId) {
     if (exchangeId.isEmpty) {
-      Get.offAllNamed('/exchanges');
+      // ignore: always_specify_types
+      Get.offNamedUntil('/exchanges', (route) => route.isFirst);
       return;
     }
 
     if (Get.currentRoute == '/exchanges') {
-      Get.reloadAll();
-      Get.offNamed('/');
+      // ignore: always_specify_types
+      Get.until((route) => route.isFirst);
     }
 
-    Get.snackbar(
-      'Common.Text.Tips'.tr,
-      '${'Common.Text.SwitchExchangeId'.tr}${'[$exchangeId]'}',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.green.withOpacity(.2),
-      duration: const Duration(milliseconds: 2000),
-    );
+    if (!Get.isSnackbarOpen!) {
+      Get.snackbar(
+        'Common.Text.Tips'.tr,
+        '${'Common.Text.SwitchExchangeId'.tr}${'[$exchangeId]'}',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green.withOpacity(.2),
+        duration: const Duration(milliseconds: 2000),
+      );
+    }
 
     getExchangeAndUpdate();
   }
@@ -92,7 +105,10 @@ class ExchangeController extends GetxController {
 
   Future<void> getExchangeAndUpdate({String? exchangeId, bool reload = false}) async {
     final String _exchangeId = exchangeId ?? currentExchangeId.value;
-    if (_exchangeId.isEmpty) return;
+    if (_exchangeId.isEmpty) {
+      currentExchange.value = Exchange.empty();
+      return;
+    }
 
     if (!reload) {
       final Exchange? _exchangeLocal = await getExchangeLocal(_exchangeId);

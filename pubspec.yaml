@@ -23,16 +23,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   animate_do: ^2.0.0
   animated_text_kit: ^4.2.1
   auto_animated: ^3.0.0
   bottom_navy_bar: ^6.0.0
   carousel_slider: 4.0.0-nullsafety.0
-  connectivity: ^3.0.3
+  connectivity_plus: ^1.0.4
   cupertino_icons: ^1.0.3
   device_info_plus: ^1.0.1
   dio: ^4.0.0
+  expandable: ^5.0.1
   extended_image: ^4.1.0
   extended_nested_scroll_view: ^3.0.0
   flustars: ^2.0.1

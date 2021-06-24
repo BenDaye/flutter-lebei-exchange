@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/currency_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class CurrencyView extends StatelessWidget {
   final CurrencyViewController currencyViewController = Get.put<CurrencyViewController>(CurrencyViewController());
@@ -26,13 +27,21 @@ class CurrencyView extends StatelessWidget {
           Expanded(
             child: SafeArea(
               child: Obx(
-                () => ListView.builder(
-                  itemBuilder: (BuildContext context, int index) => ListTile(
-                    title: Text(currencyViewController.codes[index].code),
-                    selected: settingsController.currency.value == currencyViewController.codes[index].code,
-                    onTap: () => settingsController.onChangeCurrency(currencyViewController.codes[index].code),
+                () => SmartRefresher(
+                  controller: currencyViewController.refreshController,
+                  header: const WaterDropMaterialHeader(),
+                  onRefresh: () async {
+                    await currencyViewController.getCurrenciesAndUpdate(reload: true);
+                    currencyViewController.refreshController.refreshCompleted();
+                  },
+                  child: ListView.builder(
+                    itemBuilder: (BuildContext context, int index) => ListTile(
+                      title: Text(currencyViewController.codes[index].code),
+                      selected: settingsController.currency.value == currencyViewController.codes[index].code,
+                      onTap: () => settingsController.onChangeCurrency(currencyViewController.codes[index].code),
+                    ),
+                    itemCount: currencyViewController.codes.length,
                   ),
-                  itemCount: currencyViewController.codes.length,
                 ),
               ),
             ),

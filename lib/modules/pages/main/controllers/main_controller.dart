@@ -4,6 +4,7 @@ import 'package:flutter_lebei_exchange/modules/commons/keep_alive_widget.dart';
 import 'package:flutter_lebei_exchange/modules/pages/balance/views/balances_view.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/views/home_view.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/markets_view.dart';
+import 'package:flutter_lebei_exchange/modules/pages/trade/views/trades_view.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
@@ -18,9 +19,7 @@ class MainViewController extends GetxController {
       child: MarketsView(),
     ),
     KeepAliveWidget(
-      child: Container(
-        color: Colors.pink,
-      ),
+      child: TradesView(),
     ),
     KeepAliveWidget(
       child: BalancesView(),
@@ -63,6 +62,12 @@ class MainViewController extends GetxController {
   void onInit() {
     super.onInit();
     pageController = PageController(initialPage: currentIndex.value);
+  }
+
+  @override
+  void onClose() {
+    pageController.dispose();
+    super.onClose();
   }
 
   void setCurrentIndex(int index) {

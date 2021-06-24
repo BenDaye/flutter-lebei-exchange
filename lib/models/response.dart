@@ -15,12 +15,12 @@ class Response<T> {
 
   int status;
   String message;
-  @_Converter()
+  @ResponseDataConverter()
   T? data;
 }
 
-class _Converter<T> implements JsonConverter<T, Object?> {
-  const _Converter();
+class ResponseDataConverter<T> implements JsonConverter<T, Object?> {
+  const ResponseDataConverter();
 
   @override
   T fromJson(Object? json) {

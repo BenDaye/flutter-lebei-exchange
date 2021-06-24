@@ -8,13 +8,13 @@ part of 'exchange.dart';
 
 Exchange _$ExchangeFromJson(Map<String, dynamic> json) {
   return Exchange(
-    json['id'] as String,
-    json['name'] as String,
+    StringFormatter.anyToString(json['id']),
+    StringFormatter.anyToString(json['name']),
     (json['countries'] as List<dynamic>).map((e) => e as String).toList(),
     json['enableRateLimit'] as bool? ?? true,
     json['rateLimit'] as int? ?? 2000,
     Urls.fromJson(json['urls'] as Map<String, dynamic>),
-    json['version'] as String,
+    StringFormatter.anyToString(json['version']),
     json['api'] as Map<String, dynamic>,
     Has.fromJson(json['has'] as Map<String, dynamic>),
     (json['timeframes'] as Map<String, dynamic>?)?.map(
@@ -28,13 +28,13 @@ Exchange _$ExchangeFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$ExchangeToJson(Exchange instance) => <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
+      'id': CommonFormatter.whatever(instance.id),
+      'name': CommonFormatter.whatever(instance.name),
       'countries': instance.countries,
       'enableRateLimit': instance.enableRateLimit,
       'rateLimit': instance.rateLimit,
       'urls': instance.urls.toJson(),
-      'version': instance.version,
+      'version': CommonFormatter.whatever(instance.version),
       'api': instance.api,
       'has': instance.has.toJson(),
       'timeframes': instance.timeframes,

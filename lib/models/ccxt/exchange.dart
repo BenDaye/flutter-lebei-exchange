@@ -1,3 +1,5 @@
+import 'package:flutter_lebei_exchange/utils/formatter/common.dart';
+import 'package:flutter_lebei_exchange/utils/formatter/string.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'exchange.g.dart';
@@ -83,7 +85,9 @@ class Exchange {
     }
   }
 
+  @JsonKey(fromJson: StringFormatter.anyToString, toJson: CommonFormatter.whatever)
   String id;
+  @JsonKey(fromJson: StringFormatter.anyToString, toJson: CommonFormatter.whatever)
   String name;
   List<String> countries;
   @JsonKey(defaultValue: true)
@@ -91,6 +95,7 @@ class Exchange {
   @JsonKey(defaultValue: 2000)
   int rateLimit;
   Urls urls;
+  @JsonKey(fromJson: StringFormatter.anyToString, toJson: CommonFormatter.whatever)
   String version;
   Map<String, dynamic> api;
   Has has;

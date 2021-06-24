@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/api/juhe.dart';
@@ -13,7 +16,7 @@ enum AdvanceDeclineColorMode {
 }
 
 class SettingsController extends GetxController {
-  final Rx<ThemeMode> themeMode = ThemeMode.dark.obs;
+  final Rx<ThemeMode> themeMode = ThemeMode.light.obs;
   final Rx<Locale> locale = const Locale('en', 'US').obs;
   final RxString currency = 'USD'.obs;
   final RxDouble currencyRate = 1.0.obs;
@@ -23,9 +26,15 @@ class SettingsController extends GetxController {
   final RxBool wakelock = false.obs;
   final RxDouble autoRefresh = 60.0.obs;
 
+  final Rx<ConnectivityResult> connectivityResult = ConnectivityResult.none.obs;
+  late StreamSubscription<ConnectivityResult> connectivitySubscription;
+
   @override
   void onInit() {
     super.onInit();
+    connectivitySubscription =
+        Connectivity().onConnectivityChanged.listen((ConnectivityResult event) => connectivityResult.value = event);
+
     ever(themeMode, watchThemeMode);
     ever(locale, watchLocale);
     ever(currency, watchCurrency);
@@ -35,8 +44,9 @@ class SettingsController extends GetxController {
   Future<void> onReady() async {
     super.onReady();
 
-    themeMode.value =
-        SpUtil.getString('Settings.themeMode', defValue: 'dark') == 'dark' ? ThemeMode.dark : ThemeMode.light;
+    connectivityResult.value = await Connectivity().checkConnectivity();
+
+    themeMode.value = SpUtil.getString('Settings.themeMode') == 'dark' ? ThemeMode.dark : ThemeMode.light;
 
     _initLocale();
 
@@ -49,6 +59,12 @@ class SettingsController extends GetxController {
 
     wakelock.value = await Wakelock.enabled;
     autoRefresh.value = SpUtil.getDouble('Settings.autoRefresh', defValue: 60.0) ?? 60.0;
+  }
+
+  @override
+  void onClose() {
+    connectivitySubscription.cancel();
+    super.onClose();
   }
 
   void _initLocale() {

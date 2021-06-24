@@ -54,42 +54,42 @@ class Ticker {
   factory Ticker.fromJson(Map<String, dynamic> json) => _$TickerFromJson(json);
   Map<String, dynamic> toJson() => _$TickerToJson(this);
 
-  String symbol; // string symbol of the market ('BTC/USD', 'ETH/BTC', ...)
-  dynamic info; // { the original non-modified unparsed reply from exchange API },
+  String symbol;
+  dynamic info;
   @JsonKey(defaultValue: 0)
-  int timestamp; // int (64-bit Unix Timestamp in milliseconds since Epoch 1 Jan 1970)
+  int timestamp;
   @JsonKey(fromJson: DateTimeFormatter.formatDateStr, toJson: CommonFormatter.whatever)
-  String datetime; // ISO8601 datetime string with milliseconds
+  String datetime;
   @JsonKey(fromJson: NumberFormatter.numberToDouble, toJson: CommonFormatter.whatever)
-  double high; // float, // highest price
+  double high;
   @JsonKey(fromJson: NumberFormatter.numberToDouble, toJson: CommonFormatter.whatever)
-  double low; // float, // lowest price
+  double low;
   @JsonKey(fromJson: NumberFormatter.numberToDouble, toJson: CommonFormatter.whatever)
-  double bid; // float, // current best bid (buy) price
+  double bid;
   @JsonKey(fromJson: NumberFormatter.numberToString, toJson: NumberFormatter.stringToNumber)
-  String bidVolume; // float, // current best bid (buy) amount (may be missing or undefined)
+  String bidVolume;
   @JsonKey(fromJson: NumberFormatter.numberToDouble, toJson: CommonFormatter.whatever)
-  double ask; // float, // current best ask (sell) price
+  double ask;
   @JsonKey(fromJson: NumberFormatter.numberToString, toJson: NumberFormatter.stringToNumber)
-  String askVolume; // float, // current best ask (sell) amount (may be missing or undefined)
+  String askVolume;
   @JsonKey(fromJson: NumberFormatter.numberToString, toJson: NumberFormatter.stringToNumber)
-  String vwap; // float, // volume weighed average price
+  String vwap;
   @JsonKey(fromJson: NumberFormatter.numberToString, toJson: NumberFormatter.stringToNumber)
-  String open; // float, // opening price
+  String open;
   @JsonKey(fromJson: NumberFormatter.numberToString, toJson: NumberFormatter.stringToNumber)
-  String close; // float, // price of last trade (closing price for current period)
+  String close;
   @JsonKey(fromJson: NumberFormatter.numberToString, toJson: NumberFormatter.stringToNumber)
-  String last; // float, // same as `close`, duplicated for convenience
+  String last;
   @JsonKey(fromJson: NumberFormatter.numberToString, toJson: NumberFormatter.stringToNumber)
-  String previousClose; // float, // closing price for the previous period
+  String previousClose;
   @JsonKey(fromJson: NumberFormatter.numberToString, toJson: NumberFormatter.stringToNumber)
-  String change; // float, // absolute change, `last - open`
+  String change;
   @JsonKey(fromJson: NumberFormatter.numberToDouble, toJson: CommonFormatter.whatever)
-  double percentage; // float, // relative change, `(change/open) * 100`
+  double percentage;
   @JsonKey(fromJson: NumberFormatter.numberToString, toJson: NumberFormatter.stringToNumber)
-  String average; // float, // average price, `(last + open) / 2`
+  String average;
   @JsonKey(fromJson: NumberFormatter.numberToString, toJson: NumberFormatter.stringToNumber)
-  String baseVolume; // float, // volume of base currency traded for last 24 hours
+  String baseVolume;
   @JsonKey(fromJson: NumberFormatter.numberToString, toJson: NumberFormatter.stringToNumber)
-  String quoteVolume; // float, // volume of quote currency traded for last 24 hours
+  String quoteVolume;
 }

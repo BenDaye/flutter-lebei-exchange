@@ -76,6 +76,7 @@ class ChartView extends GetView<ChartController> {
                             isLine: false,
                             mainState: controller.mainState.value,
                             secondaryState: controller.secondaryState.value,
+                            fixedLength: 2,
                           ),
                   ),
                   if (controller.showSettings.isTrue || controller.showExtra.isTrue)

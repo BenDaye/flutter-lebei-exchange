@@ -31,17 +31,23 @@ class SymbolPopularGridViewController extends GetxController {
         action: getDataAndUpdate,
       ),
     );
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
     debounce(
       tickerController.tickers,
       watchTickerControllerTickers,
       time: const Duration(milliseconds: 300),
     );
     ever(tickers, watchTickers);
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    watchTickerControllerTickers(tickerController.tickers);
+    Future<void>.delayed(
+      Duration(seconds: settingsController.autoRefresh.value.toInt()),
+      () => TimerHandler.watchAutoRefresh(timer)(settingsController.autoRefresh.value),
+    );
   }
 
   @override

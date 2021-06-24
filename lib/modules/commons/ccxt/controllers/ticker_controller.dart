@@ -12,12 +12,14 @@ class TickerController extends GetxController {
 
   final RxList<Ticker> tickers = <Ticker>[].obs;
   final RxMap<String, Ticker> tickersMap = <String, Ticker>{}.obs;
+  final RxBool loading = true.obs;
 
   @override
   void onInit() {
     super.onInit();
     ever(exchangeController.currentExchangeId, watchCurrentExchangeId);
     ever(tickersMap, watchTickersMap);
+    ever(tickers, watchTickers);
   }
 
   void watchCurrentExchangeId(String _exchangeId) {
@@ -26,6 +28,10 @@ class TickerController extends GetxController {
 
   void watchTickersMap(Map<String, Ticker> _tickersMap) {
     tickers.value = _tickersMap.values.toList();
+  }
+
+  void watchTickers(List<Ticker> _tickers) {
+    loading.value = _tickers.isEmpty;
   }
 
   Future<void> getTickersAndUpdate() async {

@@ -74,7 +74,11 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
   @override
   void onReady() {
     super.onReady();
-    TimerHandler.watchAutoRefresh(timer)(settingsController.autoRefresh.value);
+    watchSymbol(symbolController.currentSymbol.value);
+    Future<void>.delayed(
+      Duration(seconds: settingsController.autoRefresh.value.toInt()),
+      () => TimerHandler.watchAutoRefresh(timer)(settingsController.autoRefresh.value),
+    );
   }
 
   @override
@@ -104,6 +108,7 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
                 low: item[3].toDouble(),
                 close: item[4].toDouble(),
                 vol: item[5].toDouble(),
+                amount: item[5].toDouble(),
               ),
             )
             .toList(),

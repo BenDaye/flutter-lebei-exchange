@@ -36,7 +36,7 @@ Market _$MarketFromJson(Map<String, dynamic> json) {
     json['tierBased'] as bool?,
     Precision.fromJson(json['precision'] as Map<String, dynamic>),
     Limits.fromJson(json['limits'] as Map<String, dynamic>),
-    json['info'] as Map<String, dynamic>,
+    json['info'],
   );
 }
 

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/controllers/notice_controller.dart';
 import 'package:get/get.dart';
 
-class HomeNoticeView extends StatelessWidget {
-  final HomeNoticeController controller = Get.put(HomeNoticeController());
+class HomeNoticeView extends GetView<HomeNoticeController> {
   @override
   Widget build(BuildContext context) {
     return Container(

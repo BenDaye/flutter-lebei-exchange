@@ -8,13 +8,13 @@ import 'package:flutter_lebei_exchange/utils/http/handler/success.dart';
 import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
 import 'package:flutter_lebei_exchange/utils/http/interceptors/network.dart';
 import 'package:get/get.dart' as getx;
-// import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:sentry/sentry.dart';
 
 class Http {
   Http() {
     _dio.interceptors.add(NetworkInterceptor(_dio));
-    // _dio.interceptors.add(PrettyDioLogger(maxWidth: 180, responseBody: false));
+    _dio.interceptors.add(PrettyDioLogger(maxWidth: 180, responseBody: false));
   }
 
   static final BaseOptions _options = BaseOptions(
