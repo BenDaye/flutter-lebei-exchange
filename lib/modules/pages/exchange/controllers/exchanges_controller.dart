@@ -1,6 +1,7 @@
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:get/get.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 
 class ExchangeViewController extends GetxController {
   final ExchangeController exchangeController = Get.put(ExchangeController());

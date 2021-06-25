@@ -1,9 +1,10 @@
+import 'package:get/get.dart';
+import 'package:sentry/sentry.dart';
+
 import 'package:flutter_lebei_exchange/api/ccxt.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
-import 'package:get/get.dart';
-import 'package:sentry/sentry.dart';
 
 class OhlcvController extends GetxController {
   final ExchangeController exchangeController = Get.find<ExchangeController>();

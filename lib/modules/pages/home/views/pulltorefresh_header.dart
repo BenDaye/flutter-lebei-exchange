@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/banner_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/notice_controller.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
+
+import 'package:flutter_lebei_exchange/modules/pages/home/controllers/banner_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/home/controllers/notice_controller.dart';
 
 class HomePullToRefreshHeader extends StatelessWidget {
   HomePullToRefreshHeader(this.info);

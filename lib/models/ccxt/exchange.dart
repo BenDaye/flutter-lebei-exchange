@@ -1,6 +1,7 @@
+import 'package:json_annotation/json_annotation.dart';
+
 import 'package:flutter_lebei_exchange/utils/formatter/common.dart';
 import 'package:flutter_lebei_exchange/utils/formatter/string.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 part 'exchange.g.dart';
 

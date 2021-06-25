@@ -1,9 +1,10 @@
 import 'package:flustars/flustars.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
+import 'package:get/get.dart';
+
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
 import 'package:flutter_lebei_exchange/utils/formatter/number.dart';
-import 'package:get/get.dart';
 
 class SymbolTopBaseVolumeListController extends GetxController {
   final TickerController tickerController = Get.find<TickerController>();

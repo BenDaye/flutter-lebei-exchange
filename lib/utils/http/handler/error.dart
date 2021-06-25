@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
+
 import 'package:flutter_lebei_exchange/models/response.dart' as http_model;
+import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
 
 HttpResult<T> onError<T>(dynamic error) {
   if (error is DioError) {

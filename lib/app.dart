@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:flutter_lebei_exchange/assets/theme.dart';
 import 'package:flutter_lebei_exchange/assets/translations/main.dart';
 import 'package:flutter_lebei_exchange/routes/pages.dart';
-import 'package:get/get.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);

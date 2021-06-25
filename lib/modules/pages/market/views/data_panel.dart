@@ -1,12 +1,13 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
+
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/panel_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/exchange_list_view.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/orderbook_list_view.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/trade_list_view.dart';
-import 'package:get/get.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class MarketDataPanel extends GetView<MarketPanelController> {
   final MarketViewController marketViewController = Get.find<MarketViewController>();

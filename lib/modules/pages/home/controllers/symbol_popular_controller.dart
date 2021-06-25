@@ -1,10 +1,11 @@
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:flustars/flustars.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
-import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
-import 'package:flutter_lebei_exchange/utils/handlers/timer.dart';
 import 'package:get/get.dart';
+
+import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
+import 'package:flutter_lebei_exchange/utils/handlers/timer.dart';
 
 class SymbolPopularGridViewController extends GetxController {
   final SettingsController settingsController = Get.find<SettingsController>();

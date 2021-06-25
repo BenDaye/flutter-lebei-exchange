@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ohlcv_controller.dart';
@@ -7,7 +9,6 @@ import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/trade_co
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/exchange_list_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/panel_controller.dart';
-import 'package:get/get.dart';
 
 class MarketBinding extends Bindings {
   @override

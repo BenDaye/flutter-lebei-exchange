@@ -1,11 +1,12 @@
 import 'package:flustars/flustars.dart';
-import 'package:flutter_lebei_exchange/api/juhe.dart';
-import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
-import 'package:flutter_lebei_exchange/models/juhe/exchange.dart';
-import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sentry/sentry.dart';
+
+import 'package:flutter_lebei_exchange/api/juhe.dart';
+import 'package:flutter_lebei_exchange/models/juhe/exchange.dart';
+import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
+import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
 
 class CurrencyViewController extends GetxController {
   final SettingsController settingsController = Get.find<SettingsController>();

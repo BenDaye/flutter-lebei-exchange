@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
-import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
-import 'package:get/get.dart';
 
 class MarketDrawerController extends GetxController with SingleGetTickerProviderMixin {
   final TickerController tickerController = Get.find<TickerController>();

@@ -1,7 +1,8 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/pages/main/controllers/main_controller.dart';
 import 'package:get/get.dart';
+
+import 'package:flutter_lebei_exchange/modules/pages/main/controllers/main_controller.dart';
 
 class MainView extends GetView<MainViewController> {
   @override

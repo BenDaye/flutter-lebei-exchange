@@ -1,8 +1,9 @@
 import 'package:expandable/expandable.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:get/get.dart';
+
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 
 class TradesViewController extends GetxController {
   final ExchangeController exchangeController = Get.find<ExchangeController>();

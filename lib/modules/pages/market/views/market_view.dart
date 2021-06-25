@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
@@ -9,7 +11,6 @@ import 'package:flutter_lebei_exchange/modules/pages/market/views/chart_view.dar
 import 'package:flutter_lebei_exchange/modules/pages/market/views/data_panel.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/market_drawer_view.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/ticker_card_view.dart';
-import 'package:get/get.dart';
 
 class MarketView extends GetView<MarketViewController> {
   final ExchangeController exchangeController = Get.find<ExchangeController>();

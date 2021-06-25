@@ -1,11 +1,12 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/controllers/trade_list_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/market/controllers/trade_list_controller.dart';
 
 class TradeListView extends GetView<MarketViewController> {
   final TradeListController tradeListController = Get.put(TradeListController());

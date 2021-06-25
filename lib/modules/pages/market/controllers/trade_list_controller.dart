@@ -1,11 +1,12 @@
 import 'package:flustars/flustars.dart';
+import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+
 import 'package:flutter_lebei_exchange/models/ccxt/trade.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/trade_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
 import 'package:flutter_lebei_exchange/utils/handlers/timer.dart';
-import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class TradeListController extends GetxController {
   final SettingsController settingsController = Get.find<SettingsController>();

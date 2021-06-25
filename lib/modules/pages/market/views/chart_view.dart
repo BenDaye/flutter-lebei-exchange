@@ -1,9 +1,10 @@
 // ignore_for_file: overridden_fields,annotate_overrides
 
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/controllers/chart_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
+
+import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/market/controllers/chart_controller.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:k_chart/chart_style.dart';
 // ignore: import_of_legacy_library_into_null_safe

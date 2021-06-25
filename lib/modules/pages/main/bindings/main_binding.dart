@@ -1,11 +1,12 @@
+import 'package:get/get.dart';
+
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/currency_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
+import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/main/controllers/main_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
-import 'package:get/get.dart';
 
 class MainBinding extends Bindings {
   @override

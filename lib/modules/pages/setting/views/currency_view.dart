@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/currency_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
+import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/currency_controller.dart';
 
 class CurrencyView extends StatelessWidget {
   final CurrencyViewController currencyViewController = Get.put<CurrencyViewController>(CurrencyViewController());

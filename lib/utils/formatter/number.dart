@@ -1,4 +1,4 @@
-import 'package:flustars/flustars.dart';
+import 'package:flustars/flustars.dart' show NumUtil;
 import 'package:get/get.dart';
 
 class NumberFormatter {

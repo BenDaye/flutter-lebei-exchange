@@ -1,11 +1,12 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sentry/sentry.dart';
+
 import 'package:flutter_lebei_exchange/api/ccxt.dart';
 import 'package:flutter_lebei_exchange/models/ccxt/exchange.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/local.dart';
 import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
-import 'package:get/get.dart';
-import 'package:sentry/sentry.dart';
 
 class ExchangeController extends GetxController {
   final RxList<String> exchanges = <String>[].obs;
@@ -40,6 +41,7 @@ class ExchangeController extends GetxController {
 
   void watchCurrentExchangeId(String exchangeId) {
     if (exchangeId.isEmpty) {
+      currentExchange.value = Exchange.empty();
       // ignore: always_specify_types
       Get.offNamedUntil('/exchanges', (route) => route.isFirst);
       return;
@@ -105,10 +107,7 @@ class ExchangeController extends GetxController {
 
   Future<void> getExchangeAndUpdate({String? exchangeId, bool reload = false}) async {
     final String _exchangeId = exchangeId ?? currentExchangeId.value;
-    if (_exchangeId.isEmpty) {
-      currentExchange.value = Exchange.empty();
-      return;
-    }
+    if (_exchangeId.isEmpty) return;
 
     if (!reload) {
       final Exchange? _exchangeLocal = await getExchangeLocal(_exchangeId);

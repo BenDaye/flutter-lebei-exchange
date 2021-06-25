@@ -1,6 +1,6 @@
-import 'package:flustars/flustars.dart';
-import 'package:logger/logger.dart';
+import 'package:flustars/flustars.dart' show TimerUtil;
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 class TimerHandler {
   static Function(int) common({String? name, Function? action}) {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/trade/controllers/trades_controller.dart';
-import 'package:get/get.dart';
 
 class TradesView extends GetView<TradesViewController> {
   final ExchangeController exchangeController = Get.find<ExchangeController>();

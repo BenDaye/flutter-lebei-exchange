@@ -3,12 +3,14 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:wakelock/wakelock.dart';
+
 import 'package:flutter_lebei_exchange/api/juhe.dart';
 import 'package:flutter_lebei_exchange/assets/translations/main.dart';
 import 'package:flutter_lebei_exchange/models/juhe/exchange.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
-import 'package:get/get.dart';
-import 'package:wakelock/wakelock.dart';
 
 enum AdvanceDeclineColorMode {
   advanceGreen,
@@ -240,9 +242,20 @@ class SettingsController extends GetxController {
     }
   }
 
+  void resetSettings() {
+    themeMode.value = ThemeMode.light;
+    locale.value = const Locale('en', 'US');
+    currency.value = 'USD';
+    advanceDeclineColorMode.value = AdvanceDeclineColorMode.advanceGreen;
+
+    wakelock.value = false;
+    autoRefresh.value = 0.0;
+  }
+
   Future<void> resetApp() async {
     await SpUtil.clear();
-    Get.reloadAll(force: true);
-    Get.forceAppUpdate();
+    resetSettings();
+    final ExchangeController exchangeController = Get.find<ExchangeController>();
+    exchangeController.currentExchangeId.value = '';
   }
 }

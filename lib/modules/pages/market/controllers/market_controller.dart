@@ -1,15 +1,15 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart' hide Precision;
+
+import 'package:flutter_lebei_exchange/models/ccxt/market.dart';
+import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
-import 'package:flutter_lebei_exchange/models/ccxt/market.dart';
-import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
+import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
 import 'package:flutter_lebei_exchange/utils/handlers/timer.dart';
-import 'package:get/get.dart' hide Precision;
-// ignore: import_of_legacy_library_into_null_safe
 
 class MarketViewController extends GetxController with SingleGetTickerProviderMixin {
   final ExchangeController exchangeController = Get.find<ExchangeController>();

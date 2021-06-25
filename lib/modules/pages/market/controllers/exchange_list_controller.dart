@@ -1,14 +1,15 @@
 import 'package:flustars/flustars.dart';
+import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+
 import 'package:flutter_lebei_exchange/api/ccxt.dart';
+import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
-import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
 import 'package:flutter_lebei_exchange/utils/formatter/number.dart';
 import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
-import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class TickerForRender {
   TickerForRender(

@@ -1,12 +1,13 @@
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/views/ticker_percentage_list_tile.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/controllers/home_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_toppercentage_list_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/views/list_view_header.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/views/shimmer_list_view.dart';
-import 'package:get/get.dart';
 
 class SymbolTopPercentageList extends GetView<HomeViewController> {
   @override

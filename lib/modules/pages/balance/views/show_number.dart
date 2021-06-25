@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/pages/balance/controllers/balances_controller.dart';
 import 'package:get/get.dart';
+
+import 'package:flutter_lebei_exchange/modules/pages/balance/controllers/balances_controller.dart';
 
 class ShowNumber extends GetView<BalancesViewController> {
   const ShowNumber({required this.child});

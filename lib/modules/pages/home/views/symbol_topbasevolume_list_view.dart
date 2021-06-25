@@ -1,15 +1,16 @@
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/symbol.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number.dart';
+import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/symbol.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
+import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/controllers/home_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_topbasevolume_list_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/views/list_view_header.dart';
 import 'package:flutter_lebei_exchange/modules/pages/home/views/shimmer_list_view.dart';
-import 'package:flutter_lebei_exchange/modules/pages/setting/controllers/settings_controller.dart';
-import 'package:get/get.dart';
 
 class SymbolTopBaseVolumeList extends GetView<HomeViewController> {
   @override

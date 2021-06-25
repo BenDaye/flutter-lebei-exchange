@@ -1,10 +1,11 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sentry/sentry.dart';
+
 import 'package:flutter_lebei_exchange/api/ccxt.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
 import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
-import 'package:get/get.dart';
-import 'package:sentry/sentry.dart';
 
 class SymbolController extends GetxController {
   final ExchangeController exchangeController = Get.find<ExchangeController>();
@@ -27,7 +28,13 @@ class SymbolController extends GetxController {
   }
 
   void watchCurrentExchangeId(String _exchangeId) {
-    getSymbolsAndUpdate(exchangeId: _exchangeId);
+    if (_exchangeId.isEmpty) {
+      symbols.clear();
+      favoriteSymbols.clear();
+      currentSymbol.value = '';
+      return;
+    }
+    getSymbolsAndUpdate();
   }
 
   void watchFavoriteSymbols(List<String> _symbols) {

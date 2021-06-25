@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/controllers/search_controller.dart';
 import 'package:get/get.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+
+import 'package:flutter_lebei_exchange/modules/pages/market/controllers/search_controller.dart';
 
 class SearchMarketView extends StatelessWidget {
   final SearchController searchViewController = Get.put(SearchController(), permanent: false);
