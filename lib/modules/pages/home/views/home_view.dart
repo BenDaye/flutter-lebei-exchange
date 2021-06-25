@@ -93,32 +93,29 @@ class HomeView extends GetView<HomeViewController> {
                     children: <Widget>[
                       RankTabBarView(),
                       Expanded(
-                        child: Container(
-                          color: Theme.of(context).backgroundColor,
-                          child: TabBarView(
-                            controller: controller.tabController,
-                            children: <Widget>[
-                              SymbolTopPercentageList(),
-                              SymbolTopBaseVolumeList(),
-                              SymbolTopQuoteVolumeList(),
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  HomeListViewHeader(
-                                    firstText: 'ListViewHeader.Symbol'.tr,
-                                    middleText: 'ListViewHeader.LastPrice'.tr,
-                                    lastText: 'ListViewHeader.QuoteVolume'.tr,
+                        child: TabBarView(
+                          controller: controller.tabController,
+                          children: <Widget>[
+                            SymbolTopPercentageList(),
+                            SymbolTopBaseVolumeList(),
+                            SymbolTopQuoteVolumeList(),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                HomeListViewHeader(
+                                  firstText: 'ListViewHeader.Symbol'.tr,
+                                  middleText: 'ListViewHeader.LastPrice'.tr,
+                                  lastText: 'ListViewHeader.QuoteVolume'.tr,
+                                ),
+                                Expanded(
+                                  child: NestedScrollViewInnerScrollPositionKeyWidget(
+                                    Key(controller.tabStrings.last),
+                                    Container(),
                                   ),
-                                  Expanded(
-                                    child: NestedScrollViewInnerScrollPositionKeyWidget(
-                                      Key(controller.tabStrings.last),
-                                      Container(),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     ],

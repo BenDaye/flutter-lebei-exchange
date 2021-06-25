@@ -69,7 +69,7 @@ class SymbolTopQuoteVolumeListView extends GetView<SymbolTopQuoteVolumeListContr
           trailing: SizedBox(
             width: 96.0,
             child: ElevatedButton(
-              onPressed: null,
+              onPressed: () {},
               style: ElevatedButton.styleFrom(
                 primary: Colors.blue[700],
                 elevation: 0,
