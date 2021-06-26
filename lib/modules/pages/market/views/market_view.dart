@@ -5,7 +5,6 @@ import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/symbol.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/controllers/chart_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/chart_view.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/data_panel.dart';
@@ -59,11 +58,7 @@ class MarketView extends GetView<MarketViewController> {
           Column(
             children: <Widget>[
               TickerCardView(),
-              GetBuilder<ChartController>(
-                id: 'chart',
-                init: ChartController(),
-                builder: (_) => ChartView(),
-              ),
+              Expanded(child: ChartView()),
             ],
           ),
           MarketDataPanel(),

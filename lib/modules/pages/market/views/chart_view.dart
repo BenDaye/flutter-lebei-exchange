@@ -10,195 +10,192 @@ import 'package:k_chart/chart_style.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:k_chart/flutter_k_chart.dart';
 
-class ChartView extends GetView<ChartController> {
+class ChartView extends StatelessWidget {
   final SettingsController settingsController = Get.find<SettingsController>();
+  final ChartController controller = Get.find<ChartController>(tag: 'MarketPageChart');
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Expanded(
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 32,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TabBar(
-                      tabs: controller.timeframesTabs,
-                      controller: controller.timeframesController,
-                      indicatorSize: TabBarIndicatorSize.label,
-                      isScrollable: true,
-                      onTap: controller.handleClickTab,
+      () => Column(
+        children: <Widget>[
+          SizedBox(
+            height: 32,
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: TabBar(
+                    tabs: controller.timeframesTabs,
+                    controller: controller.timeframesController,
+                    indicatorSize: TabBarIndicatorSize.label,
+                    isScrollable: true,
+                    onTap: controller.handleClickTab,
+                  ),
+                ),
+                const VerticalDivider(width: 1, indent: 8, endIndent: 8),
+                InkWell(
+                  onTap: () => controller.showSettings.toggle(),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Tab(
+                      child: Icon(
+                        Icons.folder_special,
+                        size: 16,
+                        color: controller.showSettings.isTrue
+                            ? Theme.of(context).accentColor
+                            : Theme.of(context).unselectedWidgetColor,
+                      ),
                     ),
                   ),
-                  const VerticalDivider(width: 1, indent: 8, endIndent: 8),
-                  InkWell(
-                    onTap: () => controller.showSettings.toggle(),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Tab(
-                        child: Obx(
-                          () => Icon(
-                            Icons.folder_special,
-                            size: 16,
-                            color: controller.showSettings.isTrue
-                                ? Theme.of(context).accentColor
-                                : Theme.of(context).unselectedWidgetColor,
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: <Widget>[
+                SizedBox(
+                  width: double.infinity,
+                  child: controller.timeframe.value == 'depth'
+                      ? DepthChart(
+                          controller.depthBids,
+                          controller.depthAsks,
+                          CustomChartColors().copyWith(
+                            upColor: settingsController.advanceDeclineColors.first,
+                            dnColor: settingsController.advanceDeclineColors.last,
                           ),
+                        )
+                      : KChartWidget(
+                          controller.kline,
+                          CustomChartStyle(),
+                          CustomChartColors().copyWith(
+                            upColor: settingsController.advanceDeclineColors.first,
+                            dnColor: settingsController.advanceDeclineColors.last,
+                          ),
+                          isLine: false,
+                          mainState: controller.mainState.value,
+                          secondaryState: controller.secondaryState.value,
+                          fixedLength: 2,
                         ),
-                      ),
+                ),
+                if (controller.showSettings.isTrue || controller.showExtra.isTrue)
+                  InkWell(
+                    onTap: () {
+                      controller.showSettings.value = false;
+                      controller.showExtra.value = false;
+                    },
+                    child: Container(
+                      color: Colors.black26,
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Stack(
-                alignment: Alignment.topCenter,
-                children: <Widget>[
-                  SizedBox(
-                    width: double.infinity,
-                    child: controller.timeframe.value == 'depth'
-                        ? DepthChart(
-                            controller.depthBids,
-                            controller.depthAsks,
-                            CustomChartColors().copyWith(
-                              upColor: settingsController.advanceDeclineColors.first,
-                              dnColor: settingsController.advanceDeclineColors.last,
+                  )
+                else
+                  Container(height: 0),
+                AnimatedSize(
+                  duration: const Duration(milliseconds: 300),
+                  vsync: controller,
+                  child: controller.showSettings.isTrue
+                      ? Container(
+                          color: Colors.transparent,
+                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.all(Radius.circular(4)),
+                              color: Theme.of(context).dialogBackgroundColor,
                             ),
-                          )
-                        : KChartWidget(
-                            controller.kline,
-                            CustomChartStyle(),
-                            CustomChartColors().copyWith(
-                              upColor: settingsController.advanceDeclineColors.first,
-                              dnColor: settingsController.advanceDeclineColors.last,
-                            ),
-                            isLine: false,
-                            mainState: controller.mainState.value,
-                            secondaryState: controller.secondaryState.value,
-                            fixedLength: 2,
-                          ),
-                  ),
-                  if (controller.showSettings.isTrue || controller.showExtra.isTrue)
-                    InkWell(
-                      onTap: () {
-                        controller.showSettings.value = false;
-                        controller.showExtra.value = false;
-                      },
-                      child: Container(
-                        color: Colors.black26,
-                      ),
-                    )
-                  else
-                    Container(height: 0),
-                  AnimatedSize(
-                    duration: const Duration(milliseconds: 300),
-                    vsync: controller,
-                    child: controller.showSettings.isTrue
-                        ? Container(
-                            color: Colors.transparent,
-                            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(Radius.circular(4)),
-                                color: Theme.of(context).dialogBackgroundColor,
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  ListTile(
-                                    leading: Text('MarketPage.KChart.MainState'.tr),
-                                    title: Wrap(
-                                      spacing: 8,
-                                      children: MainState.values
-                                          .map(
-                                            (MainState e) => ElevatedButton(
-                                              onPressed: () => controller.mainState.value = e,
-                                              style: ElevatedButton.styleFrom(
-                                                primary: controller.mainState.value == e
-                                                    ? Theme.of(context).buttonColor
-                                                    : Theme.of(context).dividerColor,
-                                                elevation: 0,
-                                              ),
-                                              child: Text(e.toString().split('.').last),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                ListTile(
+                                  leading: Text('MarketPage.KChart.MainState'.tr),
+                                  title: Wrap(
+                                    spacing: 8,
+                                    children: MainState.values
+                                        .map(
+                                          (MainState e) => ElevatedButton(
+                                            onPressed: () => controller.mainState.value = e,
+                                            style: ElevatedButton.styleFrom(
+                                              primary: controller.mainState.value == e
+                                                  ? Theme.of(context).buttonColor
+                                                  : Theme.of(context).dividerColor,
+                                              elevation: 0,
                                             ),
-                                          )
-                                          .toList(),
-                                    ),
-                                  ),
-                                  const Divider(height: 1),
-                                  ListTile(
-                                    leading: Text('MarketPage.KChart.SecondaryState'.tr),
-                                    title: Wrap(
-                                      runAlignment: WrapAlignment.center,
-                                      crossAxisAlignment: WrapCrossAlignment.center,
-                                      spacing: 8,
-                                      children: SecondaryState.values
-                                          .map(
-                                            (SecondaryState e) => ElevatedButton(
-                                              onPressed: () => controller.secondaryState.value = e,
-                                              style: ElevatedButton.styleFrom(
-                                                primary: controller.secondaryState.value == e
-                                                    ? Theme.of(context).buttonColor
-                                                    : Theme.of(context).dividerColor,
-                                                elevation: 0,
-                                              ),
-                                              child: Text(e.toString().split('.').last),
-                                            ),
-                                          )
-                                          .toList(),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        : Container(height: 0),
-                  ),
-                  AnimatedSize(
-                    duration: const Duration(milliseconds: 300),
-                    vsync: controller,
-                    child: controller.showExtra.isTrue
-                        ? Container(
-                            color: Colors.transparent,
-                            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(Radius.circular(4)),
-                                color: Theme.of(context).dialogBackgroundColor,
-                              ),
-                              child: ListTile(
-                                title: Wrap(
-                                  runAlignment: WrapAlignment.center,
-                                  crossAxisAlignment: WrapCrossAlignment.center,
-                                  spacing: 8,
-                                  children: controller.timeframesExtra
-                                      .map<ElevatedButton>(
-                                        (String e) => ElevatedButton(
-                                          onPressed: () => controller.onChangeTimeframeExtra(e),
-                                          style: ElevatedButton.styleFrom(
-                                            primary: controller.timeframe.value == e
-                                                ? Theme.of(context).buttonColor
-                                                : Theme.of(context).dividerColor,
-                                            elevation: 0,
+                                            child: Text(e.toString().split('.').last),
                                           ),
-                                          child: Text('MarketPage.Period.$e'.tr),
-                                        ),
-                                      )
-                                      .toList(),
+                                        )
+                                        .toList(),
+                                  ),
                                 ),
+                                const Divider(height: 1),
+                                ListTile(
+                                  leading: Text('MarketPage.KChart.SecondaryState'.tr),
+                                  title: Wrap(
+                                    runAlignment: WrapAlignment.center,
+                                    crossAxisAlignment: WrapCrossAlignment.center,
+                                    spacing: 8,
+                                    children: SecondaryState.values
+                                        .map(
+                                          (SecondaryState e) => ElevatedButton(
+                                            onPressed: () => controller.secondaryState.value = e,
+                                            style: ElevatedButton.styleFrom(
+                                              primary: controller.secondaryState.value == e
+                                                  ? Theme.of(context).buttonColor
+                                                  : Theme.of(context).dividerColor,
+                                              elevation: 0,
+                                            ),
+                                            child: Text(e.toString().split('.').last),
+                                          ),
+                                        )
+                                        .toList(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      : Container(height: 0),
+                ),
+                AnimatedSize(
+                  duration: const Duration(milliseconds: 300),
+                  vsync: controller,
+                  child: controller.showExtra.isTrue
+                      ? Container(
+                          color: Colors.transparent,
+                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.all(Radius.circular(4)),
+                              color: Theme.of(context).dialogBackgroundColor,
+                            ),
+                            child: ListTile(
+                              title: Wrap(
+                                runAlignment: WrapAlignment.center,
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                spacing: 8,
+                                children: controller.timeframesExtra
+                                    .map<ElevatedButton>(
+                                      (String e) => ElevatedButton(
+                                        onPressed: () => controller.onChangeTimeframeExtra(e),
+                                        style: ElevatedButton.styleFrom(
+                                          primary: controller.timeframe.value == e
+                                              ? Theme.of(context).buttonColor
+                                              : Theme.of(context).dividerColor,
+                                          elevation: 0,
+                                        ),
+                                        child: Text('MarketPage.Period.$e'.tr),
+                                      ),
+                                    )
+                                    .toList(),
                               ),
                             ),
-                          )
-                        : Container(height: 0),
-                  ),
-                ],
-              ),
+                          ),
+                        )
+                      : Container(height: 0),
+                ),
+              ],
             ),
-            Container(height: 100),
-          ],
-        ),
+          ),
+          Container(height: 100),
+        ],
       ),
     );
   }

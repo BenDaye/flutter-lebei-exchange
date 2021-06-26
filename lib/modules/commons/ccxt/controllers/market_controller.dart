@@ -15,12 +15,14 @@ class MarketController extends GetxController {
 
   final RxList<Market> markets = <Market>[].obs;
   final RxMap<String, Market> marketsMap = <String, Market>{}.obs;
+  final Rx<Market> currentMarket = Market.empty().obs;
 
   @override
   void onInit() {
     super.onInit();
     ever(exchangeController.currentExchangeId, watchCurrentExchangeId);
     ever(marketsMap, watchMarketsMap);
+    ever(symbolController.currentSymbol, watchCurrentSymbol);
   }
 
   void watchCurrentExchangeId(String _exchangeId) {
@@ -33,6 +35,16 @@ class MarketController extends GetxController {
 
   void watchMarketsMap(Map<String, Market> _marketsMap) {
     markets.value = _marketsMap.values.toList();
+    watchCurrentSymbol(symbolController.currentSymbol.value);
+  }
+
+  void watchCurrentSymbol(String symbol) {
+    if (symbol.isEmpty) {
+      currentMarket.value = Market.empty();
+      return;
+    }
+    final String _symbol = symbol.replaceAll('_', '/');
+    currentMarket.value = marketsMap.containsKey(_symbol) ? marketsMap[_symbol]! : Market.empty();
   }
 
   Future<void> getMarketsAndUpdate() async {

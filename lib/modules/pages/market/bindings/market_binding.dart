@@ -1,11 +1,6 @@
+import 'package:flutter_lebei_exchange/modules/pages/market/controllers/chart_controller.dart';
 import 'package:get/get.dart';
 
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ohlcv_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/orderbook_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/trade_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/exchange_list_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/panel_controller.dart';
@@ -13,14 +8,9 @@ import 'package:flutter_lebei_exchange/modules/pages/market/controllers/panel_co
 class MarketBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<ExchangeController>(() => ExchangeController());
-    Get.lazyPut<MarketController>(() => MarketController());
-    Get.lazyPut<TickerController>(() => TickerController());
-    Get.lazyPut<OhlcvController>(() => OhlcvController());
-    Get.lazyPut<OrderBookController>(() => OrderBookController());
-    Get.lazyPut<TradeController>(() => TradeController());
+    Get.put<ChartController>(ChartController(), tag: 'MarketPageChart');
 
-    Get.lazyPut<MarketViewController>(() => MarketViewController());
+    Get.put<MarketViewController>(MarketViewController());
 
     Get.lazyPut<MarketPanelController>(() => MarketPanelController());
     Get.lazyPut<ExchangeListViewController>(() => ExchangeListViewController());

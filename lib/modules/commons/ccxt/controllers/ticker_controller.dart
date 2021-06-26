@@ -13,6 +13,7 @@ class TickerController extends GetxController {
 
   final RxList<Ticker> tickers = <Ticker>[].obs;
   final RxMap<String, Ticker> tickersMap = <String, Ticker>{}.obs;
+  final Rx<Ticker> currentTicker = Ticker.empty().obs;
   final RxBool loading = true.obs;
 
   @override
@@ -21,6 +22,7 @@ class TickerController extends GetxController {
     ever(exchangeController.currentExchangeId, watchCurrentExchangeId);
     ever(tickersMap, watchTickersMap);
     ever(tickers, watchTickers);
+    ever(symbolController.currentSymbol, watchCurrentSymbol);
   }
 
   void watchCurrentExchangeId(String _exchangeId) {
@@ -33,10 +35,20 @@ class TickerController extends GetxController {
 
   void watchTickersMap(Map<String, Ticker> _tickersMap) {
     tickers.value = _tickersMap.values.toList();
+    watchCurrentSymbol(symbolController.currentSymbol.value);
   }
 
   void watchTickers(List<Ticker> _tickers) {
     loading.value = _tickers.isEmpty;
+  }
+
+  void watchCurrentSymbol(String symbol) {
+    if (symbol.isEmpty) {
+      currentTicker.value = Ticker.empty();
+      return;
+    }
+    final String _symbol = symbol.replaceAll('_', '/');
+    currentTicker.value = tickersMap.containsKey(_symbol) ? tickersMap[_symbol]! : Ticker.empty();
   }
 
   Future<void> getTickersAndUpdate() async {

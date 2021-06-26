@@ -41,6 +41,7 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
 
   final TimerUtil timer = TimerUtil(mInterval: 60 * 1000);
   late Worker timerWorker;
+  late Worker watchSymbolWorker;
 
   @override
   void onInit() {
@@ -58,7 +59,7 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
       ),
     );
 
-    ever(symbolController.currentSymbol, watchSymbol);
+    watchSymbolWorker = ever(symbolController.currentSymbol, watchSymbol);
 
     tabController = TabController(length: tabs.length, vsync: this);
   }
@@ -80,6 +81,7 @@ class MarketViewController extends GetxController with SingleGetTickerProviderMi
 
     tabController.dispose();
 
+    watchSymbolWorker.dispose();
     super.onClose();
   }
 

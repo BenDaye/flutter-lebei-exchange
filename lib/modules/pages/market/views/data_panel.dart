@@ -140,9 +140,9 @@ class MarketDataPanelBody extends GetView<MarketPanelController> {
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          OrderBookListViewHeader(),
+                          OrderBookListViewHeader(marketViewController.market.value),
                           const Divider(height: 1),
-                          Expanded(child: OrderBookListView()),
+                          Expanded(child: OrderBookListView(marketViewController.market.value.symbol)),
                         ],
                       ),
                       Column(

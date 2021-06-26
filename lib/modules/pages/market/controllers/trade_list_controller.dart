@@ -19,10 +19,12 @@ class TradeListController extends GetxController {
 
   final TimerUtil timer = TimerUtil(mInterval: 60 * 1000);
   late Worker timerWorker;
+  late Worker watchSymbolWorker;
 
   @override
   void onInit() {
     super.onInit();
+    watchSymbolWorker = ever(symbolController.currentSymbol, watchSymbol);
 
     timerWorker = debounce(
       settingsController.autoRefresh,
@@ -52,6 +54,7 @@ class TradeListController extends GetxController {
     timerWorker.dispose();
     timer.cancel();
 
+    watchSymbolWorker.dispose();
     super.onClose();
   }
 

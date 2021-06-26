@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class SymbolHelper {
   static String getSymbolTitleText(String symbol) {
-    if (symbol.isEmpty) return '';
+    if (symbol.isEmpty) return '--';
     final String? marginString = getMarginString(symbol);
     if (marginString == null) return symbol;
     final String marginText = marginString.substring(marginString.length - 1) == 'L' ? '' : '-';

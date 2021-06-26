@@ -1,5 +1,7 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:flutter_lebei_exchange/utils/formatter/number.dart';
 
 class PercentageHelper {
@@ -30,12 +32,31 @@ class PercentageHelper {
         ),
       );
 
-  static Widget getPercentageText(List<Color> colors, double percentage) => Text(
+  static Widget getPercentageText(List<Color> colors, double percentage, {TextStyle? textStyle}) => Text(
         getPercentageString(percentage),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
           color: getPercentageColor(colors, percentage),
+        ).merge(textStyle),
+      );
+
+  static Widget getPercentageBadge(List<Color> colors, double percentage, {TextStyle? textStyle}) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 1),
+        decoration: BoxDecoration(
+          color: getPercentageColor(colors, percentage).withOpacity(.2),
+          borderRadius: BorderRadius.circular(4.0),
+        ),
+        child: Text(
+          getPercentageString(percentage),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: Get.context?.theme.textTheme.caption
+              ?.copyWith(
+                color: getPercentageColor(colors, percentage),
+                fontWeight: FontWeight.bold,
+              )
+              .merge(textStyle),
         ),
       );
 }

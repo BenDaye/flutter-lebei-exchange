@@ -45,6 +45,7 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
 
   final TimerUtil timer = TimerUtil(mInterval: 60 * 1000);
   late Worker timerWorker;
+  late Worker watchSymbolWorker;
 
   @override
   void onInit() {
@@ -66,7 +67,7 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
     watchTimeframes(exchangeController.timeframes, init: true);
     debounce(timeframe, watchTimeframe, time: const Duration(microseconds: 300));
 
-    ever(symbolController.currentSymbol, watchSymbol);
+    watchSymbolWorker = ever(symbolController.currentSymbol, watchSymbol);
     ever(ohlcv, watchOhlcv);
     ever(depth, watchDepth);
     ever(showExtra, watchShowExtra);
@@ -89,6 +90,7 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
 
     timeframesController.dispose();
 
+    watchSymbolWorker.dispose();
     super.onClose();
   }
 
@@ -114,9 +116,10 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
             )
             .toList(),
       );
-      DataUtil.calculate(list);
       kline.value = list;
-      update(<String>['chart']);
+      DataUtil.calculate(kline);
+      // FIXME: update state
+      Get.forceAppUpdate();
     } catch (err) {
       Sentry.captureException(err);
     }
@@ -138,7 +141,8 @@ class ChartController extends GetxController with SingleGetTickerProviderMixin {
       depthBids.value = _bids;
       depthAsks.value = _asks;
 
-      update(<String>['chart']);
+      // FIXME: update state
+      Get.forceAppUpdate();
     } catch (err) {
       Sentry.captureException(err);
     }

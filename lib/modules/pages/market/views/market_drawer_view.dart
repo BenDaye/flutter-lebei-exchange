@@ -7,7 +7,6 @@ import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/percentage.d
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/symbol.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_drawer_controller.dart';
 
 class MarketDrawerView extends StatelessWidget {
@@ -15,7 +14,6 @@ class MarketDrawerView extends StatelessWidget {
   final SymbolController symbolController = Get.find<SymbolController>();
   final MarketController marketController = Get.find<MarketController>();
   final SettingsController settingsController = Get.find<SettingsController>();
-  final MarketViewController marketViewController = Get.find<MarketViewController>();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
