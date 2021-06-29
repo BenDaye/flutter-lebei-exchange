@@ -27,10 +27,10 @@ dependencies:
   animated_text_kit: ^4.2.1
   auto_animated: ^3.0.0
   bottom_navy_bar: ^6.0.0
-  carousel_slider: 4.0.0-nullsafety.0
+  carousel_slider: 4.0.0
   connectivity_plus: ^1.0.4
   cupertino_icons: ^1.0.3
-  device_info_plus: ^1.0.1
+  device_info_plus: ^2.0.1
   dio: ^4.0.0
   expandable: ^5.0.1
   extended_image: ^4.1.0
@@ -39,21 +39,21 @@ dependencies:
   focus_detector: ^2.0.0
   get: ^4.1.4
   google_fonts: ^2.0.0
-  google_mobile_ads: ^0.13.0
+  google_mobile_ads: ^0.13.1
   introduction_screen: ^2.1.0
   json_annotation: ^4.0.1
-  k_chart: ^0.2.1
+  k_chart: ^0.3.2
   logger: ^1.0.0
   material_floating_search_bar: ^0.3.4
-  package_info_plus: ^1.0.1
-  permission_handler: ^7.1.0
+  package_info_plus: ^1.0.3
+  permission_handler: ^8.1.2
   pretty_dio_logger: ^1.1.1
   pull_to_refresh: ^2.0.0
   pull_to_refresh_notification: ^2.0.1
   scrollable_positioned_list: ^0.2.0-nullsafety.0
-  sentry: ^5.1.0-beta.1
+  sentry: ^5.1.0
   shimmer: ^2.0.0
-  showcaseview: ^1.0.0
+  showcaseview: ^1.1.0
   sliding_up_panel: ^2.0.0+1
   transparent_image: ^2.0.0
   visibility_detector: ^0.2.0

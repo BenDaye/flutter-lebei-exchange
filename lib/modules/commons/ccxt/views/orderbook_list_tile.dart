@@ -14,6 +14,8 @@ class OrderBookListTile extends StatelessWidget {
     this.askAmountPercentage,
     required this.askPrice,
     required this.symbol,
+    this.onBidPriceTap,
+    this.onAskPriceTap,
   });
   final int index;
   final double bidAmount;
@@ -23,6 +25,8 @@ class OrderBookListTile extends StatelessWidget {
   final double? askAmountPercentage;
   final double askPrice;
   final String symbol;
+  final Function(double)? onBidPriceTap;
+  final Function(double)? onAskPriceTap;
 
   final MarketController marketController = Get.find<MarketController>();
   final SettingsController settingsController = Get.find<SettingsController>();
@@ -74,11 +78,16 @@ class OrderBookListTile extends StatelessWidget {
                                         color: Theme.of(context).textTheme.bodyText1?.color,
                                       ),
                                 ),
-                                Text(
-                                  marketController.formatPriceByPrecision(bidPrice, symbol),
-                                  style: Theme.of(context).textTheme.caption?.copyWith(
-                                        color: settingsController.advanceDeclineColors.first,
-                                      ),
+                                InkWell(
+                                  onTap: () {
+                                    if (onBidPriceTap != null) onBidPriceTap!(bidPrice);
+                                  },
+                                  child: Text(
+                                    marketController.formatPriceByPrecision(bidPrice, symbol),
+                                    style: Theme.of(context).textTheme.caption?.copyWith(
+                                          color: settingsController.advanceDeclineColors.first,
+                                        ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -113,11 +122,16 @@ class OrderBookListTile extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text(
-                                  marketController.formatPriceByPrecision(askPrice, symbol),
-                                  style: Theme.of(context).textTheme.caption?.copyWith(
-                                        color: settingsController.advanceDeclineColors.last,
-                                      ),
+                                InkWell(
+                                  onTap: () {
+                                    if (onAskPriceTap != null) onAskPriceTap!(askPrice);
+                                  },
+                                  child: Text(
+                                    marketController.formatPriceByPrecision(askPrice, symbol),
+                                    style: Theme.of(context).textTheme.caption?.copyWith(
+                                          color: settingsController.advanceDeclineColors.last,
+                                        ),
+                                  ),
                                 ),
                                 Text(
                                   marketController.formatAmountByPrecision(askAmount, symbol),

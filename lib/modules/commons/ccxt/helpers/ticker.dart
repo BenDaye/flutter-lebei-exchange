@@ -44,16 +44,23 @@ class TickerHelper {
     }
   }
 
-  String formatPriceByRate({Ticker? ticker, String? currency, double? currencyRate}) {
+  String formatPriceByRate({
+    Ticker? ticker,
+    String? currency,
+    double? currencyRate,
+    double? price,
+    bool? showCurrency = true,
+  }) {
     final Ticker? _ticker = ticker ?? this.ticker;
     if (_ticker == null) return NumberFormatter.unknownNumberToString;
 
     final String _currency = currency ?? this.currency;
     final double _currencyRate = currencyRate ?? this.currencyRate;
+    final double _price = price ?? TickerHelper.getValuablePrice(_ticker) ?? 0.0;
 
-    return NumberHelper.getCurrencySymbol(_currency) +
+    return (showCurrency == true ? NumberHelper.getCurrencySymbol(_currency) : '') +
         NumUtil.multiply(
-          TickerHelper.getValuablePrice(_ticker) ?? 0,
+          _price,
           _currencyRate,
         ).toStringAsFixed(2);
   }

@@ -1,5 +1,6 @@
 // import 'package:expandable/expandable.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:get/get.dart';
@@ -19,6 +20,92 @@ class TradesViewController extends GetxController {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   final RxBool showOrderBook = true.obs;
+
+  final TextEditingController bidPriceController = TextEditingController();
+  final TextEditingController askPriceController = TextEditingController();
+  final TextEditingController bidAmountController = TextEditingController();
+  final TextEditingController askAmountController = TextEditingController();
+  final RxDouble bidPrice = 0.0.obs;
+  final RxDouble askPrice = 0.0.obs;
+  final RxDouble bidAmount = 0.0.obs;
+  final RxDouble askAmount = 0.0.obs;
+  final RxString _bidTotal = '--'.obs;
+  final RxString _askTotal = '--'.obs;
+
+  String get bidTotal => _bidTotal.value;
+  String get askTotal => _askTotal.value;
+
+  // TODO: formatPriceByPrecision
+  set bidTotal(String t) => _bidTotal.value = t;
+  set askTotal(String t) => _askTotal.value = t;
+
+  final List<String> orderTypes = <String>[
+    'TradesPage.OrderType.market',
+    'TradesPage.OrderType.limit',
+    'TradesPage.OrderType.stop',
+    'TradesPage.OrderType.trigger',
+  ];
+
+  final RxString orderType = 'TradesPage.OrderType.limit'.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    bidPriceController.addListener(watchBidPriceController);
+    askPriceController.addListener(watchAskPriceController);
+    bidAmountController.addListener(watchBidAmountController);
+    askAmountController.addListener(watchAskAmountController);
+
+    debounce(bidPrice, watchBidPrice, time: const Duration(milliseconds: 300));
+    debounce(askPrice, watchAskPrice, time: const Duration(milliseconds: 300));
+    debounce(bidAmount, watchBidAmount, time: const Duration(milliseconds: 300));
+    debounce(askAmount, watchAskAmount, time: const Duration(milliseconds: 300));
+  }
+
+  @override
+  void onClose() {
+    bidPriceController.removeListener(watchBidPriceController);
+    askPriceController.removeListener(watchAskPriceController);
+    bidAmountController.removeListener(watchBidAmountController);
+    askAmountController.removeListener(watchAskAmountController);
+    super.onClose();
+  }
+
+  void watchBidPrice(double p) {
+    final double total = bidPrice.value * bidAmount.value;
+    bidTotal = total == 0.0 ? '--' : total.toString();
+  }
+
+  void watchAskPrice(double p) {
+    final double total = askPrice.value * askAmount.value;
+    askTotal = total == 0.0 ? '--' : total.toString();
+  }
+
+  void watchBidAmount(double p) {
+    final double total = bidPrice.value * bidAmount.value;
+    bidTotal = total == 0.0 ? '--' : total.toString();
+  }
+
+  void watchAskAmount(double p) {
+    final double total = askPrice.value * askAmount.value;
+    askTotal = total == 0.0 ? '--' : total.toString();
+  }
+
+  void watchBidPriceController() {
+    bidPrice.value = NumUtil.getDoubleByValueStr(bidPriceController.text) ?? 0.0;
+  }
+
+  void watchAskPriceController() {
+    askPrice.value = NumUtil.getDoubleByValueStr(askPriceController.text) ?? 0.0;
+  }
+
+  void watchBidAmountController() {
+    bidAmount.value = NumUtil.getDoubleByValueStr(bidAmountController.text) ?? 0.0;
+  }
+
+  void watchAskAmountController() {
+    askAmount.value = NumUtil.getDoubleByValueStr(askAmountController.text) ?? 0.0;
+  }
 
   void showExchangeInfoBottomSheet() {
     Get.bottomSheet(

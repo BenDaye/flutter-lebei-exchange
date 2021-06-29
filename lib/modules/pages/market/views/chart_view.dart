@@ -5,9 +5,7 @@ import 'package:get/get.dart';
 
 import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/chart_controller.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:k_chart/chart_style.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:k_chart/flutter_k_chart.dart';
 
 class ChartView extends StatelessWidget {
@@ -72,10 +70,8 @@ class ChartView extends StatelessWidget {
                             upColor: settingsController.advanceDeclineColors.first,
                             dnColor: settingsController.advanceDeclineColors.last,
                           ),
-                          isLine: false,
                           mainState: controller.mainState.value,
                           secondaryState: controller.secondaryState.value,
-                          fixedLength: 2,
                         ),
                 ),
                 if (controller.showSettings.isTrue || controller.showExtra.isTrue)
