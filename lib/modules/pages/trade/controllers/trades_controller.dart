@@ -60,6 +60,7 @@ class TradesViewController extends GetxController {
     debounce(askPrice, watchAskPrice, time: const Duration(milliseconds: 300));
     debounce(bidAmount, watchBidAmount, time: const Duration(milliseconds: 300));
     debounce(askAmount, watchAskAmount, time: const Duration(milliseconds: 300));
+    debounce(orderType, watchOrderType, time: const Duration(milliseconds: 300));
   }
 
   @override
@@ -89,6 +90,13 @@ class TradesViewController extends GetxController {
   void watchAskAmount(double p) {
     final double total = askPrice.value * askAmount.value;
     askTotal = total == 0.0 ? '--' : total.toString();
+  }
+
+  void watchOrderType(String type) {
+    bidPriceController.clear();
+    bidAmountController.clear();
+    askPriceController.clear();
+    askAmountController.clear();
   }
 
   void watchBidPriceController() {
