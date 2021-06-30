@@ -109,4 +109,6 @@ const Map<String, String> zh_CN = <String, String>{
   'TradesPage.Order.Available': '可用',
   'TradesPage.Order.Buy': '买入',
   'TradesPage.Order.Sell': '卖出',
+  'TradesPage.Orders.Title': '当前委托',
+  'TradesPage.Orders.All': '全部',
 };

@@ -105,4 +105,6 @@ const Map<String, String> en_US = <String, String>{
   'TradesPage.Order.Available': 'Available',
   'TradesPage.Order.Buy': 'Buy',
   'TradesPage.Order.Sell': 'Sell',
+  'TradesPage.Orders.Title': 'Orders',
+  'TradesPage.Orders.All': 'All',
 };

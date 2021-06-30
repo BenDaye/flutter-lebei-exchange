@@ -19,8 +19,8 @@ class ShimmerListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
+      baseColor: Theme.of(context).dividerColor,
+      highlightColor: Theme.of(context).highlightColor,
       child: ListTile(
         leading: Container(
           height: 24,

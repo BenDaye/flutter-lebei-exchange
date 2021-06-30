@@ -188,8 +188,8 @@ class SymbolPopularGridViewShimmer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[100]!,
+                        baseColor: Theme.of(context).dividerColor,
+                        highlightColor: Theme.of(context).highlightColor,
                         child: Container(
                           color: Colors.white,
                           width: 96,
@@ -198,8 +198,8 @@ class SymbolPopularGridViewShimmer extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[100]!,
+                        baseColor: Theme.of(context).dividerColor,
+                        highlightColor: Theme.of(context).highlightColor,
                         child: Container(
                           color: Colors.white,
                           width: 80,
@@ -208,8 +208,8 @@ class SymbolPopularGridViewShimmer extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[100]!,
+                        baseColor: Theme.of(context).dividerColor,
+                        highlightColor: Theme.of(context).highlightColor,
                         child: Container(
                           color: Colors.white,
                           width: 72,

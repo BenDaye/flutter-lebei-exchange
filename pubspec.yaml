@@ -36,6 +36,7 @@ dependencies:
   extended_image: ^4.1.0
   extended_nested_scroll_view: ^3.0.0
   flustars: ^2.0.1
+  flutter_sticky_header: ^0.6.0
   focus_detector: ^2.0.0
   get: ^4.1.4
   google_fonts: ^2.0.0

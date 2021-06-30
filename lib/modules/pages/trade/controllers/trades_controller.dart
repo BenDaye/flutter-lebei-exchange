@@ -56,11 +56,12 @@ class TradesViewController extends GetxController {
     bidAmountController.addListener(watchBidAmountController);
     askAmountController.addListener(watchAskAmountController);
 
-    debounce(bidPrice, watchBidPrice, time: const Duration(milliseconds: 300));
-    debounce(askPrice, watchAskPrice, time: const Duration(milliseconds: 300));
-    debounce(bidAmount, watchBidAmount, time: const Duration(milliseconds: 300));
-    debounce(askAmount, watchAskAmount, time: const Duration(milliseconds: 300));
+    debounce(bidPrice, watchBid, time: const Duration(milliseconds: 300));
+    debounce(askPrice, watchAsk, time: const Duration(milliseconds: 300));
+    debounce(bidAmount, watchBid, time: const Duration(milliseconds: 300));
+    debounce(askAmount, watchAsk, time: const Duration(milliseconds: 300));
     debounce(orderType, watchOrderType, time: const Duration(milliseconds: 300));
+    ever(symbolController.currentSymbol, watchOrderType);
   }
 
   @override
@@ -72,22 +73,12 @@ class TradesViewController extends GetxController {
     super.onClose();
   }
 
-  void watchBidPrice(double p) {
+  void watchBid(double p) {
     final double total = bidPrice.value * bidAmount.value;
     bidTotal = total == 0.0 ? '--' : total.toString();
   }
 
-  void watchAskPrice(double p) {
-    final double total = askPrice.value * askAmount.value;
-    askTotal = total == 0.0 ? '--' : total.toString();
-  }
-
-  void watchBidAmount(double p) {
-    final double total = bidPrice.value * bidAmount.value;
-    bidTotal = total == 0.0 ? '--' : total.toString();
-  }
-
-  void watchAskAmount(double p) {
+  void watchAsk(double p) {
     final double total = askPrice.value * askAmount.value;
     askTotal = total == 0.0 ? '--' : total.toString();
   }
