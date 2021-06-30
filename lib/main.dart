@@ -9,7 +9,18 @@ import 'package:sentry/sentry.dart';
 
 import 'package:flutter_lebei_exchange/app.dart';
 
-Future<void> main() async {
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+    <DeviceOrientation>[
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ],
+  );
+  if (Platform.isAndroid) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  }
+
   runZonedGuarded(() async {
     await Sentry.init(
       (SentryOptions options) {
@@ -17,22 +28,12 @@ Future<void> main() async {
       },
     );
 
-    WidgetsFlutterBinding.ensureInitialized();
     MobileAds.instance.initialize();
     await MobileAds.instance.updateRequestConfiguration(
       RequestConfiguration(
         testDeviceIds: <String>['kGADSimulatorID'],
       ),
     );
-    SystemChrome.setPreferredOrientations(
-      <DeviceOrientation>[
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ],
-    );
-    if (Platform.isAndroid) {
-      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-    }
     await SpUtil.getInstance();
 
     runApp(const App());

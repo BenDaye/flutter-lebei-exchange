@@ -237,6 +237,18 @@ class TradesView extends GetView<TradesViewController> {
                           ],
                         ),
                       ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 8),
+                        color: Theme.of(context).backgroundColor,
+                        child: ListTile(
+                          title: Text('TradesPage.Orders.Title'.tr),
+                          trailing: TextButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(Icons.more_vert, size: 18),
+                            label: Text('TradesPage.Orders.All'.tr),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -261,35 +273,71 @@ class OrderDashboard extends GetView<TradesViewController> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        TextFormField(
-          controller: isBuy ? controller.bidPriceController : controller.askPriceController,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          decoration: InputDecoration(
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Theme.of(context).accentColor,
-              ),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: .5,
-                color: Theme.of(context).dividerColor,
-              ),
-            ),
-            disabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: .5,
-                color: Theme.of(context).disabledColor,
-              ),
-            ),
-            filled: controller.orderType.value == 'TradesPage.OrderType.market',
-            isDense: true,
-            contentPadding: const EdgeInsets.all(8),
-            hintText: controller.orderType.value != 'TradesPage.OrderType.market'
-                ? 'TradesPage.Order.Price'.tr
-                : 'TradesPage.Order.OptimalPrice'.tr,
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(width: .5, color: Theme.of(context).dividerColor),
+            borderRadius: BorderRadius.circular(4),
           ),
-          enabled: controller.orderType.value != 'TradesPage.OrderType.market',
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: TextFormField(
+                  controller: isBuy ? controller.bidPriceController : controller.askPriceController,
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  decoration: InputDecoration(
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).accentColor,
+                      ),
+                    ),
+                    enabledBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        width: .5,
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    filled: controller.orderType.value == 'TradesPage.OrderType.market',
+                    isDense: true,
+                    contentPadding: const EdgeInsets.all(8),
+                    hintText: controller.orderType.value != 'TradesPage.OrderType.market'
+                        ? 'TradesPage.Order.Price'.tr
+                        : 'TradesPage.Order.OptimalPrice'.tr,
+                  ),
+                  enabled: controller.orderType.value != 'TradesPage.OrderType.market',
+                ),
+              ),
+              SizedBox(
+                width: 32,
+                height: 32,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {},
+                        child: Icon(
+                          Icons.arrow_drop_up,
+                          size: 16,
+                          color: Theme.of(context).textTheme.caption?.color,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {},
+                        child: Icon(
+                          Icons.arrow_drop_down,
+                          size: 16,
+                          color: Theme.of(context).textTheme.caption?.color,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
         Container(
           margin: const EdgeInsets.only(top: 4.0),

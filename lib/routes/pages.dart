@@ -1,5 +1,7 @@
 // ignore_for_file: constant_identifier_names,always_specify_types
 
+import 'package:flutter_lebei_exchange/modules/pages/splash/bindings/splash_binding.dart';
+import 'package:flutter_lebei_exchange/modules/pages/splash/views/splash_view.dart';
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 
@@ -23,11 +25,14 @@ import 'package:flutter_lebei_exchange/modules/pages/trade/bindings/trades_bindi
 part 'routes.dart';
 
 class Pages {
-  static const String INITIAL = Routes.INITIAL;
-
   static final List<GetPage> routes = <GetPage>[
     GetPage(
-      name: INITIAL,
+      name: Routes.INITIAL,
+      page: () => SplashView(),
+      binding: SplashBinding(),
+    ),
+    GetPage(
+      name: Routes.HOME,
       page: () => MainView(),
       bindings: [
         MainBinding(),

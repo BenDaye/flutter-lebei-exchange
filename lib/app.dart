@@ -11,15 +11,16 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: Pages.INITIAL,
+      initialRoute: Routes.INITIAL,
       getPages: Pages.routes,
       theme: CustomTheme.themeData(false, context),
       darkTheme: CustomTheme.themeData(true, context),
-      // themeMode: ThemeMode.system,
-      debugShowCheckedModeBanner: false,
+      // debugShowCheckedModeBanner: false,
       translations: TranslationService(),
       locale: TranslationService.locale,
       fallbackLocale: TranslationService.fallbackLocale,
+      title: 'LeBei Global',
+      popGesture: true,
     );
   }
 }
