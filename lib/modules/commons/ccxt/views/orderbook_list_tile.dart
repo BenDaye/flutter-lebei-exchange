@@ -8,12 +8,12 @@ class OrderBookListTile extends StatelessWidget {
   OrderBookListTile({
     required this.index,
     required this.bidAmount,
-    this.bidAmountPercentage,
     required this.bidPrice,
     required this.askAmount,
-    this.askAmountPercentage,
     required this.askPrice,
     required this.symbol,
+    this.bidAmountPercentage,
+    this.askAmountPercentage,
     this.onBidPriceTap,
     this.onAskPriceTap,
   });

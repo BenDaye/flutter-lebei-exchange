@@ -1,5 +1,6 @@
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
@@ -38,12 +39,16 @@ class SymbolTopPercentageListView extends GetView<SymbolTopPercentageListControl
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => ListView.separated(
-        key: key,
-        itemBuilder: (BuildContext context, int index) => TickerPercentageListTile(controller.tickers[index]),
-        itemCount: controller.tickers.length,
-        physics: const ClampingScrollPhysics(),
-        separatorBuilder: (_, int _i) => const Divider(height: 1.0),
+      () => EasyRefresh(
+        header: MaterialHeader(),
+        onRefresh: controller.tickerController.getTickersAndUpdate,
+        child: ListView.separated(
+          key: key,
+          itemBuilder: (BuildContext context, int index) => TickerPercentageListTile(controller.tickers[index]),
+          itemCount: controller.tickers.length,
+          physics: const ClampingScrollPhysics(),
+          separatorBuilder: (_, int _i) => const Divider(height: 1.0),
+        ),
       ),
     );
   }

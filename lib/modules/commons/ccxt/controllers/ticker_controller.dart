@@ -57,7 +57,10 @@ class TickerController extends GetxController {
     tickersMap.value = _tickersMap;
   }
 
-  Future<void> getTickersAndUpdatePartial({String? exchangeId, required List<String> symbols}) async {
+  Future<void> getTickersAndUpdatePartial({
+    required List<String> symbols,
+    String? exchangeId,
+  }) async {
     final String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
     if (_exchangeId.isEmpty || symbols.isEmpty) return;
 

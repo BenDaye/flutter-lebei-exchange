@@ -10,7 +10,11 @@ class OhlcvController extends GetxController {
   final ExchangeController exchangeController = Get.find<ExchangeController>();
   final SymbolController symbolController = Get.find<SymbolController>();
 
-  Future<List<List<num>>?> getOhlcv({String? symbol, String? exchangeId, required String period}) async {
+  Future<List<List<num>>?> getOhlcv({
+    required String period,
+    String? symbol,
+    String? exchangeId,
+  }) async {
     final String _symbol = symbol ?? symbolController.currentSymbol.value;
     final String _exchangeId = exchangeId ?? exchangeController.currentExchangeId.value;
     if (_symbol.isEmpty || _exchangeId.isEmpty) return null;

@@ -15,7 +15,7 @@ class App extends StatelessWidget {
       getPages: Pages.routes,
       theme: CustomTheme.themeData(false, context),
       darkTheme: CustomTheme.themeData(true, context),
-      themeMode: ThemeMode.light,
+      // themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
       translations: TranslationService(),
       locale: TranslationService.locale,

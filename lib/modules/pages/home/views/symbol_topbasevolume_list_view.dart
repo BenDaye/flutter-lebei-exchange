@@ -1,5 +1,6 @@
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
@@ -41,51 +42,55 @@ class SymbolTopBaseVolumeListView extends GetView<SymbolTopBaseVolumeListControl
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => ListView.separated(
-        separatorBuilder: (BuildContext context, int index) => const Divider(height: 1.0),
-        itemBuilder: (BuildContext context, int index) => ListTile(
-          title: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SymbolHelper.getSymbolTitle(controller.tickers[index].symbol),
-                  SymbolHelper.getSymbolSubtitle(
-                    controller.tickers[index].symbol,
-                    settingsController.advanceDeclineColors,
-                  ),
-                ],
-              ),
-              Text(
-                marketController.formatPriceByPrecision(
-                  TickerHelper.getValuablePrice(controller.tickers[index]),
-                  controller.tickers[index].symbol,
+      () => EasyRefresh(
+        header: MaterialHeader(),
+        onRefresh: controller.tickerController.getTickersAndUpdate,
+        child: ListView.separated(
+          separatorBuilder: (BuildContext context, int index) => const Divider(height: 1.0),
+          itemBuilder: (BuildContext context, int index) => ListTile(
+            title: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SymbolHelper.getSymbolTitle(controller.tickers[index].symbol),
+                    SymbolHelper.getSymbolSubtitle(
+                      controller.tickers[index].symbol,
+                      settingsController.advanceDeclineColors,
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          trailing: SizedBox(
-            width: 96.0,
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blue[700],
-                elevation: 0,
-              ),
-              child: Text(
-                NumberHelper(locale: settingsController.locale.value)
-                    .getNumberDisplay(controller.tickers[index].baseVolume)
-                    .text,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+                Text(
+                  marketController.formatPriceByPrecision(
+                    TickerHelper.getValuablePrice(controller.tickers[index]),
+                    controller.tickers[index].symbol,
+                  ),
+                ),
+              ],
+            ),
+            trailing: SizedBox(
+              width: 96.0,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blue[700],
+                  elevation: 0,
+                ),
+                child: Text(
+                  NumberHelper(locale: settingsController.locale.value)
+                      .getNumberDisplay(controller.tickers[index].baseVolume)
+                      .text,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
           ),
+          itemCount: controller.tickers.length,
+          physics: const ClampingScrollPhysics(),
         ),
-        itemCount: controller.tickers.length,
-        physics: const ClampingScrollPhysics(),
       ),
     );
   }

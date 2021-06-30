@@ -36,6 +36,7 @@ dependencies:
   extended_image: ^4.1.0
   extended_nested_scroll_view: ^3.0.0
   flustars: ^2.0.1
+  flutter_easyrefresh: ^2.2.1
   flutter_sticky_header: ^0.6.0
   focus_detector: ^2.0.0
   get: ^4.1.4
@@ -63,8 +64,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   build_runner: ^2.0.2
+  flutter_native_splash: ^1.2.0
   json_serializable: ^4.0.1
   lint: ^1.5.3
 
