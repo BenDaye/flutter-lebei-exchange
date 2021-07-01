@@ -65,9 +65,15 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^2.0.2
-  flutter_native_splash: ^1.2.0
+  flutter_launcher_icons: ^0.9.0
+  # flutter_native_splash: ^1.2.0
   json_serializable: ^4.0.1
   lint: ^1.5.3
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "images/logo.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

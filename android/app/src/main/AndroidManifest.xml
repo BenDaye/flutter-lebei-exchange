@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutter_lebei_exchange">
    <application
-        android:label="flutter_lebei_exchange"
+        android:label="LeBei Global"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
