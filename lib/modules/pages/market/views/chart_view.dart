@@ -2,11 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/controllers/chart_controller.dart';
 import 'package:k_chart/chart_style.dart';
 import 'package:k_chart/flutter_k_chart.dart';
+
+import '../../../commons/settings/controller/settings_controller.dart';
+import '../controllers/chart_controller.dart';
 
 class ChartView extends StatelessWidget {
   final SettingsController settingsController = Get.find<SettingsController>();
