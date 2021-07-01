@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/banner_controller.dart';
+import '../controllers/banner_controller.dart';
 
 class HomeBannerView extends GetView<HomeBannerController> {
   @override

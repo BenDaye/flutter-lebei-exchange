@@ -1,9 +1,9 @@
 import 'package:flustars/flustars.dart';
 import 'package:sentry/sentry.dart';
 
-import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number.dart';
-import 'package:flutter_lebei_exchange/utils/formatter/number.dart';
+import '../../../../models/ccxt/ticker.dart';
+import '../../../../utils/formatter/number.dart';
+import 'number.dart';
 
 enum SortType {
   unset,

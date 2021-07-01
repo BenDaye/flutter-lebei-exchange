@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/googlead_banner_controller.dart';
+import '../controllers/googlead_banner_controller.dart';
 
 class HomeGoogleAdBannerView extends StatelessWidget {
   final HomeGoogleAdBannerController homeGoogleAdBannerController = Get.put(HomeGoogleAdBannerController());

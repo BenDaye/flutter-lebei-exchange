@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
+import '../../../commons/ccxt/controllers/symbol_controller.dart';
 
 class SearchController extends GetxController {
   final SymbolController symbolController = Get.find<SymbolController>();

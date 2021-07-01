@@ -1,17 +1,17 @@
-import 'package:flutter_lebei_exchange/modules/pages/market/controllers/chart_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/controllers/orderbook_list_controller.dart';
 import 'package:get/get.dart';
 
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/currency_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ohlcv_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/orderbook_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/trade_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/main/controllers/main_controller.dart';
+import '../../../commons/ccxt/controllers/currency_controller.dart';
+import '../../../commons/ccxt/controllers/exchange_controller.dart';
+import '../../../commons/ccxt/controllers/market_controller.dart';
+import '../../../commons/ccxt/controllers/ohlcv_controller.dart';
+import '../../../commons/ccxt/controllers/orderbook_controller.dart';
+import '../../../commons/ccxt/controllers/symbol_controller.dart';
+import '../../../commons/ccxt/controllers/ticker_controller.dart';
+import '../../../commons/ccxt/controllers/trade_controller.dart';
+import '../../../commons/settings/controller/settings_controller.dart';
+import '../../market/controllers/chart_controller.dart';
+import '../../market/controllers/orderbook_list_controller.dart';
+import '../controllers/main_controller.dart';
 
 class MainBinding extends Bindings {
   @override

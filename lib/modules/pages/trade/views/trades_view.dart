@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/views/orderbook_list_tile.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/controllers/chart_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/controllers/orderbook_list_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/views/chart_view.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/views/orderbook_list_view.dart';
 import 'package:get/get.dart';
-
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/percentage.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/symbol.dart';
-import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/views/market_drawer_view.dart';
-import 'package:flutter_lebei_exchange/modules/pages/trade/controllers/trades_controller.dart';
 import 'package:k_chart/k_chart_widget.dart';
+
+import '../../../commons/ccxt/controllers/exchange_controller.dart';
+import '../../../commons/ccxt/controllers/market_controller.dart';
+import '../../../commons/ccxt/controllers/symbol_controller.dart';
+import '../../../commons/ccxt/controllers/ticker_controller.dart';
+import '../../../commons/ccxt/helpers/percentage.dart';
+import '../../../commons/ccxt/helpers/symbol.dart';
+import '../../../commons/ccxt/helpers/ticker.dart';
+import '../../../commons/ccxt/views/orderbook_list_tile.dart';
+import '../../../commons/settings/controller/settings_controller.dart';
+import '../../market/controllers/chart_controller.dart';
+import '../../market/controllers/orderbook_list_controller.dart';
+import '../../market/views/chart_view.dart';
+import '../../market/views/market_drawer_view.dart';
+import '../../market/views/orderbook_list_view.dart';
+import '../controllers/trades_controller.dart';
 
 class TradesView extends GetView<TradesViewController> {
   final ExchangeController exchangeController = Get.find<ExchangeController>();

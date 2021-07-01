@@ -1,6 +1,6 @@
-import 'package:flutter_lebei_exchange/api/url/juhe.dart';
-import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
-import 'package:flutter_lebei_exchange/utils/http/main.dart';
+import '../utils/http/handler/types.dart';
+import '../utils/http/main.dart';
+import 'url/juhe.dart';
 
 class ApiJuhe {
   static Future<HttpResult<List<dynamic>>> exchangeQuery() async {

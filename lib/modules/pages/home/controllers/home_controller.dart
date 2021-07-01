@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
+import '../../../commons/ccxt/controllers/ticker_controller.dart';
+import '../../../commons/settings/controller/settings_controller.dart';
 
 class HomeViewController extends GetxController with SingleGetTickerProviderMixin {
   final SettingsController settingsController = Get.find<SettingsController>();

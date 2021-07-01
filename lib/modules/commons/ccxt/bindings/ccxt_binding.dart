@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
+import '../controllers/exchange_controller.dart';
+import '../controllers/market_controller.dart';
+import '../controllers/symbol_controller.dart';
+import '../controllers/ticker_controller.dart';
 
 class CcxtBinding extends Bindings {
   @override

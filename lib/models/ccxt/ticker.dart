@@ -1,8 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:flutter_lebei_exchange/utils/formatter/common.dart';
-import 'package:flutter_lebei_exchange/utils/formatter/datetime.dart';
-import 'package:flutter_lebei_exchange/utils/formatter/number.dart';
+import '../../utils/formatter/common.dart';
+import '../../utils/formatter/datetime.dart';
+import '../../utils/formatter/number.dart';
 
 part 'ticker.g.dart';
 

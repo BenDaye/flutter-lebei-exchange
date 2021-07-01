@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sentry/sentry.dart';
 
-import 'package:flutter_lebei_exchange/api/ccxt.dart';
-import 'package:flutter_lebei_exchange/models/ccxt/exchange.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/local.dart';
-import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
+import '../../../../api/ccxt.dart';
+import '../../../../models/ccxt/exchange.dart';
+import '../../../../utils/http/handler/types.dart';
+import '../helpers/local.dart';
 
 class ExchangeController extends GetxController {
   final RxList<String> exchanges = <String>[].obs;

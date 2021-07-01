@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wakelock/wakelock.dart';
 
-import 'package:flutter_lebei_exchange/api/juhe.dart';
-import 'package:flutter_lebei_exchange/assets/translations/main.dart';
-import 'package:flutter_lebei_exchange/models/juhe/exchange.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
-import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
+import '../../../../api/juhe.dart';
+import '../../../../assets/translations/main.dart';
+import '../../../../models/juhe/exchange.dart';
+import '../../../../utils/http/handler/types.dart';
+import '../../ccxt/controllers/exchange_controller.dart';
 
 enum AdvanceDeclineColorMode {
   advanceGreen,

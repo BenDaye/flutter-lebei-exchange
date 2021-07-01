@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
-import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
-import 'package:flutter_lebei_exchange/utils/handlers/timer.dart';
+import '../../../../models/ccxt/ticker.dart';
+import '../../../../utils/handlers/timer.dart';
+import '../../../commons/ccxt/controllers/ticker_controller.dart';
+import '../../../commons/ccxt/helpers/ticker.dart';
+import '../../../commons/settings/controller/settings_controller.dart';
 
 class MarketsViewController extends GetxController with SingleGetTickerProviderMixin {
   final SettingsController settingsController = Get.find<SettingsController>();

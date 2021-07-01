@@ -2,14 +2,15 @@ import 'dart:collection';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/config/http.dart';
-import 'package:flutter_lebei_exchange/utils/http/handler/error.dart';
-import 'package:flutter_lebei_exchange/utils/http/handler/success.dart';
-import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
-import 'package:flutter_lebei_exchange/utils/http/interceptors/network.dart';
 import 'package:get/get.dart' as getx;
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:sentry/sentry.dart';
+
+import '../../config/http.dart';
+import 'handler/error.dart';
+import 'handler/success.dart';
+import 'handler/types.dart';
+import 'interceptors/network.dart';
 
 class Http {
   Http() {

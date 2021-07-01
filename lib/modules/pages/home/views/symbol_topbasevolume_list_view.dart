@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:get/get.dart';
 
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/number.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/symbol.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
-import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/home_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_topbasevolume_list_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/views/list_view_header.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/views/shimmer_list_view.dart';
+import '../../../commons/ccxt/controllers/market_controller.dart';
+import '../../../commons/ccxt/helpers/number.dart';
+import '../../../commons/ccxt/helpers/symbol.dart';
+import '../../../commons/ccxt/helpers/ticker.dart';
+import '../../../commons/settings/controller/settings_controller.dart';
+import '../controllers/home_controller.dart';
+import '../controllers/symbol_topbasevolume_list_controller.dart';
+import 'list_view_header.dart';
+import 'shimmer_list_view.dart';
 
 class SymbolTopBaseVolumeList extends GetView<HomeViewController> {
   @override

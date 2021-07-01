@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/notice_controller.dart';
+import '../controllers/notice_controller.dart';
 
 class HomeNoticeView extends GetView<HomeNoticeController> {
   @override

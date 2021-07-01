@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lebei_exchange/models/ccxt/market.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/views/orderbook_list_tile.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/controllers/orderbook_list_controller.dart';
+import '../../../../models/ccxt/market.dart';
+import '../../../commons/ccxt/controllers/market_controller.dart';
+import '../../../commons/ccxt/views/orderbook_list_tile.dart';
+import '../../../commons/settings/controller/settings_controller.dart';
+import '../controllers/orderbook_list_controller.dart';
 
 class OrderBookListView extends StatelessWidget {
   OrderBookListView(this.symbol);

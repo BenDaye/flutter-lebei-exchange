@@ -2,11 +2,11 @@ import 'package:flustars/flustars.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import 'package:flutter_lebei_exchange/models/ccxt/orderbook.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/orderbook_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
-import 'package:flutter_lebei_exchange/utils/handlers/timer.dart';
+import '../../../../models/ccxt/orderbook.dart';
+import '../../../../utils/handlers/timer.dart';
+import '../../../commons/ccxt/controllers/orderbook_controller.dart';
+import '../../../commons/ccxt/controllers/symbol_controller.dart';
+import '../../../commons/settings/controller/settings_controller.dart';
 
 class OrderBookListController extends GetxController {
   final SettingsController settingsController = Get.find<SettingsController>();

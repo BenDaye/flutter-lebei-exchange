@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
+import '../../../commons/ccxt/controllers/exchange_controller.dart';
+import '../../../commons/settings/controller/settings_controller.dart';
 
 class GeneralView extends GetView<SettingsController> {
   final ExchangeController exchangeController = Get.find<ExchangeController>();

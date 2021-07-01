@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
+import '../../settings/controller/settings_controller.dart';
+import '../controllers/market_controller.dart';
 
 class OrderBookListTile extends StatelessWidget {
   OrderBookListTile({

@@ -2,7 +2,7 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:flutter_lebei_exchange/utils/formatter/number.dart';
+import '../../../../utils/formatter/number.dart';
 
 class PercentageHelper {
   static String getPercentageSymbol(double percentage) =>

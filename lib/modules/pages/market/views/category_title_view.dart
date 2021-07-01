@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:flutter_lebei_exchange/modules/pages/market/controllers/markets_controller.dart';
+import '../controllers/markets_controller.dart';
 
 class CategoryTitleView extends GetView<MarketsViewController> {
   @override

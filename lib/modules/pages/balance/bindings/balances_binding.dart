@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import 'package:flutter_lebei_exchange/modules/pages/balance/controllers/balances_controller.dart';
+import '../controllers/balances_controller.dart';
 
 class BalancesBinding extends Bindings {
   @override

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
-import 'package:flutter_lebei_exchange/models/response.dart' as http_model;
-import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
+import '../../../models/response.dart' as http_model;
+import 'types.dart';
 
 // ignore: always_specify_types
 HttpResult<T> onSuccess<T>(Response response) {

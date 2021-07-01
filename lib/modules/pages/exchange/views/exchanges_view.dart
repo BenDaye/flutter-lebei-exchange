@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/exchange/controllers/exchanges_controller.dart';
+import '../../../commons/ccxt/controllers/exchange_controller.dart';
+import '../controllers/exchanges_controller.dart';
 
 class ExchangesView extends GetView<ExchangeViewController> {
   final ExchangeController exchangeController = Get.find<ExchangeController>();

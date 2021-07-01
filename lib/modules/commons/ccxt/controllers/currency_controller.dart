@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import 'package:sentry/sentry.dart';
 
-import 'package:flutter_lebei_exchange/api/ccxt.dart';
-import 'package:flutter_lebei_exchange/models/ccxt/currency.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
-import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
+import '../../../../api/ccxt.dart';
+import '../../../../models/ccxt/currency.dart';
+import '../../../../utils/http/handler/types.dart';
+import 'exchange_controller.dart';
 
 class CurrencyController extends GetxController {
   final ExchangeController exchangeController = Get.find<ExchangeController>();

@@ -1,6 +1,6 @@
-import 'package:flutter_lebei_exchange/api/url/ccxt.dart';
-import 'package:flutter_lebei_exchange/utils/http/handler/types.dart';
-import 'package:flutter_lebei_exchange/utils/http/main.dart';
+import '../utils/http/handler/types.dart';
+import '../utils/http/main.dart';
+import 'url/ccxt.dart';
 
 class ApiCcxt {
   static Future<HttpResult<List<dynamic>>> exchanges() async {

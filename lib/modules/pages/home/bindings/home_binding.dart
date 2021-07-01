@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/banner_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/home_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/notice_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_popular_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_topbasevolume_list_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_toppercentage_list_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_topquotevolume_list_controller.dart';
+import '../controllers/banner_controller.dart';
+import '../controllers/home_controller.dart';
+import '../controllers/notice_controller.dart';
+import '../controllers/symbol_popular_controller.dart';
+import '../controllers/symbol_topbasevolume_list_controller.dart';
+import '../controllers/symbol_toppercentage_list_controller.dart';
+import '../controllers/symbol_topquotevolume_list_controller.dart';
 
 class HomeBinding extends Bindings {
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/home_controller.dart';
+import '../controllers/home_controller.dart';
 
 class RankTabBarView extends GetView<HomeViewController> {
   @override

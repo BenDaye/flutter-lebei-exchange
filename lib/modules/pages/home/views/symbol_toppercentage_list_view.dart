@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:get/get.dart';
 
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/views/ticker_percentage_list_tile.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/home_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_toppercentage_list_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/views/list_view_header.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/views/shimmer_list_view.dart';
+import '../../../commons/ccxt/helpers/ticker.dart';
+import '../../../commons/ccxt/views/ticker_percentage_list_tile.dart';
+import '../controllers/home_controller.dart';
+import '../controllers/symbol_toppercentage_list_controller.dart';
+import 'list_view_header.dart';
+import 'shimmer_list_view.dart';
 
 class SymbolTopPercentageList extends GetView<HomeViewController> {
   @override

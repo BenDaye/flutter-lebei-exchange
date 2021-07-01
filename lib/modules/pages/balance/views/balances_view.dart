@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:flutter_lebei_exchange/modules/pages/balance/controllers/balances_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/balance/views/show_number.dart';
+import '../controllers/balances_controller.dart';
+import 'show_number.dart';
 
 class BalancesView extends GetView<BalancesViewController> {
   @override

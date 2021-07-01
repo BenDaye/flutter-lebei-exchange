@@ -1,9 +1,5 @@
 // import 'package:auto_animated/auto_animated.dart';
 import 'package:flutter/material.dart';
-import 'package:focus_detector/focus_detector.dart';
-import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
-
 import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
 import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
@@ -12,6 +8,9 @@ import 'package:flutter_lebei_exchange/modules/commons/ccxt/views/ticker_percent
 import 'package:flutter_lebei_exchange/modules/pages/home/views/list_view_header.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/controllers/markets_controller.dart';
 import 'package:flutter_lebei_exchange/modules/pages/market/views/category_title_view.dart';
+import 'package:focus_detector/focus_detector.dart';
+import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class MarketsView extends GetView<MarketsViewController> {
   final SymbolController symbolController = Get.find<SymbolController>();

@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/percentage.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
-import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/symbol_popular_controller.dart';
-import 'package:flutter_lebei_exchange/utils/formatter/number.dart';
+import '../../../../models/ccxt/ticker.dart';
+import '../../../../utils/formatter/number.dart';
+import '../../../commons/ccxt/controllers/market_controller.dart';
+import '../../../commons/ccxt/controllers/symbol_controller.dart';
+import '../../../commons/ccxt/controllers/ticker_controller.dart';
+import '../../../commons/ccxt/helpers/percentage.dart';
+import '../../../commons/ccxt/helpers/ticker.dart';
+import '../../../commons/settings/controller/settings_controller.dart';
+import '../controllers/symbol_popular_controller.dart';
 
 class SymbolPopularGridView extends StatelessWidget {
   final TickerController tickerController = Get.find<TickerController>();

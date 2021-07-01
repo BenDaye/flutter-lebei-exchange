@@ -3,16 +3,16 @@ import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart' hide NestedScrollView;
 import 'package:get/get.dart';
 
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/home_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/views/banner_view.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/views/list_view_header.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/views/notice_view.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/views/rank_tab_bar_view.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/views/shortcut_grid_view.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/views/symbol_popular_grid_view.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/views/symbol_topbasevolume_list_view.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/views/symbol_toppercentage_list_view.dart';
-import 'package:flutter_lebei_exchange/modules/pages/home/views/symbol_topquotevolume_list_view.dart';
+import '../controllers/home_controller.dart';
+import 'banner_view.dart';
+import 'list_view_header.dart';
+import 'notice_view.dart';
+import 'rank_tab_bar_view.dart';
+import 'shortcut_grid_view.dart';
+import 'symbol_popular_grid_view.dart';
+import 'symbol_topbasevolume_list_view.dart';
+import 'symbol_toppercentage_list_view.dart';
+import 'symbol_topquotevolume_list_view.dart';
 
 class HomeView extends GetView<HomeViewController> {
   @override

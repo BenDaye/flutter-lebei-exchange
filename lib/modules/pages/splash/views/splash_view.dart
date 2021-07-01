@@ -2,10 +2,10 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'package:flutter_lebei_exchange/modules/pages/splash/controllers/splash_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
+
+import '../controllers/splash_controller.dart';
 
 class SplashView extends GetView<SplashController> {
   @override

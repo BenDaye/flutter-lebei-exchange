@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import 'package:flutter_lebei_exchange/modules/pages/market/controllers/markets_controller.dart';
+import '../controllers/markets_controller.dart';
 
 class MarketsBinding extends Bindings {
   @override

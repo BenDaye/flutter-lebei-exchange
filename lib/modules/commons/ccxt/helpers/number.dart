@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sentry/sentry.dart';
 
-import 'package:flutter_lebei_exchange/models/ccxt/exchange.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/types/number_display.dart';
-import 'package:flutter_lebei_exchange/utils/formatter/number.dart';
+import '../../../../models/ccxt/exchange.dart';
+import '../../../../utils/formatter/number.dart';
+import '../types/number_display.dart';
 
 class NumberHelper {
   NumberHelper({this.currencyRate = 1.0, this.locale});

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-import 'package:flutter_lebei_exchange/modules/pages/home/controllers/googlead_list_tile_controller.dart';
+import '../controllers/googlead_list_tile_controller.dart';
 
 class HomeGoogleAdListTile extends StatelessWidget {
   final HomeGoogleAdListTileController homeGoogleAdListTileController =

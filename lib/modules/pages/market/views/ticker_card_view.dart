@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/percentage.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/helpers/ticker.dart';
-import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
-import 'package:flutter_lebei_exchange/modules/pages/market/controllers/market_controller.dart';
+import '../../../commons/ccxt/controllers/market_controller.dart';
+import '../../../commons/ccxt/helpers/percentage.dart';
+import '../../../commons/ccxt/helpers/ticker.dart';
+import '../../../commons/settings/controller/settings_controller.dart';
+import '../controllers/market_controller.dart';
 
 class TickerCardView extends GetView<MarketViewController> {
   final SettingsController settingsController = Get.find<SettingsController>();

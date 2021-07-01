@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:flutter_lebei_exchange/assets/translations/main.dart';
-import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
+import '../../../../assets/translations/main.dart';
+import '../../../commons/settings/controller/settings_controller.dart';
 
 class LanguageView extends GetView<SettingsController> {
   @override

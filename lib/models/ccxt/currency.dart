@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:flutter_lebei_exchange/models/ccxt/market.dart';
+import 'market.dart';
 
 part 'currency.g.dart';
 

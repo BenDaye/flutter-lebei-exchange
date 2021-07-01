@@ -2,14 +2,14 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Precision;
 
-import 'package:flutter_lebei_exchange/models/ccxt/market.dart';
-import 'package:flutter_lebei_exchange/models/ccxt/ticker.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/exchange_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/market_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/symbol_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/ccxt/controllers/ticker_controller.dart';
-import 'package:flutter_lebei_exchange/modules/commons/settings/controller/settings_controller.dart';
-import 'package:flutter_lebei_exchange/utils/handlers/timer.dart';
+import '../../../../models/ccxt/market.dart';
+import '../../../../models/ccxt/ticker.dart';
+import '../../../../utils/handlers/timer.dart';
+import '../../../commons/ccxt/controllers/exchange_controller.dart';
+import '../../../commons/ccxt/controllers/market_controller.dart';
+import '../../../commons/ccxt/controllers/symbol_controller.dart';
+import '../../../commons/ccxt/controllers/ticker_controller.dart';
+import '../../../commons/settings/controller/settings_controller.dart';
 
 class MarketViewController extends GetxController with SingleGetTickerProviderMixin {
   final ExchangeController exchangeController = Get.find<ExchangeController>();
