@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomTheme {
@@ -23,14 +24,15 @@ class CustomTheme {
     return ThemeData(
       primaryColorBrightness: isDarkTheme ? Brightness.dark : Brightness.light,
       brightness: isDarkTheme ? Brightness.dark : Brightness.light,
-      accentColorBrightness: isDarkTheme ? Brightness.dark : Brightness.light,
       colorScheme: isDarkTheme
           ? ThemeData.dark().colorScheme.copyWith(
                 primary: Colors.orange,
+                secondary: Colors.orange,
                 background: Colors.grey[800],
               )
           : ThemeData.light().colorScheme.copyWith(
                 primary: Colors.orange,
+                secondary: Colors.orange,
                 background: Colors.white,
               ),
       textTheme:
@@ -40,7 +42,6 @@ class CustomTheme {
           : ThemeData.light().primaryTextTheme.merge(textTheme),
       primarySwatch: Colors.orange,
       primaryColor: Colors.orange,
-      accentColor: Colors.orange,
       toggleableActiveColor: Colors.orange,
       backgroundColor: isDarkTheme ? Colors.grey[800] : Colors.white,
       tabBarTheme: TabBarTheme(
@@ -52,9 +53,11 @@ class CustomTheme {
             isDarkTheme ? ThemeData.dark().unselectedWidgetColor : ThemeData.light().unselectedWidgetColor,
       ),
       appBarTheme: AppBarTheme(
+        systemOverlayStyle: isDarkTheme ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light,
         backgroundColor: isDarkTheme ? ThemeData.dark().bottomAppBarColor : ThemeData.light().bottomAppBarColor,
-        textTheme:
-            isDarkTheme ? ThemeData.dark().textTheme.merge(textTheme) : ThemeData.light().textTheme.merge(textTheme),
+        toolbarTextStyle: isDarkTheme
+            ? ThemeData.dark().appBarTheme.toolbarTextStyle?.merge(GoogleFonts.oswald())
+            : ThemeData.light().appBarTheme.toolbarTextStyle?.merge(GoogleFonts.oswald()),
       ),
     );
   }
