@@ -8,7 +8,7 @@
       "name": "flutter-lebei-exchange",
       "request": "launch",
       "type": "dart",
-      "args": ["--no-sound-null-safety"]
+      // "args": ["--no-sound-null-safety"]
     }
   ]
 }

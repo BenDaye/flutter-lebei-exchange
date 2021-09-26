@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:sentry/sentry.dart';
 
 import 'app.dart';
@@ -28,12 +28,12 @@ void main() {
       },
     );
 
-    MobileAds.instance.initialize();
-    await MobileAds.instance.updateRequestConfiguration(
-      RequestConfiguration(
-        testDeviceIds: <String>['kGADSimulatorID'],
-      ),
-    );
+    // MobileAds.instance.initialize();
+    // await MobileAds.instance.updateRequestConfiguration(
+    //   RequestConfiguration(
+    //     testDeviceIds: <String>['kGADSimulatorID'],
+    //   ),
+    // );
     await SpUtil.getInstance();
 
     runApp(const App());

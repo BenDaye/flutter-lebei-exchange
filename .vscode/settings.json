@@ -1,6 +1,6 @@
 {
   "scm.defaultViewMode": "tree",
   "dart.flutterRunAdditionalArgs": [
-    "--no-sound-null-safety"
+    // "--no-sound-null-safety"
   ]
 }

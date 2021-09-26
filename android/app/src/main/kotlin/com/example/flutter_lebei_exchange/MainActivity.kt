@@ -1,4 +1,4 @@
-package com.example.flutter_lebei_exchange
+package vip.bendaye.flutter_lebei_exchange
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.flutter_lebei_exchange">
+    package="vip.bendaye.flutter_lebei_exchange">
    <application
         android:label="LeBei Global"
         android:icon="@mipmap/ic_launcher">
