@@ -51,7 +51,7 @@ class HomeBannerView extends GetView<HomeBannerController> {
                         margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
                         decoration: BoxDecoration(
                           color: controller.currentIndex.value == index
-                              ? Theme.of(context).accentColor
+                              ? Theme.of(context).colorScheme.secondary
                               : Theme.of(context).dividerColor,
                         ),
                       );

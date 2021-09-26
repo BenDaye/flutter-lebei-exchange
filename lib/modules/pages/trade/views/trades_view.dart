@@ -127,7 +127,7 @@ class TradesView extends GetView<TradesViewController> {
                     onPressed: controller.showOrderBook.toggle,
                     icon: const Icon(Icons.list_alt),
                     color: controller.showOrderBook.isTrue
-                        ? Theme.of(context).accentColor
+                        ? Theme.of(context).colorScheme.secondary
                         : Theme.of(context).unselectedWidgetColor,
                   ),
                   contentPadding: const EdgeInsets.only(left: 16),
@@ -212,7 +212,7 @@ class TradesView extends GetView<TradesViewController> {
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 width: .5,
-                                color: Theme.of(context).accentColor,
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
@@ -287,7 +287,7 @@ class OrderDashboard extends GetView<TradesViewController> {
                   decoration: InputDecoration(
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                     ),
                     enabledBorder: const UnderlineInputBorder(
@@ -378,7 +378,7 @@ class OrderDashboard extends GetView<TradesViewController> {
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       width: .5,
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
                   enabledBorder: UnderlineInputBorder(

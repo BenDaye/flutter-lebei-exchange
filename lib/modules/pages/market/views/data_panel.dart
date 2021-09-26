@@ -123,7 +123,6 @@ class MarketDataPanelBody extends GetView<MarketPanelController> {
   Widget build(BuildContext context) {
     return AnimatedSize(
       duration: const Duration(milliseconds: 300),
-      vsync: marketViewController,
       alignment: Alignment.bottomCenter,
       child: Obx(
         () => SizedBox(

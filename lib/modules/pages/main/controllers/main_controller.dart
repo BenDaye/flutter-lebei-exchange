@@ -37,25 +37,25 @@ class MainViewController extends GetxController {
           title: Text('MainBottomNavy.Home'.tr),
           icon: const Icon(Icons.home),
           activeColor: Theme.of(context).primaryColor,
-          inactiveColor: Theme.of(context).accentColor,
+          inactiveColor: Theme.of(context).colorScheme.secondary,
         ),
         BottomNavyBarItem(
           title: Text('MainBottomNavy.Market'.tr),
           icon: const Icon(Icons.assessment),
           activeColor: Theme.of(context).primaryColor,
-          inactiveColor: Theme.of(context).accentColor,
+          inactiveColor: Theme.of(context).colorScheme.secondary,
         ),
         BottomNavyBarItem(
           title: Text('MainBottomNavy.Trade'.tr),
           icon: const Icon(Icons.coffee),
           activeColor: Theme.of(context).primaryColor,
-          inactiveColor: Theme.of(context).accentColor,
+          inactiveColor: Theme.of(context).colorScheme.secondary,
         ),
         BottomNavyBarItem(
           title: Text('MainBottomNavy.Asset'.tr),
           icon: const Icon(Icons.person),
           activeColor: Theme.of(context).primaryColor,
-          inactiveColor: Theme.of(context).accentColor,
+          inactiveColor: Theme.of(context).colorScheme.secondary,
         ),
       ];
 

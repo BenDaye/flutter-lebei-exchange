@@ -11,7 +11,7 @@ class BalancesView extends GetView<BalancesViewController> {
       appBar: PreferredSize(
         preferredSize: Size(Get.width, 160),
         child: Container(
-          color: Theme.of(context).accentColor,
+          color: Theme.of(context).colorScheme.secondary,
           child: SafeArea(
             bottom: false,
             left: false,
@@ -56,7 +56,7 @@ class BalancesView extends GetView<BalancesViewController> {
                         child: ElevatedButton(
                           onPressed: null,
                           style: ElevatedButton.styleFrom(
-                            primary: Theme.of(context).accentColor.withAlpha(201),
+                            primary: Theme.of(context).colorScheme.secondary.withAlpha(201),
                           ),
                           child: const Text('充币'),
                         ),
@@ -66,7 +66,7 @@ class BalancesView extends GetView<BalancesViewController> {
                         child: ElevatedButton(
                           onPressed: null,
                           style: ElevatedButton.styleFrom(
-                            primary: Theme.of(context).accentColor.withAlpha(201),
+                            primary: Theme.of(context).colorScheme.secondary.withAlpha(201),
                           ),
                           child: const Text('提币'),
                         ),
@@ -76,7 +76,7 @@ class BalancesView extends GetView<BalancesViewController> {
                         child: ElevatedButton(
                           onPressed: null,
                           style: ElevatedButton.styleFrom(
-                            primary: Theme.of(context).accentColor.withAlpha(201),
+                            primary: Theme.of(context).colorScheme.secondary.withAlpha(201),
                           ),
                           child: const Text('划转'),
                         ),
@@ -118,7 +118,7 @@ class BalancesView extends GetView<BalancesViewController> {
                       Text(
                         'USDT',
                         style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                              color: Theme.of(context).accentColor,
+                              color: Theme.of(context).colorScheme.secondary,
                               fontWeight: FontWeight.bold,
                             ),
                       ),

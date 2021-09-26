@@ -8,7 +8,7 @@ class CategoryTitleView extends GetView<MarketsViewController> {
   Widget build(BuildContext context) {
     TextStyle? categoryTextStyle(bool actived) => actived
         ? Theme.of(context).primaryTextTheme.headline6?.copyWith(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
             )
         : Theme.of(context).primaryTextTheme.subtitle1?.copyWith(
               color: Theme.of(context).textTheme.caption?.color,

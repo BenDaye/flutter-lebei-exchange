@@ -23,11 +23,11 @@ class ExchangesView extends GetView<ExchangeViewController> {
                   trailing: Text(
                     ExchangeController.getExchangeName(exchangeController.currentExchangeId.value),
                     style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                          color: Theme.of(context).accentColor,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                   ),
                   selected: true,
-                  selectedTileColor: Theme.of(context).accentColor.withOpacity(.1),
+                  selectedTileColor: Theme.of(context).colorScheme.secondary.withOpacity(.1),
                 ),
                 ListTile(
                   title: Padding(
@@ -99,7 +99,7 @@ class ExchangesView extends GetView<ExchangeViewController> {
                               Icons.check,
                               size: 16,
                               color: exchangeController.currentExchangeId.value == exchangeController.exchanges[index]
-                                  ? Theme.of(context).accentColor
+                                  ? Theme.of(context).colorScheme.secondary
                                   : Colors.transparent,
                             ),
                           ),

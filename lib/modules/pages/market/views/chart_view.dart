@@ -39,7 +39,7 @@ class ChartView extends StatelessWidget {
                         Icons.folder_special,
                         size: 16,
                         color: controller.showSettings.isTrue
-                            ? Theme.of(context).accentColor
+                            ? Theme.of(context).colorScheme.secondary
                             : Theme.of(context).unselectedWidgetColor,
                       ),
                     ),
@@ -88,7 +88,6 @@ class ChartView extends StatelessWidget {
                   Container(height: 0),
                 AnimatedSize(
                   duration: const Duration(milliseconds: 300),
-                  vsync: controller,
                   child: controller.showSettings.isTrue
                       ? Container(
                           color: Colors.transparent,
@@ -111,7 +110,7 @@ class ChartView extends StatelessWidget {
                                             onPressed: () => controller.mainState.value = e,
                                             style: ElevatedButton.styleFrom(
                                               primary: controller.mainState.value == e
-                                                  ? Theme.of(context).buttonColor
+                                                  ? Theme.of(context).primaryColor
                                                   : Theme.of(context).dividerColor,
                                               elevation: 0,
                                             ),
@@ -134,7 +133,7 @@ class ChartView extends StatelessWidget {
                                             onPressed: () => controller.secondaryState.value = e,
                                             style: ElevatedButton.styleFrom(
                                               primary: controller.secondaryState.value == e
-                                                  ? Theme.of(context).buttonColor
+                                                  ? Theme.of(context).primaryColor
                                                   : Theme.of(context).dividerColor,
                                               elevation: 0,
                                             ),
@@ -152,7 +151,6 @@ class ChartView extends StatelessWidget {
                 ),
                 AnimatedSize(
                   duration: const Duration(milliseconds: 300),
-                  vsync: controller,
                   child: controller.showExtra.isTrue
                       ? Container(
                           color: Colors.transparent,
@@ -173,7 +171,7 @@ class ChartView extends StatelessWidget {
                                         onPressed: () => controller.onChangeTimeframeExtra(e),
                                         style: ElevatedButton.styleFrom(
                                           primary: controller.timeframe.value == e
-                                              ? Theme.of(context).buttonColor
+                                              ? Theme.of(context).primaryColor
                                               : Theme.of(context).dividerColor,
                                           elevation: 0,
                                         ),

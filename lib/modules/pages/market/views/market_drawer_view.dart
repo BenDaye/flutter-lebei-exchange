@@ -121,7 +121,7 @@ class MarketDrawerView extends StatelessWidget {
                       ),
                       selected: symbolController.currentSymbol.value.replaceAll('_', '/') ==
                           marketDrawerViewController.tickers[index].symbol,
-                      selectedTileColor: Theme.of(context).accentColor.withOpacity(.2),
+                      selectedTileColor: Theme.of(context).colorScheme.secondary.withOpacity(.2),
                       onTap: () {
                         symbolController.onChangeCurrentSymbol(marketDrawerViewController.tickers[index].symbol);
                         Get.back();

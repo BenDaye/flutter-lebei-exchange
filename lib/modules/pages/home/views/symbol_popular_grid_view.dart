@@ -161,7 +161,7 @@ class SymbolPopularGridViewIndicator extends GetView<SymbolPopularGridViewContro
                 margin: const EdgeInsets.symmetric(horizontal: 2.0),
                 decoration: BoxDecoration(
                   color: e.key == controller.currentIndex.value
-                      ? Theme.of(context).accentColor
+                      ? Theme.of(context).colorScheme.secondary
                       : Theme.of(context).dividerColor,
                 ),
               ),

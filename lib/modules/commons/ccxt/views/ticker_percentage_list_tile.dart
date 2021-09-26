@@ -51,7 +51,7 @@ class TickerPercentageListTile extends StatelessWidget {
         ),
       ),
       selected: symbolController.favoriteSymbols.any((String s) => s == ticker.symbol),
-      selectedTileColor: Theme.of(context).accentColor.withOpacity(.1),
+      selectedTileColor: Theme.of(context).colorScheme.secondary.withOpacity(.1),
       onTap: () {
         symbolController.onChangeCurrentSymbol(ticker.symbol);
         Get.toNamed('/market');
